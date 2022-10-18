@@ -108,6 +108,24 @@
   "dashboard": {
     "title": "Dashboard"
   },
+  "trainers": {
+    "trainers": "Trainers",
+    "fields": {
+      "id": "Id",
+      "name": "Name",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "location": "Location",
+      "content": "Content",
+      "createdAt": "Created At"
+    },
+    "titles": {
+      "create": "Create Trainer",
+      "edit": "Edit Trainer",
+      "list": "Trainers",
+      "show": "Show Trainer"
+    }
+  },
   "posts": {
     "posts": "Posts",
     "fields": {

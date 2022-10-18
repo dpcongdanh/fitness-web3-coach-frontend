@@ -19,6 +19,8 @@ import { supabaseClient } from "utility";
 import { Title, Sider, Layout, Header } from "components/layout";
 import authProvider from "./authProvider";
 
+import { PostList, PostCreate, PostEdit } from "pages/trainers";
+
 function App() {
   const { t, i18n } = useTranslation();
 
@@ -74,6 +76,14 @@ function App() {
               }}
             />
           )}
+          resources={[
+            {
+              name: "trainers",
+              list: PostList,
+              // create: PostCreate,
+              // edit: PostEdit,
+            },
+          ]}
           Title={Title}
           Sider={Sider}
           Layout={Layout}
