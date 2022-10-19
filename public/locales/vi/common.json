@@ -1,61 +1,61 @@
 {
   "pages": {
     "login": {
-      "title": "Sign in to your account",
-      "signin": "Sign in",
-      "signup": "Sign up",
-      "divider": "or",
+      "title": "Đăng nhập vào tài khoản",
+      "signin": "Đăng nhập",
+      "signup": "Đăng Ký",
+      "divider": "hoặc",
       "fields": {
         "email": "Email",
-        "password": "Password"
+        "password": "Mật khẩu"
       },
       "errors": {
-        "validEmail": "Invalid email address"
+        "validEmail": "Địa chỉ email không chính xác"
       },
       "buttons": {
-        "submit": "Login",
-        "forgotPassword": "Forgot password?",
-        "noAccount": "Don’t have an account?",
-        "rememberMe": "Remember me"
+        "submit": "Đăng nhập",
+        "forgotPassword": "Quên mật khẩu?",
+        "noAccount": "Chưa có tài khoản?",
+        "rememberMe": "Giữ tôi được đăng nhập"
       }
     },
     "forgotPassword": {
-      "title": "Forgot your password?",
+      "title": "Quên mật khẩu?",
       "fields": {
         "email": "Email"
       },
       "errors": {
-        "validEmail": "Invalid email address"
+        "validEmail": "Địa chỉ email không chính xác"
       },
       "buttons": {
-        "submit": "Send reset instructions"
+        "submit": "Gửi hướng dẫn đật lại password"
       }
     },
     "register": {
-      "title": "Sign up for your account",
+      "title": "Tạo tài khoản",
       "fields": {
         "email": "Email",
-        "password": "Password"
+        "password": "Mật Khẩu"
       },
       "errors": {
-        "validEmail": "Invalid email address"
+        "validEmail": "Địa chỉ email không chính xác"
       },
       "buttons": {
-        "submit": "Register",
-        "haveAccount": "Have an account?"
+        "submit": "Đăng ký",
+        "haveAccount": "Đã có tài khoản?"
       }
     },
     "updatePassword": {
-      "title": "Update password",
+      "title": "Đổi mật khẩu",
       "fields": {
-        "password": "New Password",
-        "confirmPassword": "Confirm new password"
+        "password": "Mật khẩu mới",
+        "confirmPassword": "Xác nhận mật khẩu"
       },
       "errors": {
-        "confirmPasswordNotMatch": "Passwords do not match"
+        "confirmPasswordNotMatch": "Mật khẩu không khớp"
       },
       "buttons": {
-        "submit": "Update"
+        "submit": "Cập nhật"
       }
     },
     "error": {
@@ -66,23 +66,23 @@
     }
   },
   "actions": {
-    "list": "List",
+    "list": "Danh sách",
     "create": "Create",
     "edit": "Edit",
-    "show": "Show"
+    "show": "Thông tin chi tiết"
   },
   "buttons": {
     "create": "Create",
     "save": "Save",
-    "logout": "Logout",
+    "logout": "Đăng xuất",
     "delete": "Delete",
     "edit": "Edit",
     "cancel": "Cancel",
     "confirm": "Are you sure?",
     "filter": "Filter",
     "clear": "Clear",
-    "refresh": "Refresh",
-    "show": "View Details",
+    "refresh": "Làm mới",
+    "show": "Xem chi tiết",
     "undo": "Undo",
     "import": "Import",
     "clone": "Clone",
@@ -101,7 +101,7 @@
     "editError": "Error when editing {{resource}} (status code: {{statusCode}})",
     "importProgress": "Importing: {{processed}}/{{total}}"
   },
-  "loading": "Loading",
+  "loading": "Đang tải",
   "tags": {
     "clone": "Clone"
   },
@@ -109,48 +109,21 @@
     "title": "Dashboard"
   },
   "trainers": {
-    "trainers": "Trainers",
+    "trainers": "Huấn luyện viên",
     "fields": {
       "id": "Id",
-      "name": "Name",
-      "first_name": "First Name",
-      "last_name": "Last Name",
-      "location": "Location",
-      "about": "About",
-      "createdAt": "Created At"
+      "name": "Username",
+      "first_name": "Tên",
+      "last_name": "Họ",
+      "location": "Địa điểm",
+      "about": "Giới thiệu bản thân",
+      "createdAt": "Được tạo vào"
     },
     "titles": {
       "create": "Create Trainer",
       "edit": "Edit Trainer",
       "list": "Trainers",
-      "show": "Show Trainer"
-    }
-  },
-  "posts": {
-    "posts": "Posts",
-    "fields": {
-      "id": "Id",
-      "title": "Title",
-      "category": {
-        "title": "Category",
-        "filter": {
-          "placeholder": "Select Category"
-        }
-      },
-      "status": {
-        "title": "Status",
-        "published": "Published",
-        "draft": "Draft",
-        "rejected": "Rejected"
-      },
-      "content": "Content",
-      "createdAt": "Created At"
-    },
-    "titles": {
-      "create": "Create Post",
-      "edit": "Edit Post",
-      "list": "Posts",
-      "show": "Show Post"
+      "show": "Thông Tin Huấn Luyện Viên"
     }
   },
   "table": {

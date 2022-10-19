@@ -18,5 +18,6 @@ export interface ITrainer {
   last_name: string;
   location: string;
   about: string;
+  avatar: string;
   created_at: string;
 }

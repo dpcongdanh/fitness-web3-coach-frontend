@@ -5,6 +5,7 @@ import {
   CardContent,
   CardMedia,
   Button,
+  ShowButton,
   Typography,
 } from "@pankod/refine-mui";
 import { ITrainer } from "interfaces";
@@ -15,12 +16,15 @@ export type DataProps = {
 
 export const TrainerCard: React.FC<DataProps> = ({ data }) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+    // sx={{ maxWidth: 320 }}
+    >
       <CardMedia
         component="img"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
+        height="240"
+        // image="https://www.dropbox.com/s/a36t7juz7rl0sqm/binhthanhmai-1665188876521.jpg?raw=1"
+        image={data?.avatar}
+        alt="avatar"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -31,8 +35,9 @@ export const TrainerCard: React.FC<DataProps> = ({ data }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        {/* <Button size="small">View Details</Button> */}
+        <ShowButton size="small" recordItemId={data?.id} />
+        {/* <Button size="small">Learn More</Button> */}
       </CardActions>
     </Card>
   );
