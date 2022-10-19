@@ -19,5 +19,13 @@ export interface ITrainer {
   location: string;
   about: string;
   avatar: string;
+  services: number[];
+  created_at: string;
+}
+
+export interface IService {
+  id: number;
+  name: string;
+  description: string;
   created_at: string;
 }

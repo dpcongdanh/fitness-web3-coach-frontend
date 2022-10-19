@@ -124,7 +124,12 @@
       "edit": "Edit Trainer",
       "list": "Trainers",
       "show": "Thông Tin Huấn Luyện Viên"
-    }
+    },
+    "services": "Dịch vụ",
+    "certification": "Chứng chỉ",
+    "image_gallery": "Thư viện ảnh",
+    "main_products": "Sản phẩm chủ lực",
+    "posts": "Bài đăng"
   },
   "table": {
     "actions": "Actions"
