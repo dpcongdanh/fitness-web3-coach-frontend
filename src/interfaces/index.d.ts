@@ -29,3 +29,22 @@ export interface IService {
   description: string;
   created_at: string;
 }
+
+export interface IGallery {
+  id: number;
+  user_id: number;
+  image: string;
+  title: string;
+  created_at: string;
+}
+
+export interface IProduct {
+  id: number;
+  user_id: number;
+  name: string;
+  description: string[];
+  image: string;
+  plan: string;
+  price: string;
+  created_at: string;
+}
