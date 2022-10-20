@@ -21,6 +21,8 @@ import authProvider from "./authProvider";
 
 import { TrainerList, TrainerShow, PostCreate, PostEdit } from "pages/trainers";
 
+import { CalendarList } from "pages/calendar";
+
 function App() {
   const { t, i18n } = useTranslation();
 
@@ -81,6 +83,13 @@ function App() {
               name: "trainers",
               list: TrainerList,
               show: TrainerShow,
+              // create: PostCreate,
+              // edit: PostEdit,
+            },
+            {
+              name: "calendar",
+              list: CalendarList,
+              // show: TrainerShow,
               // create: PostCreate,
               // edit: PostEdit,
             },
