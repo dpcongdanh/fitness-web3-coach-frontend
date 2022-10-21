@@ -16,17 +16,15 @@ import {
   Grid,
 } from "@pankod/refine-mui";
 
-import { ITrainer } from "interfaces";
+import { IPost } from "interfaces";
 
-import { TrainerCard } from "../../components/trainer-card";
+import { PostCard } from "../../components/post-card";
 
-export const TrainerList: React.FC = () => {
+export const PostList: React.FC = () => {
   // const t = useTranslate();
 
-  // const { dataGridProps } = useDataGrid<ITrainer>();
-
-  const trainerListQueryResult = useList<ITrainer>({
-    resource: "trainers",
+  const postListQueryResult = useList<IPost>({
+    resource: "posts",
     config: {
       pagination: { current: 1, pageSize: 10 },
     },
@@ -118,10 +116,6 @@ export const TrainerList: React.FC = () => {
   //   [t]
   // );
 
-  console.log(trainerListQueryResult);
-
-  console.log(trainerListQueryResult.data);
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid
@@ -129,15 +123,14 @@ export const TrainerList: React.FC = () => {
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
       >
-        {!trainerListQueryResult.isLoading &&
-          trainerListQueryResult.data !== undefined &&
-          trainerListQueryResult.data.data.map((row, index) => (
+        {!postListQueryResult.isLoading &&
+          postListQueryResult.data !== undefined &&
+          postListQueryResult.data.data.map((row, index) => (
             <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
-              <TrainerCard data={row}></TrainerCard>
+              <PostCard data={row}></PostCard>
             </Grid>
           ))}
       </Grid>
-      {/* <DataGrid {...dataGridProps} columns={columns} autoHeight /> */}
     </Box>
   );
 };

@@ -19,9 +19,11 @@ import { supabaseClient } from "utility";
 import { Title, Sider, Layout, Header } from "components/layout";
 import authProvider from "./authProvider";
 
-import { TrainerList, TrainerShow, PostCreate, PostEdit } from "pages/trainers";
+import { TrainerList, TrainerShow } from "pages/trainers";
 
 import { CalendarList } from "pages/calendar";
+
+import { PostList, PostShow } from "pages/posts";
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -90,6 +92,13 @@ function App() {
               name: "calendar",
               list: CalendarList,
               // show: TrainerShow,
+              // create: PostCreate,
+              // edit: PostEdit,
+            },
+            {
+              name: "posts",
+              list: PostList,
+              show: PostShow,
               // create: PostCreate,
               // edit: PostEdit,
             },

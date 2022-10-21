@@ -155,7 +155,8 @@
       "create": "Create Post",
       "edit": "Edit Post",
       "list": "Posts",
-      "show": "Show Post"
+      "show": "Show Post",
+      "latest_posts": "Latest Posts"
     }
   },
   "table": {

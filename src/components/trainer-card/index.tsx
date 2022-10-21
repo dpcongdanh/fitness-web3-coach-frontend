@@ -11,7 +11,7 @@ import {
 import { ITrainer } from "interfaces";
 
 export type DataProps = {
-  data: ITrainer | undefined;
+  data?: ITrainer;
 };
 
 export const TrainerCard: React.FC<DataProps> = ({ data }) => {

@@ -20,13 +20,16 @@ import {
   MuiList,
   ImageList,
   ImageListItem,
+  Grid,
 } from "@pankod/refine-mui";
 
 import { FitnessCenter } from "@mui/icons-material";
 
-import { ITrainer, IService, IGallery, IProduct } from "interfaces";
+import { ITrainer, IService, IGallery, IProduct, IPost } from "interfaces";
 
 import { ProductCard } from "../../components/product-card";
+
+import { PostCard } from "../../components/post-card";
 
 export const TrainerShow: React.FC = () => {
   const t = useTranslate();
@@ -69,6 +72,19 @@ export const TrainerShow: React.FC = () => {
 
   const { data: productData, isLoading: productLoading } = useList<IProduct>({
     resource: "products",
+    config: {
+      filters: [
+        {
+          field: "user_id",
+          operator: "eq",
+          value: record?.id || null,
+        },
+      ],
+    },
+  });
+
+  const { data: postsData, isLoading: postsLoading } = useList<IPost>({
+    resource: "posts",
     config: {
       filters: [
         {
@@ -197,6 +213,19 @@ export const TrainerShow: React.FC = () => {
         <Typography variant="h4" fontWeight="bold">
           {t("trainers.posts")}
         </Typography>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
+        >
+          {!postsLoading &&
+            postsData !== undefined &&
+            postsData.data.map((row, index) => (
+              <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
+                <PostCard data={row}></PostCard>
+              </Grid>
+            ))}
+        </Grid>
       </Stack>
     </Show>
   );
