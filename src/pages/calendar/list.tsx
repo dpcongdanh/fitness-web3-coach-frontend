@@ -5,6 +5,14 @@ import {
   useList,
 } from "@pankod/refine-core";
 import { gapi } from "gapi-script";
+// import { Calendar, momentLocalizer } from "react-big-calendar";
+// import { Calendar } from '@fullcalendar/core';
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import listPlugin from "@fullcalendar/list";
+// import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import {
   // useDataGrid,
   // DataGrid,
@@ -24,6 +32,8 @@ const calendarID = process.env.REACT_APP_CALENDAR_ID;
 const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
 const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
 
+// const localizer = momentLocalizer(moment);
+
 export const CalendarList: React.FC = () => {
   const [events, setEvents]: any = useState([]);
 
@@ -35,7 +45,11 @@ export const CalendarList: React.FC = () => {
         })
         .then(function () {
           return gapi.client.request({
-            path: `https://www.googleapis.com/calendar/v3/calendars/${calendarID}/events`,
+            path: `https://www.googleapis.com/calendar/v3/calendars/${calendarID}`,
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
           });
         })
 
@@ -69,6 +83,25 @@ export const CalendarList: React.FC = () => {
         frameBorder={0}
         scrolling="no"
       ></iframe>
+      {/* <Calendar
+        localizer={localizer}
+        // events={myEventsList}
+        startAccessor="start"
+        endAccessor="end"
+        style={{ height: 500 }}
+      /> */}
+      <FullCalendar
+        // plugins={[dayGridPlugin]}
+        // initialView="dayGridMonth"
+        plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+        initialView="dayGridMonth"
+        headerToolbar={{
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
+        }}
+        // events={events}
+      />
       <MuiList>
         {events !== undefined &&
           events.map((event: any) => (
