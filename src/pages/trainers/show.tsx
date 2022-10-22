@@ -21,11 +21,19 @@ import {
   ImageList,
   ImageListItem,
   Grid,
+  Box,
 } from "@pankod/refine-mui";
 
 import { FitnessCenter } from "@mui/icons-material";
 
-import { ITrainer, IService, IGallery, IProduct, IPost } from "interfaces";
+import {
+  ITrainer,
+  ICertification,
+  IService,
+  IGallery,
+  IProduct,
+  IPost,
+} from "interfaces";
 
 import { ProductCard } from "../../components/product-card";
 
@@ -56,6 +64,16 @@ export const TrainerShow: React.FC = () => {
       enabled: record !== undefined ? record?.services.length > 0 : false,
     },
   });
+
+  const { data: certificationsData, isLoading: certificationsLoading } =
+    useMany<ICertification>({
+      resource: "certificates",
+      ids: record?.certifications || [],
+      queryOptions: {
+        enabled:
+          record !== undefined ? record?.certifications.length > 0 : false,
+      },
+    });
 
   console.log(servicesData);
 
@@ -178,6 +196,37 @@ export const TrainerShow: React.FC = () => {
           <Typography variant="h4" fontWeight="bold">
             {t("trainers.certification")}
           </Typography>
+          <Stack>
+            <Grid
+              container
+              spacing={{ xs: 2, md: 3 }}
+              columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
+            >
+              {!certificationsLoading &&
+                certificationsData !== undefined &&
+                certificationsData.data.map((row, index) => (
+                  <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        width: "fit-content",
+                        color: "text.secondary",
+                      }}
+                      gap={1}
+                    >
+                      <Avatar
+                        src={
+                          row?.image ||
+                          "https://mhxuwblyckkausnppiws.supabase.co/storage/v1/object/sign/certificates/generic/Certification.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJjZXJ0aWZpY2F0ZXMvZ2VuZXJpYy9DZXJ0aWZpY2F0aW9uLnBuZyIsImlhdCI6MTY2NjQ0NzcyNywiZXhwIjoxOTgxODA3NzI3fQ.PIbh5UD83atwxItAW2J_NO97dFHafLcUuE6elzSeQg4"
+                        }
+                      />
+                      <Typography variant="body2">{row?.name}</Typography>
+                    </Box>
+                  </Grid>
+                ))}
+            </Grid>
+          </Stack>
         </Stack>
       </Stack>
       <Stack gap={1} justifyContent="center" alignItems="center">

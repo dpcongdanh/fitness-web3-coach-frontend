@@ -1,3 +1,5 @@
+import { StringIfPlural } from "react-i18next";
+
 export interface ICategory {
   id: number;
   title: string;
@@ -25,6 +27,14 @@ export interface ITrainer {
   avatar: string;
   services: number[];
   video: string;
+  certifications: number[];
+  created_at: string;
+}
+
+export interface ICertification {
+  id: number;
+  name: string;
+  image: string;
   created_at: string;
 }
 
