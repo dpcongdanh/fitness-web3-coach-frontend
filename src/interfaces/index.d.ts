@@ -24,6 +24,7 @@ export interface ITrainer {
   about: string;
   avatar: string;
   services: number[];
+  video: string;
   created_at: string;
 }
 

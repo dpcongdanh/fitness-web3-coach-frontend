@@ -31,6 +31,8 @@ import { ProductCard } from "../../components/product-card";
 
 import { PostCard } from "../../components/post-card";
 
+import { VideoDialog } from "../../components/video-dialog";
+
 export const TrainerShow: React.FC = () => {
   const t = useTranslate();
 
@@ -112,11 +114,18 @@ export const TrainerShow: React.FC = () => {
         direction={{ sm: "column", md: "row" }}
         spacing={{ xs: 1, sm: 2, md: 4 }}
       >
-        <Avatar
-          alt={record?.username}
-          src={record?.avatar}
-          sx={{ width: 192, height: 192 }}
-        />
+        <Stack gap={1}>
+          <Avatar
+            alt={record?.username}
+            src={record?.avatar}
+            sx={{ width: 192, height: 192 }}
+          />
+          <VideoDialog
+            buttonText="Why train with me?"
+            dialogTitle="Trainer's Introduction Video"
+            videoLink={record?.video}
+          />
+        </Stack>
         <Stack gap={1}>
           <Typography variant="body1" fontWeight="bold">
             {t("trainers.fields.name")}
