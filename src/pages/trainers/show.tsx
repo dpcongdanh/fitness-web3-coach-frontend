@@ -22,6 +22,7 @@ import {
   ImageListItem,
   Grid,
   Box,
+  CircularProgress,
 } from "@pankod/refine-mui";
 
 import { FitnessCenter } from "@mui/icons-material";
@@ -126,7 +127,20 @@ export const TrainerShow: React.FC = () => {
   //   },
   // });
 
-  return (
+  return isLoading ? (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        height: "calc(100vh - 112px)",
+      }}
+    >
+      <CircularProgress />
+      <Typography>Loading Trainer Information</Typography>
+    </Box>
+  ) : (
     <Show isLoading={isLoading}>
       <Stack
         direction={{ sm: "column", md: "row" }}
