@@ -110,6 +110,8 @@
   },
   "trainers": {
     "trainers": "Trainers",
+    "loading": "Loading Trainers",
+    "show_loading": "Loading Trainer's information",
     "fields": {
       "id": "Id",
       "name": "Name",
@@ -133,6 +135,8 @@
   },
   "posts": {
     "posts": "Posts",
+    "loading": "Loading Posts",
+    "show_loading": "Loading Post",
     "fields": {
       "id": "Id",
       "title": "Title",

@@ -110,6 +110,8 @@
   },
   "trainers": {
     "trainers": "Huấn luyện viên",
+    "loading": "Đang tải danh sách huấn luyện viên",
+    "show_loading": "Đang tải thông tin huấn luyện viên",
     "fields": {
       "id": "Id",
       "name": "Username",
@@ -130,6 +132,36 @@
     "image_gallery": "Thư viện ảnh",
     "subscriptions": "Subscriptions",
     "posts": "Bài đăng"
+  },
+  "posts": {
+    "posts": "Các bài Đăng",
+    "loading": "Đang tải danh sách các bài đăng",
+    "show_loading": "Đang tải bài đăng",
+    "fields": {
+      "id": "Id",
+      "title": "Tiêu đề",
+      "category": {
+        "title": "Category",
+        "filter": {
+          "placeholder": "Select Category"
+        }
+      },
+      "status": {
+        "title": "Trạng thái",
+        "published": "Published",
+        "draft": "Draft",
+        "rejected": "Rejected"
+      },
+      "content": "Nội dung",
+      "createdAt": "Created At"
+    },
+    "titles": {
+      "create": "Create Post",
+      "edit": "Edit Post",
+      "list": "Các bài đăng",
+      "show": "Bài đăng",
+      "latest_posts": "Bài mới nhất"
+    }
   },
   "table": {
     "actions": "Actions"

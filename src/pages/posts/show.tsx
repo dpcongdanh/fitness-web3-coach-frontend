@@ -25,6 +25,7 @@ import {
   Box,
   Divider,
   border,
+  CircularProgress,
 } from "@pankod/refine-mui";
 
 import { FitnessCenter } from "@mui/icons-material";
@@ -110,7 +111,20 @@ export const PostShow: React.FC = () => {
   //   },
   // });
 
-  return (
+  return isLoading || trainerLoading ? (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        height: "calc(100vh - 112px)",
+      }}
+    >
+      <CircularProgress />
+      <Typography>{t("posts.show_loading")}</Typography>
+    </Box>
+  ) : (
     <Container>
       <Show isLoading={isLoading}>
         <Stack

@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  // useTranslate,
+  useTranslate,
   // useMany,
   useList,
 } from "@pankod/refine-core";
@@ -23,7 +23,7 @@ import { ITrainer } from "interfaces";
 import { TrainerCard } from "../../components/trainer-card";
 
 export const TrainerList: React.FC = () => {
-  // const t = useTranslate();
+  const t = useTranslate();
 
   // const { dataGridProps } = useDataGrid<ITrainer>();
 
@@ -51,7 +51,7 @@ export const TrainerList: React.FC = () => {
           }}
         >
           <CircularProgress />
-          <Typography>Loading Trainers</Typography>
+          <Typography>{t("trainers.loading")}</Typography>
         </Box>
       ) : trainerListQueryResult.data !== undefined &&
         trainerListQueryResult.data.total > 0 ? (

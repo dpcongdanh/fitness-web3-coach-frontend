@@ -127,7 +127,13 @@ export const TrainerShow: React.FC = () => {
   //   },
   // });
 
-  return isLoading ? (
+  return isLoading ||
+    servicesLoading ||
+    certificationsLoading ||
+    certificationsLoading ||
+    galleryLoading ||
+    productLoading ||
+    postsLoading ? (
     <Box
       sx={{
         display: "flex",
@@ -138,7 +144,7 @@ export const TrainerShow: React.FC = () => {
       }}
     >
       <CircularProgress />
-      <Typography>Loading Trainer Information</Typography>
+      <Typography>{t("trainers.show_loading")}</Typography>
     </Box>
   ) : (
     <Show isLoading={isLoading}>
