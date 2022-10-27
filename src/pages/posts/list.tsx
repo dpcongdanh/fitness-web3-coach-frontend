@@ -176,9 +176,6 @@ export const PostList: React.FC = () => {
                   {row.first_name + " " + row.last_name}
                 </MenuItem>
               ))}
-            {/* <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem> */}
           </Select>
         </FormControl>
 

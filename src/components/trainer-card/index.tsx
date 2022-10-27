@@ -7,8 +7,13 @@ import {
   Button,
   ShowButton,
   Typography,
+  TagField,
 } from "@pankod/refine-mui";
+
+import { LocationOn } from "@mui/icons-material";
 import { ITrainer } from "interfaces";
+
+import countryListAllIsoData from "components/countriesList";
 
 export type DataProps = {
   data?: ITrainer;
@@ -31,11 +36,17 @@ export const TrainerCard: React.FC<DataProps> = ({ data }) => {
           {data?.first_name + " " + data?.last_name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {data?.location}
+          <LocationOn sx={{ verticalAlign: "middle" }} />
+          <TagField
+            value={
+              countryListAllIsoData.find(
+                (country) => country.code3 === data?.location
+              )?.name
+            }
+          />
         </Typography>
       </CardContent>
       <CardActions>
-        {/* <Button size="small">View Details</Button> */}
         <ShowButton size="small" recordItemId={data?.id} />
         {/* <Button size="small">Learn More</Button> */}
       </CardActions>

@@ -22,13 +22,20 @@ import {
   Paper,
   InputBase,
   Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
 } from "@pankod/refine-mui";
 
 import { Search } from "@mui/icons-material";
 
-import { ITrainer } from "interfaces";
+import { IService, ITrainer } from "interfaces";
 
 import { TrainerCard } from "../../components/trainer-card";
+
+import countryListAllIsoData from "components/countriesList";
 
 export const TrainerList: React.FC = () => {
   const t = useTranslate();
@@ -38,6 +45,10 @@ export const TrainerList: React.FC = () => {
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   const [search, setSearch] = useState<string>("");
+
+  const [selectServices, setSelectServices] = useState<number[]>([]);
+
+  const [selectCountries, setSelectCountries] = useState<number[]>([]);
   // const [trainerListQueryResult, setTrainerListQueryResult] = useState<
   //   QueryObserverResult<GetListResponse<ITrainer>, HttpError>
   // >([]);
@@ -79,27 +90,90 @@ export const TrainerList: React.FC = () => {
     },
   });
 
+  // const { refetch: refetchTrainersWithService } = useList<ITrainer>({
+  //   resource: "trainers",
+  //   config: {
+  //     filters: [
+  //       { field: "first_name", operator: "contains", value: search },
+  //       // { field: "services", operator: "nbetween", value: 3 },
+  //     ],
+  //   },
+  //   queryOptions: {
+  //     enabled: false,
+  //     onSuccess: (data) => {
+  //       setIsLoading(false);
+  //       if (data.total > 0) {
+  //         setTrainerListResponse(data);
+  //       }
+  //     },
+  //   },
+  // });
+
+  // const servicesListQueryResult = useList<IService>({
+  //   resource: "services",
+  // });
+
+  const { refetch: refetchTrainersWithCountries } = useList<ITrainer>({
+    resource: "trainers",
+    config: {
+      filters: [
+        { field: "first_name", operator: "contains", value: search },
+        { field: "location", operator: "in", value: selectCountries },
+      ],
+    },
+    queryOptions: {
+      enabled: false,
+      onSuccess: (data) => {
+        setIsLoading(false);
+        if (data.total > 0) {
+          setTrainerListResponse(data);
+        }
+      },
+    },
+  });
+
+  const servicesListQueryResult = useList<IService>({
+    resource: "services",
+  });
+
   console.log(trainerListResponse);
 
   // console.log(trainerListQueryResult);
 
   // console.log(trainerListQueryResult.data);
 
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   setTrainerListResponse(undefined);
+  //   refetchTrainers();
+  // }, [refetchTrainers, search]);
+
   useEffect(() => {
+    console.log(selectServices);
     setIsLoading(true);
     setTrainerListResponse(undefined);
-    refetchTrainers();
-  }, [refetchTrainers, search]);
+    if (selectCountries !== undefined && selectCountries.length !== 0)
+      refetchTrainersWithCountries();
+    // if (selectServices !== undefined && selectServices.length !== 0)
+    //   refetchTrainersWithService();
+    else refetchTrainers();
+  }, [
+    refetchTrainers,
+    refetchTrainersWithCountries,
+    search,
+    selectServices,
+    selectCountries,
+  ]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Paper
         component="form"
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 400 }}
+        sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 960 }}
       >
-        {/* <IconButton sx={{ p: '10px' }} aria-label="menu">
-        <MenuIcon />
-      </IconButton> */}
+        <IconButton disabled type="button" sx={{ p: "10px" }} aria-label="menu">
+          <Search />
+        </IconButton>
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search Trainers"
@@ -111,17 +185,6 @@ export const TrainerList: React.FC = () => {
           }}
           inputProps={{ "aria-label": "search trainers" }}
         />
-        <IconButton
-          type="button"
-          sx={{ p: "10px" }}
-          aria-label="search"
-          onClick={(event: any) => {
-            console.log(event);
-          }}
-        >
-          <Search />
-        </IconButton>
-        {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" /> */}
         <Divider
           sx={{
             color: "text.secondary",
@@ -133,6 +196,89 @@ export const TrainerList: React.FC = () => {
         {/* <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
         <DirectionsIcon />
       </IconButton> */}
+        <FormControl sx={{ minWidth: 320 }}>
+          <InputLabel>Select Services</InputLabel>
+          <Select
+            sx={{ ml: 1, flex: 1 }}
+            multiple
+            variant="standard"
+            value={selectServices}
+            onChange={(
+              event: SelectChangeEvent<number[]>,
+              child: React.ReactNode
+            ) => {
+              setSelectServices(event.target.value as number[]);
+            }}
+            // onChange={(
+            //   event: SelectChangeEvent<number>,
+            //   child: React.ReactNode
+            // ) => {
+            //   setSelectServices(event.target.value);
+            // }}
+            // label="Select Author"
+          >
+            {servicesListQueryResult.data !== undefined &&
+              servicesListQueryResult.data.total > 0 &&
+              servicesListQueryResult.data.data.map((row, index) => (
+                <MenuItem key={row.id} value={row.id}>
+                  {row.name}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+        <Divider
+          sx={{
+            color: "text.secondary",
+            borderColor: "text.secondary",
+          }}
+          orientation="vertical"
+          flexItem
+        />
+        <FormControl sx={{ minWidth: 320 }}>
+          <InputLabel>Select Country</InputLabel>
+          <Select
+            sx={{ ml: 1, flex: 1 }}
+            multiple
+            variant="standard"
+            value={selectCountries}
+            onChange={(
+              event: SelectChangeEvent<number[]>,
+              child: React.ReactNode
+            ) => {
+              setSelectCountries(event.target.value as number[]);
+            }}
+          >
+            {countryListAllIsoData.map((row, index) => (
+              <MenuItem key={row.code} value={row.code3}>
+                {row.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {/* <FormControl sx={{ minWidth: 320 }}>
+          <InputLabel>Select Location</InputLabel>
+          <Select
+            sx={{ ml: 1, flex: 1 }}
+            variant="standard"
+            value={selectService}
+            onChange={(
+              event: SelectChangeEvent<number>,
+              child: React.ReactNode
+            ) => {
+              setSelectService(event.target.value);
+            }}
+            // label="Select Author"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {servicesListQueryResult.data !== undefined &&
+              servicesListQueryResult.data.total > 0 &&
+              servicesListQueryResult.data.data.map((row, index) => (
+                <MenuItem value={row.id}>{row.name}</MenuItem>
+              ))}
+          </Select>
+        </FormControl> */}
       </Paper>
       {isLoading ? (
         <Box

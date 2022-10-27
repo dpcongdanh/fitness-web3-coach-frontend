@@ -165,13 +165,15 @@ export const PostShow: React.FC = () => {
               </Typography>
             </Box>
             <Box sx={{ width: "100%" }}>
-              <img
-                src={`${record?.cover}`}
-                srcSet={`${record?.cover}`}
-                alt={record?.title}
-                style={{ width: "inherit", height: "inherit" }}
-                loading="lazy"
-              />
+              {record?.cover !== "" && record?.cover !== null && (
+                <img
+                  src={`${record?.cover}`}
+                  srcSet={`${record?.cover}`}
+                  alt={record?.title}
+                  style={{ width: "inherit", height: "inherit" }}
+                  loading="lazy"
+                />
+              )}
             </Box>
             <Typography variant="body2">{parse(record?.body || "")}</Typography>
           </Stack>
