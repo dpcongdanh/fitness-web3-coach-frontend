@@ -160,7 +160,9 @@ export const PostShow: React.FC = () => {
               />
               <Typography variant="body2">
                 {!trainerLoading && trainerData !== undefined
-                  ? trainerData.data.created_at
+                  ? new Date(
+                      Date.parse(trainerData.data.created_at)
+                    ).toLocaleString()
                   : "loading"}
               </Typography>
             </Box>

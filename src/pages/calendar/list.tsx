@@ -41,16 +41,13 @@ export const CalendarList: React.FC = () => {
   //       .then(function () {
   //         return gapi.client.request({
   //           path: `https://www.googleapis.com/calendar/v3/calendars/${calendarID}/events`,
-  //           // headers: {
-  //           //   "Content-type": "application/json",
-  //           //   Authorization: `Bearer ${accessToken}`,
-  //           // },
   //         });
   //       })
 
   //       .then(
   //         (response: any) => {
   //           let events = response.result.items;
+  //           setEvents(events);
   //           return events;
   //         },
   //         function (err: any) {
@@ -64,7 +61,7 @@ export const CalendarList: React.FC = () => {
 
   // useEffect(() => {
   //   const events = getEvents(calendarID, apiKey);
-  //   setEvents(events);
+  //   console.log(events);
   // }, []);
 
   return (
@@ -84,13 +81,14 @@ export const CalendarList: React.FC = () => {
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
         }}
+        // events={events}
         events={{
           googleCalendarId: calendarID,
           className: "gcal-event",
         }}
         eventClick={(info) => {
           info.jsEvent.preventDefault();
-          console.log(info);
+          console.log(info.event.toJSON());
         }}
       />
     </List>

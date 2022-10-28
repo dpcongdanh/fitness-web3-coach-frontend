@@ -9,7 +9,7 @@ import {
   // useDataGrid,
   // DataGrid,
   // GridColumns,
-  // List,
+  List,
   Box,
   // Stack,
   // EditButton,
@@ -106,7 +106,13 @@ export const PostList: React.FC = () => {
     <Box sx={{ flexGrow: 1 }}>
       <Paper
         component="form"
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 640 }}
+        sx={{
+          p: "2px 4px",
+          marginBottom: "10px",
+          display: "flex",
+          alignItems: "center",
+          width: 640,
+        }}
       >
         <IconButton disabled type="button" sx={{ p: "10px" }} aria-label="menu">
           <Search />
@@ -183,46 +189,48 @@ export const PostList: React.FC = () => {
         <DirectionsIcon />
       </IconButton> */}
       </Paper>
-      {isLoading ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            height: "calc(100vh - 112px)",
-          }}
-        >
-          <CircularProgress />
-          <Typography>{t("posts.loading")}</Typography>
-        </Box>
-      ) : postsListResponse !== undefined && postsListResponse.total > 0 ? (
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
-        >
-          {postsListResponse.data.map((row, index) => (
-            <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
-              <PostCard data={row}></PostCard>
-            </Grid>
-          ))}
-        </Grid>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "calc(100vh - 112px)",
-          }}
-        >
-          No Posts Found
-        </Box>
-        // <Box sx={{ display: "flex", lineHeight: "calc(100vh - 112px)" }}>
-        //   No Doctors Found
-        // </Box>
-      )}
+      <List wrapperProps={{ sx: { minHeight: "calc(100vh - 230px)" } }}>
+        {isLoading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              height: "calc(100vh - 112px)",
+            }}
+          >
+            <CircularProgress />
+            <Typography>{t("posts.loading")}</Typography>
+          </Box>
+        ) : postsListResponse !== undefined && postsListResponse.total > 0 ? (
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
+          >
+            {postsListResponse.data.map((row, index) => (
+              <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
+                <PostCard data={row}></PostCard>
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "calc(100vh - 112px)",
+            }}
+          >
+            No Posts Found
+          </Box>
+          // <Box sx={{ display: "flex", lineHeight: "calc(100vh - 112px)" }}>
+          //   No Doctors Found
+          // </Box>
+        )}
+      </List>
     </Box>
   );
 };

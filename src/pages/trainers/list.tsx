@@ -27,6 +27,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  width,
 } from "@pankod/refine-mui";
 
 import { Search } from "@mui/icons-material";
@@ -169,7 +170,13 @@ export const TrainerList: React.FC = () => {
     <Box sx={{ flexGrow: 1 }}>
       <Paper
         component="form"
-        sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 960 }}
+        sx={{
+          p: "2px 4px",
+          marginBottom: "10px",
+          display: "flex",
+          alignItems: "center",
+          width: 960,
+        }}
       >
         <IconButton disabled type="button" sx={{ p: "10px" }} aria-label="menu">
           <Search />
@@ -280,43 +287,46 @@ export const TrainerList: React.FC = () => {
           </Select>
         </FormControl> */}
       </Paper>
-      {isLoading ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            height: "calc(100vh - 112px)",
-          }}
-        >
-          <CircularProgress />
-          <Typography>{t("trainers.loading")}</Typography>
-        </Box>
-      ) : trainerListResponse !== undefined && trainerListResponse.total > 0 ? (
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
-        >
-          {trainerListResponse.data.map((row, index) => (
-            <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
-              <TrainerCard data={row}></TrainerCard>
-            </Grid>
-          ))}
-        </Grid>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "calc(100vh - 112px)",
-          }}
-        >
-          No Trainers Found
-        </Box>
-      )}
+      <List wrapperProps={{ sx: { minHeight: "calc(100vh - 230px)" } }}>
+        {isLoading ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              height: "calc(100vh - (340px))",
+            }}
+          >
+            <CircularProgress />
+            <Typography>{t("trainers.loading")}</Typography>
+          </Box>
+        ) : trainerListResponse !== undefined &&
+          trainerListResponse.total > 0 ? (
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
+          >
+            {trainerListResponse.data.map((row, index) => (
+              <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
+                <TrainerCard data={row}></TrainerCard>
+              </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "calc(100vh - 112px)",
+            }}
+          >
+            No Trainers Found
+          </Box>
+        )}
+      </List>
     </Box>
   );
 

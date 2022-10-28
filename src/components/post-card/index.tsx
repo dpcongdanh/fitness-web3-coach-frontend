@@ -83,9 +83,9 @@ export const PostCard: React.FC<DataProps> = ({ data }) => {
               flexItem
             />
             <Typography variant="subtitle2" color="text.secondary">
-              {!trainerLoading && trainerData !== undefined
-                ? trainerData.data.created_at
-                : "loading"}
+              {data !== undefined
+                ? new Date(Date.parse(data.created_at)).toLocaleString()
+                : "Loading"}
             </Typography>
           </Box>
         )}

@@ -13,7 +13,7 @@ export interface IPost {
   cover: string;
   body: string;
   // status: "published" | "draft" | "rejected";
-  createdAt: string;
+  created_at: string;
   // category: { id: number };
 }
 
