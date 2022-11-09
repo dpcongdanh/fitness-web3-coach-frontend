@@ -21,20 +21,23 @@ import {
   ImageList,
   ImageListItem,
   Grid,
+  Paper,
   Container,
   Box,
   Divider,
-  border,
+  // border,
   CircularProgress,
 } from "@pankod/refine-mui";
 
-import { FitnessCenter } from "@mui/icons-material";
+// import { FitnessCenter } from "@mui/icons-material";
 
-import { ITrainer, IService, IGallery, IProduct, IPost } from "interfaces";
+import { ITrainer, IPost, IComment } from "interfaces";
 
-import { ProductCard } from "../../components/product-card";
+// import { ProductCard } from "../../components/product-card";
 
 import { PostCard } from "../../components/post-card";
+
+import { CommentBox } from "components/comment-box";
 
 export const PostShow: React.FC = () => {
   const t = useTranslate();
@@ -49,6 +52,22 @@ export const PostShow: React.FC = () => {
     id: record?.user_id || "",
     queryOptions: {
       enabled: !!record?.user_id,
+    },
+  });
+
+  const { data: commentsData, isLoading: commentsLoading } = useList<IComment>({
+    resource: "post_comments",
+    config: {
+      filters: [
+        {
+          field: "post_id",
+          operator: "eq",
+          value: record?.id,
+        },
+      ],
+    },
+    queryOptions: {
+      enabled: !!record?.id,
     },
   });
 
@@ -178,6 +197,10 @@ export const PostShow: React.FC = () => {
               )}
             </Box>
             <Typography variant="body2">{parse(record?.body || "")}</Typography>
+            <Paper>
+              {/* <Typography variant="h5">{t("posts.fields.comments")}</Typography> */}
+              <CommentBox data={commentsData?.data} loading={commentsLoading} />
+            </Paper>
           </Stack>
           <Stack gap={1} sx={{ width: "500px" }}>
             <Typography variant="h6" fontWeight="bold">

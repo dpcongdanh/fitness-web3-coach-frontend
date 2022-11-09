@@ -153,6 +153,7 @@
         "rejected": "Rejected"
       },
       "content": "Content",
+      "comments": "Comments",
       "createdAt": "Created At"
     },
     "titles": {

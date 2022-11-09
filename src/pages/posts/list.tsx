@@ -197,7 +197,7 @@ export const PostList: React.FC = () => {
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
-              height: "calc(100vh - 112px)",
+              height: "calc(100vh - 340px)",
             }}
           >
             <CircularProgress />

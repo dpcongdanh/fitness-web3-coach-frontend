@@ -17,6 +17,14 @@ export interface IPost {
   // category: { id: number };
 }
 
+export interface IComment {
+  id: number;
+  email: string;
+  post_id: string;
+  body: string;
+  created_at: string;
+}
+
 export interface ITrainer {
   id: number;
   username: string;
