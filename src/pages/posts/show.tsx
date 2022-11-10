@@ -42,6 +42,23 @@ import { CommentBox } from "components/comment-box";
 export const PostShow: React.FC = () => {
   const t = useTranslate();
 
+  const { data: latestPosts, isLoading: latestPostsLoading } = useList<IPost>({
+    resource: "posts",
+    config: {
+      sort: [{ order: "desc", field: "created_at" }],
+      pagination: { current: 1, pageSize: 5 },
+    },
+    // queryOptions: {
+    //   enabled: false,
+    //   onSuccess: (data) => {
+    //     setIsLoading(false);
+    //     if (data.total > 0) {
+    //       setPostsListResponse(data);
+    //     }
+    //   },
+    // },
+  });
+
   const { queryResult } = useShow<IPost>();
 
   const { data, isLoading } = queryResult;
@@ -130,7 +147,7 @@ export const PostShow: React.FC = () => {
   //   },
   // });
 
-  return isLoading || trainerLoading ? (
+  return isLoading || trainerLoading || latestPostsLoading ? (
     <Box
       sx={{
         display: "flex",
@@ -210,6 +227,9 @@ export const PostShow: React.FC = () => {
             <Typography variant="h6" fontWeight="bold">
               {t("posts.titles.latest_posts")}
             </Typography>
+            {latestPosts?.data.map((row, index) => (
+              <PostCard data={row}></PostCard>
+            ))}
           </Stack>
         </Stack>
       </Show>

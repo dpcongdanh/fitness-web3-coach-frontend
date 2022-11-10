@@ -221,14 +221,11 @@ export const PostList: React.FC = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "calc(100vh - 112px)",
+              height: "calc(100vh - (340px))",
             }}
           >
             No Posts Found
           </Box>
-          // <Box sx={{ display: "flex", lineHeight: "calc(100vh - 112px)" }}>
-          //   No Doctors Found
-          // </Box>
         )}
       </List>
     </Box>

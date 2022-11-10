@@ -6,9 +6,8 @@ import {
   CardMedia,
   Button,
   Box,
-  ShowButton,
+  // ShowButton,
   Typography,
-  IconButton,
   MuiList,
   ListItem,
   ListItemText,
@@ -65,7 +64,6 @@ export const ProductCard: React.FC<DataProps> = ({ data }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          {/* <Button size="small">View Details</Button> */}
           {/* <ShowButton size="small" recordItemId={data?.id} /> */}
           <Button size="large">Buy</Button>
         </CardActions>

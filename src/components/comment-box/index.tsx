@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import {
-  Button,
+  // Button,
   Avatar,
   Grid,
   Paper,
   Box,
   TextField,
   Typography,
-  Stack,
+  // Stack,
+  DeleteButton,
 } from "@pankod/refine-mui";
 import {
-  useMany,
+  // useMany,
   useTranslate,
   useCreate,
   useGetIdentity,
   useList,
+  useNotification,
 } from "@pankod/refine-core";
 import { IComment, IProfile } from "interfaces";
 
@@ -29,6 +31,7 @@ export type DataProps = {
 };
 
 export const CommentBox: React.FC<DataProps> = ({ data, post_id, loading }) => {
+  const { open } = useNotification();
   const t = useTranslate();
 
   const { data: user } = useGetIdentity();
@@ -41,6 +44,19 @@ export const CommentBox: React.FC<DataProps> = ({ data, post_id, loading }) => {
   const [commentText, setCommentText] = useState<string>("");
 
   const handleSubmit = () => {
+    if (
+      commentText === "" ||
+      commentText.length === 0 ||
+      commentText === undefined ||
+      commentText === null
+    ) {
+      open?.({
+        message: "Please enter your comment",
+        description: "Error! Cannot submit empty comment",
+        type: "error",
+      });
+      return;
+    }
     setSubmitting(true);
     mutate(
       {
@@ -140,33 +156,15 @@ export const CommentBox: React.FC<DataProps> = ({ data, post_id, loading }) => {
                 </p>
               </Grid>
             </Grid>
+            {profileInfo?.id === user.id && (
+              <DeleteButton
+                resourceNameOrRouteName="post_comments"
+                recordItemId={post.id}
+              ></DeleteButton>
+            )}
           </Paper>
         );
       })}
-      {/* <Paper style={{ padding: "40px 20px", marginTop: 10 }}>
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-            <Avatar alt="Remy Sharp" src={imgLink} />
-          </Grid>
-          <Grid justifyContent="left" item xs zeroMinWidth>
-            <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
-            <p style={{ textAlign: "left" }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-              luctus ut est sed faucibus. Duis bibendum ac ex vehicula laoreet.
-              Suspendisse congue vulputate lobortis. Pellentesque at interdum
-              tortor. Quisque arcu quam, malesuada vel mauris et, posuere
-              sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit
-              metus, efficitur lobortis nisi quis, molestie porttitor metus.
-              Pellentesque et neque risus. Aliquam vulputate, mauris vitae
-              tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
-              lectus vitae ex.{" "}
-            </p>
-            <p style={{ textAlign: "left", color: "gray" }}>
-              posted 1 minute ago
-            </p>
-          </Grid>
-        </Grid>
-      </Paper> */}
     </Box>
   );
 

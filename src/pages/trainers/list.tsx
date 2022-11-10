@@ -17,7 +17,7 @@ import {
   Grid,
   CircularProgress,
   Typography,
-  TextField,
+  // TextField,
   IconButton,
   Paper,
   InputBase,
@@ -27,7 +27,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  width,
+  // width,
 } from "@pankod/refine-mui";
 
 import { Search } from "@mui/icons-material";
@@ -320,7 +320,7 @@ export const TrainerList: React.FC = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "calc(100vh - 112px)",
+              height: "calc(100vh - (340px))",
             }}
           >
             No Trainers Found
@@ -329,88 +329,4 @@ export const TrainerList: React.FC = () => {
       </List>
     </Box>
   );
-
-  // return (
-  //   <Box sx={{ flexGrow: 1 }}>
-  //     <Paper
-  //       component="form"
-  //       sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 400 }}
-  //     >
-  //       {/* <IconButton sx={{ p: '10px' }} aria-label="menu">
-  //       <MenuIcon />
-  //     </IconButton> */}
-  //       <InputBase
-  //         sx={{ ml: 1, flex: 1 }}
-  //         placeholder="Search Trainers"
-  //         value={search}
-  //         onChange={(
-  //           event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  //         ) => {
-  //           setSearch(event.target.value);
-  //         }}
-  //         inputProps={{ "aria-label": "search trainers" }}
-  //       />
-  //       <IconButton
-  //         type="button"
-  //         sx={{ p: "10px" }}
-  //         aria-label="search"
-  //         onClick={(event: any) => {
-  //           console.log(event);
-  //         }}
-  //       >
-  //         <Search />
-  //       </IconButton>
-  //       {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" /> */}
-  //       <Divider
-  //         sx={{
-  //           color: "text.secondary",
-  //           borderColor: "text.secondary",
-  //         }}
-  //         orientation="vertical"
-  //         flexItem
-  //       />
-  //       {/* <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-  //       <DirectionsIcon />
-  //     </IconButton> */}
-  //     </Paper>
-  //     {isLoading ? (
-  //       <Box
-  //         sx={{
-  //           display: "flex",
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //           flexDirection: "column",
-  //           height: "calc(100vh - 112px)",
-  //         }}
-  //       >
-  //         <CircularProgress />
-  //         <Typography>{t("trainers.loading")}</Typography>
-  //       </Box>
-  //     ) : trainerListQueryResult.data !== undefined &&
-  //       trainerListQueryResult.data.total > 0 ? (
-  //       <Grid
-  //         container
-  //         spacing={{ xs: 2, md: 3 }}
-  //         columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
-  //       >
-  //         {trainerListQueryResult.data.data.map((row, index) => (
-  //           <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
-  //             <TrainerCard data={row}></TrainerCard>
-  //           </Grid>
-  //         ))}
-  //       </Grid>
-  //     ) : (
-  //       <Box
-  //         sx={{
-  //           display: "flex",
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //           height: "calc(100vh - 112px)",
-  //         }}
-  //       >
-  //         No Trainers Found
-  //       </Box>
-  //     )}
-  //   </Box>
-  // );
 };

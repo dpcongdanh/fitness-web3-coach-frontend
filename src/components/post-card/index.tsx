@@ -4,7 +4,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Button,
+  // Button,
   Avatar,
   Box,
   Divider,
@@ -37,14 +37,14 @@ export const PostCard: React.FC<DataProps> = ({ data }) => {
   });
 
   return (
-    <Card
-    // sx={{ maxWidth: 320 }}
-    >
+    <Card>
       <CardMedia
         component="img"
         height="240"
         // image="https://www.dropbox.com/s/a36t7juz7rl0sqm/binhthanhmai-1665188876521.jpg?raw=1"
-        image={data?.cover}
+        image={
+          data?.cover || "https://via.placeholder.com/600x600.png?text=Article"
+        }
         alt={data?.title}
       />
       <CardContent sx={{ height: 192 }}>

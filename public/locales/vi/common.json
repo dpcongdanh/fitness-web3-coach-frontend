@@ -59,10 +59,10 @@
       }
     },
     "error": {
-      "info": "You may have forgotten to add the {{action}} component to {{resource}} resource.",
-      "404": "Sorry, the page you visited does not exist.",
-      "resource404": "Are you sure you have created the {{resource}} resource.",
-      "backHome": "Back Home"
+      "info": "Có vẻ như bạn đã quên thêm thành phần {{action}} vào tài nguyên {{resource}}",
+      "404": "Trang bạn đang cố truy cập không tồn tại",
+      "resource404": "bạn có chắc bạn đã tạo tài nguyên {{resource}}",
+      "backHome": "Về trang chủ"
     }
   },
   "actions": {
@@ -75,30 +75,30 @@
     "create": "Create",
     "save": "Save",
     "logout": "Đăng xuất",
-    "delete": "Delete",
-    "edit": "Edit",
-    "cancel": "Cancel",
-    "confirm": "Are you sure?",
-    "filter": "Filter",
-    "clear": "Clear",
+    "delete": "Xóa",
+    "edit": "Chỉnh sửa",
+    "cancel": "Hủy bỏ",
+    "confirm": "Bạn có chắc không?",
+    "filter": "Lọc",
+    "clear": "Làm sạch",
     "refresh": "Làm mới",
     "show": "Xem chi tiết",
-    "undo": "Undo",
+    "undo": "Hoàn tác",
     "import": "Import",
-    "clone": "Clone",
-    "notAccessTitle": "You don't have permission to access"
+    "clone": "Nhân bản",
+    "notAccessTitle": "Bạn không có quyền truy cập"
   },
   "warnWhenUnsavedChanges": "Are you sure you want to leave? You have unsaved changes.",
   "notifications": {
-    "success": "Successful",
-    "error": "Error (status code: {{statusCode}})",
-    "undoable": "You have {{seconds}} seconds to undo",
-    "createSuccess": "Successfully created {{resource}}",
-    "createError": "There was an error creating {{resource}} (status code: {{statusCode}})",
-    "deleteSuccess": "Successfully deleted {{resource}}",
-    "deleteError": "Error when deleting {{resource}} (status code: {{statusCode}})",
-    "editSuccess": "Successfully edited {{resource}}",
-    "editError": "Error when editing {{resource}} (status code: {{statusCode}})",
+    "success": "Thành công",
+    "error": "Lỗi (mã lỗi: {{statusCode}})",
+    "undoable": "Bạn có {{seconds}} giây để hoàn tác",
+    "createSuccess": "Tạo {{resource}} thành công",
+    "createError": "Đã có lỗi xảy ra khi tạo {{resource}} (mã lỗi: {{statusCode}})",
+    "deleteSuccess": "Đã xóa {{resource}} thành công",
+    "deleteError": "Đã có lỗi xảy ra khi xóa {{resource}} (mã lỗi: {{statusCode}})",
+    "editSuccess": "Chỉnh sửa {{resource}} thành công",
+    "editError": "Đã có lỗi xảy ra khi sửa {{resource}} (mã lỗi: {{statusCode}})",
     "importProgress": "Importing: {{processed}}/{{total}}"
   },
   "loading": "Đang tải",
@@ -122,9 +122,9 @@
       "createdAt": "Được tạo vào"
     },
     "titles": {
-      "create": "Create Trainer",
-      "edit": "Edit Trainer",
-      "list": "Trainers",
+      "create": "Thêm Huấn Luyện Viên",
+      "edit": "Chỉnh sửa Huấn Luyện Viên",
+      "list": "Huấn Luyện Viên",
       "show": "Thông Tin Huấn Luyện Viên"
     },
     "services": "Dịch vụ",

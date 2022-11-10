@@ -1,10 +1,4 @@
-import {
-  // useOne,
-  useShow,
-  useTranslate,
-  useMany,
-  useList,
-} from "@pankod/refine-core";
+import { useShow, useTranslate, useMany, useList } from "@pankod/refine-core";
 
 import parse from "html-react-parser";
 
@@ -12,7 +6,6 @@ import {
   Show,
   Stack,
   Typography,
-  TagField,
   Avatar,
   ListItem,
   ListItemIcon,
@@ -158,11 +151,15 @@ export const TrainerShow: React.FC = () => {
             src={record?.avatar}
             sx={{ width: 192, height: 192 }}
           />
-          <VideoDialog
-            buttonText="Why train with me?"
-            dialogTitle="Trainer's Introduction Video"
-            videoLink={record?.video}
-          />
+          {record?.video !== null &&
+            record?.video !== undefined &&
+            record?.video.length > 0 && (
+              <VideoDialog
+                buttonText="Why train with me?"
+                dialogTitle="Trainer's Introduction Video"
+                videoLink={record?.video}
+              />
+            )}
         </Stack>
         <Stack gap={1}>
           <Typography variant="body1" fontWeight="bold">
@@ -253,39 +250,75 @@ export const TrainerShow: React.FC = () => {
         <Typography variant="h4" fontWeight="bold">
           {t("trainers.image_gallery")}
         </Typography>
-        <ImageList sx={{ width: 960, height: 600 }} cols={3} rowHeight={320}>
-          {!galleryLoading &&
-            galleryData !== undefined &&
-            galleryData.data.map((item) => (
-              <ImageListItem key={item.image} sx={{ width: 320 }}>
-                <img
-                  // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
-                  // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
-                  src={`${item.image}`}
-                  srcSet={`${item.image}`}
-                  // width={240}
-                  // height={240}
-                  alt={item.title}
-                  style={{ height: "inherit" }}
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
-        </ImageList>
+        {!galleryLoading ? (
+          galleryData !== undefined && galleryData.total > 0 ? (
+            <ImageList
+              sx={{ width: 960, height: 600 }}
+              cols={3}
+              rowHeight={320}
+            >
+              {galleryData.data.map((item) => (
+                <ImageListItem key={item.image} sx={{ width: 320 }}>
+                  <img
+                    // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
+                    // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
+                    src={`${item.image}`}
+                    srcSet={`${item.image}`}
+                    // width={240}
+                    // height={240}
+                    alt={item.title}
+                    style={{ height: "inherit" }}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          ) : (
+            <img
+              // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
+              // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
+              src={"https://via.placeholder.com/300x300.png?text=No+Image"}
+              width={300}
+              height={300}
+              alt="Empty Gallery"
+              style={{ height: "inherit" }}
+              loading="lazy"
+            />
+          )
+        ) : (
+          "Loading"
+        )}
       </Stack>
       <Stack gap={1} justifyContent="center" alignItems="center">
         <Typography variant="h4" fontWeight="bold">
           {t("trainers.subscriptions")}
         </Typography>
-        <MuiList>
-          {!productLoading &&
-            productData !== undefined &&
-            productData.data.map((item) => (
-              <ListItem>
-                <ProductCard data={item}></ProductCard>
-              </ListItem>
-            ))}
-        </MuiList>
+        {!productLoading ? (
+          productData !== undefined && productData.total > 0 ? (
+            <MuiList>
+              {productData.data.map((item) => (
+                <ListItem>
+                  <ProductCard data={item}></ProductCard>
+                </ListItem>
+              ))}
+            </MuiList>
+          ) : (
+            <img
+              // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
+              // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
+              src={
+                "https://via.placeholder.com/300x300.png?text=No+Subscription"
+              }
+              width={300}
+              height={300}
+              alt="Empty Subscription"
+              style={{ height: "inherit" }}
+              loading="lazy"
+            />
+          )
+        ) : (
+          "Loading"
+        )}
       </Stack>
       <Stack gap={1}>
         <Typography variant="h4" fontWeight="bold">

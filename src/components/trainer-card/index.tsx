@@ -4,7 +4,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Button,
+  // Button,
   ShowButton,
   Typography,
   TagField,
@@ -48,7 +48,6 @@ export const TrainerCard: React.FC<DataProps> = ({ data }) => {
       </CardContent>
       <CardActions>
         <ShowButton size="small" recordItemId={data?.id} />
-        {/* <Button size="small">Learn More</Button> */}
       </CardActions>
     </Card>
   );

@@ -3,6 +3,7 @@ import {
   useGetIdentity,
   useGetLocale,
   useSetLocale,
+  useOne,
 } from "@pankod/refine-core";
 import {
   AppBar,
@@ -19,6 +20,7 @@ import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
 
 import { ColorModeContext } from "contexts";
 import i18n from "i18n";
+import { IProfile } from "interfaces";
 
 export const Header: React.FC = () => {
   const { mode, setMode } = useContext(ColorModeContext);
@@ -28,6 +30,13 @@ export const Header: React.FC = () => {
   const currentLocale = locale();
 
   const { data: user } = useGetIdentity();
+  const { data: profileData, isLoading: profileLoading } = useOne<IProfile>({
+    resource: "profiles",
+    id: user?.id || "",
+    queryOptions: {
+      enabled: !!user?.id,
+    },
+  });
   const showUserInfo = user && (user.name || user.avatar);
 
   return (
@@ -88,7 +97,16 @@ export const Header: React.FC = () => {
           </FormControl>
           {showUserInfo && (
             <Stack direction="row" gap="16px" alignItems="center">
-              {user.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
+              <Avatar
+                sx={{ height: "32px", width: "32px" }}
+                src={profileData?.data?.avatar}
+              />
+              {/* {profileData?.data?.avatar && (
+                <Avatar
+                  sx={{ height: "32px", width: "32px" }}
+                  src={profileData?.data?.avatar}
+                />
+              )} */}
               {user.name && (
                 <Typography variant="subtitle2">{user?.name}</Typography>
               )}
