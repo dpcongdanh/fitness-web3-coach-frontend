@@ -1,77 +1,148 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
   Button,
   Avatar,
   Grid,
   Paper,
   Box,
-  Divider,
-  Skeleton,
-  ShowButton,
   TextField,
   Typography,
+  Stack,
 } from "@pankod/refine-mui";
 import {
-  //   useOne,
-  // useShow,
+  useMany,
   useTranslate,
-  // useMany,
-  // useList,
+  useCreate,
+  useGetIdentity,
+  useList,
 } from "@pankod/refine-core";
-import { IComment } from "interfaces";
+import { IComment, IProfile } from "interfaces";
+
+import { LoadingButton } from "@mui/lab";
+
+import { AddComment } from "@mui/icons-material";
 
 export type DataProps = {
   data?: IComment[];
+  post_id?: number;
   loading?: boolean;
 };
 
-export const CommentBox: React.FC<DataProps> = ({ data, loading }) => {
-  const imgLink =
-    "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
+export const CommentBox: React.FC<DataProps> = ({ data, post_id, loading }) => {
   const t = useTranslate();
 
-  //   const { data: trainerData, isLoading: trainerLoading } = useOne<ITrainer>({
-  //     resource: "trainers",
-  //     id: data?.user_id || "",
-  //     queryOptions: {
-  //       enabled: !!data?.user_id,
-  //     },
-  //   });
+  const { data: user } = useGetIdentity();
+  const showUserInfo = user && (user.name || user.avatar);
+
+  const { mutate } = useCreate<IComment>();
+
+  const [submitting, setSubmitting] = useState<boolean>(false);
+
+  const [commentText, setCommentText] = useState<string>("");
+
+  const handleSubmit = () => {
+    setSubmitting(true);
+    mutate(
+      {
+        resource: "post_comments",
+        values: {
+          user_uuid: user?.id,
+          post_id: post_id,
+          body: commentText,
+        },
+      },
+      {
+        onError: (error, variables, context) => {
+          // An error happened!
+          setSubmitting(false);
+        },
+        onSuccess: (data, variables, context) => {
+          // Let's celebrate!
+          setSubmitting(false);
+          setCommentText("");
+        },
+      }
+    );
+  };
+
+  // const profilesIds = data?.map((item) => item.user_uuid) || [];
+  // const { data: profilesData, isLoading: profilesLoading } = useMany<IProfile>({
+  //   resource: "profiles",
+  //   ids: profilesIds,
+  //   queryOptions: {
+  //     enabled: profilesIds.length > 0,
+  //   },
+  // });
+
+  const { data: profilesData, isLoading: profilesLoading } = useList<IProfile>({
+    resource: "profiles",
+  });
+
+  // console.log(data);
+  // console.log(profilesIds);
+
+  // console.log(profilesData);
 
   return (
-    <Box sx={{ padding: "14px" }}>
-      <Typography variant="h4" mb="50px" fontWeight="bold">
-        {t("posts.fields.comments")}
-      </Typography>
-      <TextField
-        id="outlined-multiline-static"
-        label="Write your comment here"
-        multiline
-        rows={4}
-        fullWidth
-        // defaultValue="Default Value"
-      />
-      <Button>Submit</Button>
-      {data?.map((item) => (
-        <Paper style={{ padding: "40px 20px", marginTop: 10 }}>
-          <Grid container wrap="nowrap" spacing={2}>
-            <Grid item>
-              <Avatar alt="Remy Sharp" src={imgLink} />
+    <Box sx={{ padding: "16px" }}>
+      <Box mb="30px">
+        <Typography variant="h4" mb="16px" fontWeight="bold">
+          {t("posts.fields.comments")}
+        </Typography>
+        {showUserInfo && (
+          // <Stack direction="row" gap="16px" alignItems="center">
+          //   {user.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
+          //   {user.name && <Typography variant="subtitle2">{user?.id}</Typography>}
+          // </Stack>
+          <React.Fragment>
+            <TextField
+              id="outlined-multiline-static"
+              label="Write your comment here"
+              multiline
+              rows={4}
+              fullWidth
+              value={commentText}
+              disabled={submitting}
+              onChange={(event) => {
+                setCommentText(event.target.value);
+              }}
+            />
+            <LoadingButton
+              loadingPosition="start"
+              startIcon={<AddComment />}
+              loading={submitting}
+              onClick={handleSubmit}
+            >
+              Submit
+            </LoadingButton>
+          </React.Fragment>
+        )}
+      </Box>
+
+      {data?.map((post, index) => {
+        const profileInfo = profilesData?.data.find((profile) => {
+          return profile.id === post.user_uuid;
+        });
+        return (
+          <Paper key={index} style={{ padding: "40px 20px", marginTop: 10 }}>
+            <Grid container wrap="nowrap" spacing={2}>
+              <Grid item>
+                <Avatar alt="Avatar" src={profileInfo?.avatar} />
+              </Grid>
+              <Grid justifyContent="left" item xs zeroMinWidth>
+                <h4 style={{ margin: 0, textAlign: "left" }}>
+                  {profileInfo?.first_name + " " + profileInfo?.last_name}
+                </h4>
+                <p style={{ textAlign: "left" }}>{post.body}</p>
+                <p style={{ textAlign: "left", color: "gray" }}>
+                  Posted{" "}
+                  {new Date(Date.parse(post.created_at)).toLocaleString()}
+                </p>
+              </Grid>
             </Grid>
-            <Grid justifyContent="left" item xs zeroMinWidth>
-              <h4 style={{ margin: 0, textAlign: "left" }}>{item.email}</h4>
-              <p style={{ textAlign: "left" }}>{item.body}</p>
-              <p style={{ textAlign: "left", color: "gray" }}>
-                Posted {new Date(Date.parse(item.created_at)).toLocaleString()}
-              </p>
-            </Grid>
-          </Grid>
-        </Paper>
-      ))}
+          </Paper>
+        );
+      })}
       {/* <Paper style={{ padding: "40px 20px", marginTop: 10 }}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>

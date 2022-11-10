@@ -2,7 +2,7 @@ import {
   useOne,
   useShow,
   useTranslate,
-  useMany,
+  // useMany,
   useList,
 } from "@pankod/refine-core";
 
@@ -12,15 +12,15 @@ import {
   Show,
   Stack,
   Typography,
-  TagField,
+  // TagField,
   Avatar,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  MuiList,
-  ImageList,
-  ImageListItem,
-  Grid,
+  // ListItem,
+  // ListItemIcon,
+  // ListItemText,
+  // MuiList,
+  // ImageList,
+  // ImageListItem,
+  // Grid,
   Paper,
   Container,
   Box,
@@ -199,7 +199,11 @@ export const PostShow: React.FC = () => {
             <Typography variant="body2">{parse(record?.body || "")}</Typography>
             <Paper>
               {/* <Typography variant="h5">{t("posts.fields.comments")}</Typography> */}
-              <CommentBox data={commentsData?.data} loading={commentsLoading} />
+              <CommentBox
+                data={commentsData?.data}
+                post_id={record?.id}
+                loading={commentsLoading}
+              />
             </Paper>
           </Stack>
           <Stack gap={1} sx={{ width: "500px" }}>

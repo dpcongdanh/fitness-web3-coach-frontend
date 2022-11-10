@@ -19,10 +19,17 @@ export interface IPost {
 
 export interface IComment {
   id: number;
-  email: string;
+  user_uuid: string;
   post_id: string;
   body: string;
   created_at: string;
+}
+
+export interface IProfile {
+  id: string;
+  avatar: string;
+  first_name: string;
+  last_name: string;
 }
 
 export interface ITrainer {
