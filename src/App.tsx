@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Refine } from "@pankod/refine-core";
 import {
@@ -25,6 +25,8 @@ import { CalendarList } from "pages/calendar";
 
 import { PostList, PostShow } from "pages/posts";
 
+import { AccountSettings } from "pages/account-settings";
+
 function App() {
   const { t, i18n } = useTranslation();
 
@@ -33,6 +35,10 @@ function App() {
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
     getLocale: () => i18n.language,
   };
+
+  useEffect(() => {
+    document.title = "PT Hunter";
+  }, []);
 
   return (
     <ColorModeContextProvider>
@@ -60,6 +66,11 @@ function App() {
               {
                 path: "/update-password",
                 element: <AuthPage type="updatePassword" />,
+              },
+              {
+                element: <AccountSettings />,
+                path: "/account-settings",
+                layout: true,
               },
             ],
           }}

@@ -35,7 +35,7 @@ export const CommentBox: React.FC<DataProps> = ({ data, post_id, loading }) => {
   const t = useTranslate();
 
   const { data: user } = useGetIdentity();
-  const showUserInfo = user && (user.name || user.avatar);
+  const showUserInfo = user && user.name;
 
   const { mutate } = useCreate<IComment>();
 

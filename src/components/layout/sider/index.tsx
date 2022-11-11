@@ -42,7 +42,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
 
   const drawerWidth = () => {
     if (collapsed) return 64;
-    return 200;
+    return 240;
   };
 
   const t = useTranslate();
@@ -125,7 +125,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                     sx={{
                       justifyContent: "center",
                       minWidth: 36,
-                      color: "primary.contrastText",
+                      // color: "primary.contrastText",
                     }}
                   >
                     {icon ?? <ListOutlined />}
@@ -134,7 +134,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                     primary={label}
                     primaryTypographyProps={{
                       noWrap: true,
-                      fontSize: "14px",
+                      fontSize: "16px",
                       fontWeight: isSelected ? "bold" : "normal",
                     }}
                   />
@@ -189,7 +189,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                 sx={{
                   justifyContent: "center",
                   minWidth: 36,
-                  color: "primary.contrastText",
+                  // color: "primary.contrastText",
                 }}
               >
                 {icon ?? <ListOutlined />}
@@ -198,7 +198,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
                 primary={label}
                 primaryTypographyProps={{
                   noWrap: true,
-                  fontSize: "14px",
+                  fontSize: "16px",
                   fontWeight: isSelected ? "bold" : "normal",
                 }}
               />
@@ -240,7 +240,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             sx={{
               justifyContent: "center",
               minWidth: 36,
-              color: "primary.contrastText",
+              // color: "primary.contrastText",
             }}
           >
             <Dashboard />
@@ -249,7 +249,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             primary={translate("dashboard.title", "Dashboard")}
             primaryTypographyProps={{
               noWrap: true,
-              fontSize: "14px",
+              fontSize: "16px",
               fontWeight: selectedKey === "/" ? "bold" : "normal",
             }}
           />
@@ -274,7 +274,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           sx={{
             justifyContent: "center",
             minWidth: 36,
-            color: "primary.contrastText",
+            // color: "primary.contrastText",
           }}
         >
           <Logout />
@@ -283,7 +283,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           primary={t("buttons.logout", "Logout")}
           primaryTypographyProps={{
             noWrap: true,
-            fontSize: "14px",
+            fontSize: "16px",
           }}
         />
       </ListItemButton>
@@ -305,13 +305,19 @@ export const Sider: typeof DefaultSider = ({ render }) => {
       <>
         {dashboard}
         {items}
-        {logout}
+        {/* {logout} */}
       </>
     );
   };
 
   const drawer = (
-    <MuiList disablePadding sx={{ mt: 1, color: "primary.contrastText" }}>
+    <MuiList
+      disablePadding
+      sx={{
+        mt: 1,
+        // color: "primary.contrastText"
+      }}
+    >
       {renderSider()}
     </MuiList>
   );
@@ -348,7 +354,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             display: { sm: "block", md: "none" },
             "& .MuiDrawer-paper": {
               width: 256,
-              bgcolor: "secondary.main",
+              // bgcolor: "secondary.main",
             },
           }}
         >
@@ -371,7 +377,7 @@ export const Sider: typeof DefaultSider = ({ render }) => {
             display: { xs: "none", md: "block" },
             "& .MuiDrawer-paper": {
               width: drawerWidth,
-              bgcolor: "secondary.main",
+              // bgcolor: "secondary.main",
               overflow: "hidden",
               transition: "width 200ms cubic-bezier(0.4, 0, 0.6, 1) 0ms",
             },
@@ -399,8 +405,9 @@ export const Sider: typeof DefaultSider = ({ render }) => {
           </Box>
           <Button
             sx={{
-              background: "rgba(0,0,0,.5)",
-              color: "primary.contrastText",
+              // background: "rgba(0,0,0,.5)",
+              // color: "primary.main",
+              // color: "green",
               textAlign: "center",
               borderRadius: 0,
               borderTop: "1px solid #ffffff1a",
