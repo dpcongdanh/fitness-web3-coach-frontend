@@ -237,11 +237,14 @@ export const TrainerShow: React.FC = () => {
                         }}
                         gap={1}
                       >
-                        <Avatar
+                        {/* <Avatar
                           src={
                             row?.image ||
                             "https://mhxuwblyckkausnppiws.supabase.co/storage/v1/object/sign/certificates/generic/Certification.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJjZXJ0aWZpY2F0ZXMvZ2VuZXJpYy9DZXJ0aWZpY2F0aW9uLnBuZyIsImlhdCI6MTY2NjQ0NzcyNywiZXhwIjoxOTgxODA3NzI3fQ.PIbh5UD83atwxItAW2J_NO97dFHafLcUuE6elzSeQg4"
                           }
+                        /> */}
+                        <Avatar
+                          src={row?.image || "/images/Certification.png"}
                         />
                         <Typography variant="body2">{row?.name}</Typography>
                       </Box>

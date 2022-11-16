@@ -46,6 +46,32 @@ export interface ITrainer {
   created_at: string;
 }
 
+export interface ISchedule {
+  id: number;
+  title: string;
+  description: string;
+  start: string;
+  end: string;
+  customer_id: string;
+  trainer_id: number;
+  created_at: string;
+}
+
+export interface ISelectedEventInfo {
+  id: number;
+  title: string;
+  start: string;
+  end: string;
+  extendedProps: IExtendedPropsEvent;
+}
+
+export interface IExtendedPropsEvent {
+  description: string;
+  customer_id: string;
+  trainer_id: number;
+  created_at: string;
+}
+
 export interface ICertification {
   id: number;
   name: string;

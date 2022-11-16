@@ -11,6 +11,7 @@ import {
   IconButton,
   Typography,
 } from "@pankod/refine-mui";
+import { ISelectedEventInfo, ITrainer } from "interfaces";
 // import Iframe from "react-iframe";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -53,61 +54,81 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 }
 
 export type EventProps = {
+  visible: boolean;
+  close: () => void;
   buttonText?: string;
-  eventInfo?: JSON;
+  eventInfo?: ISelectedEventInfo;
+  trainersData?: ITrainer[];
   dialogTitle?: string;
 };
 
 export const EventDialog: React.FC<EventProps> = ({
+  visible,
+  close,
   buttonText,
   eventInfo,
+  trainersData,
   dialogTitle,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
+  const trainer = trainersData?.find((item) => {
+    return item.id === eventInfo?.extendedProps.trainer_id;
+  });
 
   return (
     <div>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        {buttonText || "Watch Video"}
-      </Button> */}
       <BootstrapDialog
-        onClose={handleClose}
+        onClose={close}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={visible}
         maxWidth="md"
         fullWidth={true}
       >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={close}>
           {dialogTitle || "Event Info"}
         </BootstrapDialogTitle>
-        <DialogContent
-          dividers
-          style={{ position: "relative", paddingBottom: "56.25%" }}
-        >
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
+        <DialogContent dividers>
+          <Typography variant="h5" gutterBottom>
+            Title
           </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
+          <Typography variant="body1" gutterBottom>
+            {eventInfo?.title}
           </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
+          <Typography variant="h5" gutterBottom>
+            Trainer
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            {trainer?.first_name + " " + trainer?.last_name}
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Start At
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            {eventInfo !== undefined
+              ? new Date(Date.parse(eventInfo.start)).toLocaleString()
+              : "Loading"}
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            End At
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            {eventInfo !== undefined
+              ? new Date(Date.parse(eventInfo.end)).toLocaleString()
+              : "Loading"}
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Description
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            {eventInfo?.extendedProps.description}
           </Typography>
         </DialogContent>
         {/* <DialogActions>

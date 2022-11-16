@@ -1,11 +1,8 @@
 import { createClient } from "@pankod/refine-supabase";
 
-// const SUPABASE_URL = "https://iwdfzvfqbtokqetmbmbp.supabase.co";
-// const SUPABASE_KEY =
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzMDU2NzAxMCwiZXhwIjoxOTQ2MTQzMDEwfQ._gr6kXGkQBi9BM9dx5vKaNKYj_DJN1xlkarprGpM_fU";
-
-const SUPABASE_URL = "https://mhxuwblyckkausnppiws.supabase.co";
+const SUPABASE_URL = "https://fsuhvshdxcmhotjlygpc.supabase.co";
 const SUPABASE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1oeHV3Ymx5Y2trYXVzbnBwaXdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjYwNzI0NjIsImV4cCI6MTk4MTY0ODQ2Mn0.b314ScnsV4jGJRW9GVg-knFWmR2vY8M-dsoV-uZtuqs";
-
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZzdWh2c2hkeGNtaG90amx5Z3BjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg1OTQ2NTAsImV4cCI6MTk4NDE3MDY1MH0.YTIRum8oBf-s7CkOpBdercvRxo2Q2Bt3fEp7X_yooik";
 export const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Database Password: 6cAtqZzvVIKRRpUz
