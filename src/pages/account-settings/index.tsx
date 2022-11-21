@@ -12,6 +12,12 @@ import {
   Stack,
   Avatar,
   SaveButton,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextFieldProps,
 } from "@pankod/refine-mui";
 import { useForm } from "@pankod/refine-react-hook-form";
 
@@ -21,13 +27,18 @@ import { FileUpload, SaveOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { BaseSyntheticEvent, useState, useEffect } from "react";
 
+import dayjs, { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import { uploadImage, getPublicImageUrl } from "api";
 
 export const AccountSettings: React.FC = () => {
   const t = useTranslate();
 
   const { data: user } = useGetIdentity();
-  const showUserInfo = user && user.name;
+  // const showUserInfo = user && user.name;
 
   const {
     refineCore: { formLoading, queryResult },
@@ -38,6 +49,7 @@ export const AccountSettings: React.FC = () => {
     getValues,
     setValue,
     formState: { errors },
+    reset,
   } = useForm<IProfile, HttpError, IProfile>({
     refineCoreProps: {
       id: user?.id,
@@ -78,6 +90,29 @@ export const AccountSettings: React.FC = () => {
   const [imageFile, setImageFile] = useState<File>();
 
   const [updatingUser, setUpdatingUser] = useState<boolean>(false);
+
+  const [firstName, setFirstName] = useState<string>("");
+
+  const [lastName, setLastName] = useState<string>("");
+
+  const [gender, setGender] = useState<string>("");
+
+  const [dob, setDob] = useState<Dayjs | null>(null);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setGender(event.target.value as string);
+  };
+
+  useEffect(() => {
+    if (!formLoading && !queryResult?.isLoading) {
+      console.log(getValues());
+      reset();
+      setFirstName(getValues("first_name"));
+      setLastName(getValues("last_name"));
+      setGender(getValues("gender"));
+      setDob(dayjs(getValues("dob")));
+    }
+  }, [getValues, reset, queryResult?.isLoading, formLoading]);
 
   // const submitButtonClick = (e: React.BaseSyntheticEvent<object, any, any>) => {
   //   console.log(getValues());
@@ -215,36 +250,92 @@ export const AccountSettings: React.FC = () => {
           </label>
         </Stack>
         <Stack gap={1} width="100%">
-          <Box
-            component="form"
-            // sx={{ display: "flex", flexDirection: "column" }}
-            autoComplete="off"
-          >
-            <TextField
-              {...register("first_name", {
-                required: "First Name is required",
-              })}
-              error={!!errors?.first_name}
-              helperText={errors.first_name?.message}
-              margin="normal"
-              required
-              fullWidth
-              id="first_name"
-              label="First Name"
-              name="first_name"
-            />
-            <TextField
-              {...register("last_name", { required: "Last Name is required" })}
-              error={!!errors?.last_name}
-              helperText={errors.last_name?.message}
-              margin="normal"
-              required
-              fullWidth
-              id="last_name"
-              label="Last Name"
-              name="last_name"
-            />
-          </Box>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {" "}
+            <Box
+              component="form"
+              // sx={{ display: "flex", flexDirection: "column" }}
+              autoComplete="off"
+            >
+              <TextField
+                {...register("first_name", {
+                  required: "First Name is required",
+                })}
+                error={!!errors?.first_name}
+                helperText={errors.first_name?.message}
+                margin="normal"
+                required
+                fullWidth
+                value={firstName}
+                onChange={(event) => {
+                  setFirstName(event.target.value);
+                }}
+                id="first_name"
+                label="First Name"
+                name="first_name"
+              />
+              <TextField
+                {...register("last_name", {
+                  required: "Last Name is required",
+                })}
+                error={!!errors?.last_name}
+                helperText={errors.last_name?.message}
+                margin="normal"
+                required
+                fullWidth
+                value={lastName}
+                onChange={(event) => {
+                  setLastName(event.target.value);
+                }}
+                id="last_name"
+                label="Last Name"
+                name="last_name"
+              />
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                <Select
+                  {...register("gender")}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={gender}
+                  label="Gender"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
+                </Select>
+              </FormControl>
+              <DatePicker
+                {...register("dob")}
+                disableFuture
+                // label={t("health_status_certificates.fields.expired_date")}
+                label="DOB"
+                openTo="day"
+                views={["year", "month", "day"]}
+                value={dob}
+                onChange={(newValue) => {
+                  if (newValue === null) setValue("dob", null);
+                  else {
+                    setValue("dob", newValue?.toDate().toLocaleDateString());
+                  }
+                  setDob(newValue);
+                }}
+                renderInput={(
+                  params: JSX.IntrinsicAttributes & TextFieldProps
+                ) => (
+                  <TextField
+                    error={!!errors?.dob}
+                    helperText={errors.dob?.message as string}
+                    fullWidth
+                    // variant="standard"
+                    margin="dense"
+                    {...params}
+                  />
+                )}
+              />
+            </Box>
+          </LocalizationProvider>
         </Stack>
       </Stack>
       {/* <Box textAlign="right">

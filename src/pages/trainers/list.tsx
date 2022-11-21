@@ -45,7 +45,9 @@ export const TrainerList: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
-  const [search, setSearch] = useState<string>("");
+  const [firstNameSearch, setFirstNameSearch] = useState<string>("");
+
+  const [lastNameSearch, setLastNameSearch] = useState<string>("");
 
   const [selectServices, setSelectServices] = useState<number[]>([]);
 
@@ -67,7 +69,10 @@ export const TrainerList: React.FC = () => {
   const { refetch: refetchTrainers } = useList<ITrainer>({
     resource: "trainers",
     config: {
-      filters: [{ field: "first_name", operator: "contains", value: search }],
+      filters: [
+        { field: "first_name", operator: "contains", value: firstNameSearch },
+        { field: "last_name", operator: "contains", value: lastNameSearch },
+      ],
     },
     queryOptions: {
       enabled: false,
@@ -118,7 +123,8 @@ export const TrainerList: React.FC = () => {
     resource: "trainers",
     config: {
       filters: [
-        { field: "first_name", operator: "contains", value: search },
+        { field: "first_name", operator: "contains", value: firstNameSearch },
+        { field: "last_name", operator: "contains", value: lastNameSearch },
         { field: "location", operator: "in", value: selectCountries },
       ],
     },
@@ -161,7 +167,8 @@ export const TrainerList: React.FC = () => {
   }, [
     refetchTrainers,
     refetchTrainersWithCountries,
-    search,
+    firstNameSearch,
+    lastNameSearch,
     selectServices,
     selectCountries,
   ]);
@@ -175,7 +182,7 @@ export const TrainerList: React.FC = () => {
           marginBottom: "10px",
           display: "flex",
           alignItems: "center",
-          width: 960,
+          // width: 960,
         }}
       >
         <IconButton disabled type="button" sx={{ p: "10px" }} aria-label="menu">
@@ -183,14 +190,33 @@ export const TrainerList: React.FC = () => {
         </IconButton>
         <InputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Trainers"
-          value={search}
+          placeholder="Search First Name"
+          value={firstNameSearch}
           onChange={(
             event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
           ) => {
-            setSearch(event.target.value);
+            setFirstNameSearch(event.target.value);
           }}
-          inputProps={{ "aria-label": "search trainers" }}
+          inputProps={{ "aria-label": "search first name" }}
+        />
+        <Divider
+          sx={{
+            color: "text.secondary",
+            borderColor: "text.secondary",
+          }}
+          orientation="vertical"
+          flexItem
+        />
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="Search Last Name"
+          value={lastNameSearch}
+          onChange={(
+            event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+          ) => {
+            setLastNameSearch(event.target.value);
+          }}
+          inputProps={{ "aria-label": "search last name" }}
         />
         <Divider
           sx={{

@@ -131,6 +131,8 @@
     "certification": "Chứng chỉ",
     "image_gallery": "Thư viện ảnh",
     "subscriptions": "Subscriptions",
+    "courses": "Khóa học",
+    "products": "Sản phẩm",
     "posts": "Bài đăng"
   },
   "posts": {
@@ -162,6 +164,28 @@
       "list": "Các bài đăng",
       "show": "Xem Bài đăng",
       "latest_posts": "Bài mới nhất"
+    }
+  },
+  "profiles": {
+    "profiles": "Danh sách người dùng",
+    "loading": "Đang tải danh sách người dùng",
+    "show_loading": "Đang tải thông tin người dùng",
+    "fields": {
+      "id": "Id",
+      "avatar": "Avatar",
+      "first_name": "Tên",
+      "last_name": "Họ",
+      "gender": "Giới tính",
+      "dob": "Ngày sinh",
+      "role": "Quyền",
+      "country": "Quốc Gia",
+      "createdAt": "Được tạo"
+    },
+    "titles": {
+      "create": "Tạo người dùng mới",
+      "edit": "Sửa người dùng",
+      "list": "Danh sách người dùng",
+      "show": "Xem chi tiết người dùng"
     }
   },
   "table": {

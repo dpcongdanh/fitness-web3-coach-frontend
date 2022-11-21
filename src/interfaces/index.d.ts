@@ -30,6 +30,10 @@ export interface IProfile {
   avatar: string;
   first_name: string;
   last_name: string;
+  gender: string;
+  dob: date;
+  role: string;
+  country: string;
 }
 
 export interface ITrainer {
@@ -94,13 +98,23 @@ export interface IGallery {
   created_at: string;
 }
 
-export interface IProduct {
+export interface ICourse {
   id: number;
   user_id: number;
   name: string;
   description: string[];
   image: string;
   plan: string;
+  price: string;
+  created_at: string;
+}
+
+export interface IProduct {
+  id: number;
+  user_id: number;
+  name: string;
+  description: string[];
+  image: string;
   price: string;
   created_at: string;
 }

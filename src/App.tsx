@@ -11,6 +11,10 @@ import {
   AuthPage,
 } from "@pankod/refine-mui";
 
+import { newEnforcer } from "casbin";
+
+import { model, adapter } from "./accessControl";
+
 import routerProvider from "@pankod/refine-react-router-v6";
 import { dataProvider, liveProvider } from "@pankod/refine-supabase";
 import { useTranslation } from "react-i18next";
@@ -23,11 +27,19 @@ import { TrainerList, TrainerShow } from "pages/trainers";
 
 import { CalendarList } from "pages/calendar";
 
+import { UserList } from "pages/users";
+
 import { PostList, PostShow } from "pages/posts";
 
 import { AccountSettings } from "pages/account-settings";
 
 function App() {
+  const user_uuid = JSON.parse(
+    localStorage.getItem("supabase.auth.token") as string
+  ).currentSession.user.id;
+
+  const dataProviderObj = dataProvider(supabaseClient);
+
   const { t, i18n } = useTranslation();
 
   const i18nProvider = {
@@ -46,10 +58,33 @@ function App() {
       <GlobalStyles styles={{ html: { WebkitFontSmoothing: "auto" } }} />
       <RefineSnackbarProvider>
         <Refine
+          accessControlProvider={{
+            can: async ({ resource, action, params }) => {
+              const enforcer = await newEnforcer(model, adapter);
+              const userProfile = await dataProviderObj.getOne({
+                resource: "profiles",
+                id: user_uuid,
+              });
+              console.log(userProfile.data.role);
+              // console.log(params?.resource);
+              const can = await enforcer.enforce(
+                userProfile.data.role,
+                resource,
+                action
+              );
+              // const can = await enforcer.enforce(
+              //   userData?.data.role,
+              //   resource,
+              //   action
+              // );
+
+              return Promise.resolve({ can });
+            },
+          }}
           notificationProvider={notificationProvider}
           ReadyPage={ReadyPage}
           catchAll={<ErrorComponent />}
-          dataProvider={dataProvider(supabaseClient)}
+          dataProvider={dataProviderObj}
           liveProvider={liveProvider(supabaseClient)}
           authProvider={authProvider}
           routerProvider={{
@@ -110,6 +145,13 @@ function App() {
               name: "posts",
               list: PostList,
               show: PostShow,
+              // create: PostCreate,
+              // edit: PostEdit,
+            },
+            {
+              name: "profiles",
+              list: UserList,
+              // show: PostShow,
               // create: PostCreate,
               // edit: PostEdit,
             },

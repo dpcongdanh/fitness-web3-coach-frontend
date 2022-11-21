@@ -12,13 +12,13 @@ import {
   ListItem,
   ListItemText,
 } from "@pankod/refine-mui";
-import { IProduct } from "interfaces";
+import { ICourse } from "interfaces";
 
 export type DataProps = {
-  data: IProduct | undefined;
+  data: ICourse | undefined;
 };
 
-export const ProductCard: React.FC<DataProps> = ({ data }) => {
+export const CourseCard: React.FC<DataProps> = ({ data }) => {
   return (
     <Card sx={{ display: "flex", height: 192 }}>
       <CardMedia
@@ -58,6 +58,9 @@ export const ProductCard: React.FC<DataProps> = ({ data }) => {
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             ${data?.price}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {data?.plan}
           </Typography>
         </CardContent>
         <CardActions>

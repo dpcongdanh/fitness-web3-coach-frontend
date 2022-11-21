@@ -27,10 +27,13 @@ import {
   IService,
   IGallery,
   IProduct,
+  ICourse,
   IPost,
 } from "interfaces";
 
 import { ProductCard } from "../../components/product-card";
+
+import { CourseCard } from "../../components/course-card";
 
 import { PostCard } from "../../components/post-card";
 
@@ -74,6 +77,19 @@ export const TrainerShow: React.FC = () => {
 
   const { data: galleryData, isLoading: galleryLoading } = useList<IGallery>({
     resource: "image_gallery",
+    config: {
+      filters: [
+        {
+          field: "user_id",
+          operator: "eq",
+          value: record?.id || null,
+        },
+      ],
+    },
+  });
+
+  const { data: coursesData, isLoading: coursesLoading } = useList<ICourse>({
+    resource: "courses",
     config: {
       filters: [
         {
@@ -268,12 +284,8 @@ export const TrainerShow: React.FC = () => {
                 {galleryData.data.map((item) => (
                   <ImageListItem key={item.image} sx={{ width: 320 }}>
                     <img
-                      // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
-                      // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
                       src={`${item.image}`}
                       srcSet={`${item.image}`}
-                      // width={240}
-                      // height={240}
                       alt={item.title}
                       style={{ height: "inherit" }}
                       loading="lazy"
@@ -283,8 +295,6 @@ export const TrainerShow: React.FC = () => {
               </ImageList>
             ) : (
               <img
-                // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
-                // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
                 src={"https://via.placeholder.com/300x300.png?text=No+Image"}
                 width={300}
                 height={300}
@@ -299,7 +309,38 @@ export const TrainerShow: React.FC = () => {
         </Stack>
         <Stack gap={1} justifyContent="center" alignItems="center">
           <Typography variant="h4" fontWeight="bold">
-            {t("trainers.subscriptions")}
+            {t("trainers.courses")}
+          </Typography>
+          {!coursesLoading ? (
+            coursesData !== undefined && coursesData.total > 0 ? (
+              <MuiList>
+                {coursesData.data.map((item) => (
+                  <ListItem>
+                    <CourseCard data={item}></CourseCard>
+                  </ListItem>
+                ))}
+              </MuiList>
+            ) : (
+              <img
+                // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
+                // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
+                src={
+                  "https://via.placeholder.com/300x300.png?text=No+Subscription"
+                }
+                width={300}
+                height={300}
+                alt="Empty Subscription"
+                style={{ height: "inherit" }}
+                loading="lazy"
+              />
+            )
+          ) : (
+            "Loading"
+          )}
+        </Stack>
+        <Stack gap={1} justifyContent="center" alignItems="center">
+          <Typography variant="h4" fontWeight="bold">
+            {t("trainers.products")}
           </Typography>
           {!productLoading ? (
             productData !== undefined && productData.total > 0 ? (
@@ -314,12 +355,10 @@ export const TrainerShow: React.FC = () => {
               <img
                 // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
                 // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
-                src={
-                  "https://via.placeholder.com/300x300.png?text=No+Subscription"
-                }
+                src={"https://via.placeholder.com/300x300.png?text=No+Product"}
                 width={300}
                 height={300}
-                alt="Empty Subscription"
+                alt="Empty Product"
                 style={{ height: "inherit" }}
                 loading="lazy"
               />

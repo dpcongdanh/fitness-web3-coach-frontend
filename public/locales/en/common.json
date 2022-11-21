@@ -131,6 +131,8 @@
     "certification": "Certification",
     "image_gallery": "Image Gallery",
     "subscriptions": "Subscriptions",
+    "courses": "Courses",
+    "products": "Products",
     "posts": "Posts"
   },
   "posts": {
@@ -162,6 +164,28 @@
       "list": "Posts",
       "show": "Show Post",
       "latest_posts": "Latest Posts"
+    }
+  },
+  "profiles": {
+    "profiles": "Users",
+    "loading": "Loading Users",
+    "show_loading": "Loading User",
+    "fields": {
+      "id": "Id",
+      "avatar": "Avatar",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "gender": "Gender",
+      "dob": "DOB",
+      "role": "Role",
+      "country": "Country",
+      "createdAt": "Created At"
+    },
+    "titles": {
+      "create": "Create User",
+      "edit": "Edit User",
+      "list": "Users",
+      "show": "Show User"
     }
   },
   "table": {
