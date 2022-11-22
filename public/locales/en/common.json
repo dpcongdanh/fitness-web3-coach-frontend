@@ -114,7 +114,7 @@
     "show_loading": "Loading Trainer's information",
     "fields": {
       "id": "Id",
-      "name": "Name",
+      "username": "Username",
       "first_name": "First Name",
       "last_name": "Last Name",
       "location": "Location",

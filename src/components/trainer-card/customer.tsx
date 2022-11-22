@@ -35,7 +35,6 @@ export const TrainerCard: React.FC<DataProps> = ({ data }) => {
       }}
       underline="none"
     >
-      {" "}
       <Card
       // sx={{ maxWidth: 320 }}
       >

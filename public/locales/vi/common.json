@@ -114,7 +114,7 @@
     "show_loading": "Đang tải thông tin huấn luyện viên",
     "fields": {
       "id": "Id",
-      "name": "Username",
+      "username": "Username",
       "first_name": "Tên",
       "last_name": "Họ",
       "location": "Địa điểm",

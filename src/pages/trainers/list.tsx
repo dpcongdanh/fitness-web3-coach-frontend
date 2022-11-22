@@ -4,6 +4,7 @@ import {
   // useMany,
   useList,
   GetListResponse,
+  CanAccess,
 } from "@pankod/refine-core";
 import {
   // useDataGrid,
@@ -34,7 +35,7 @@ import { Search } from "@mui/icons-material";
 
 import { IService, ITrainer } from "interfaces";
 
-import { TrainerCard } from "../../components/trainer-card";
+import { TrainerCard, TrainerCardAdmin } from "../../components/trainer-card";
 
 import countryListAllIsoData from "components/countriesList";
 
@@ -334,11 +335,22 @@ export const TrainerList: React.FC = () => {
             spacing={{ xs: 2, md: 3 }}
             columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
           >
-            {trainerListResponse.data.map((row, index) => (
-              <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
-                <TrainerCard data={row}></TrainerCard>
-              </Grid>
-            ))}
+            <CanAccess
+              resource="trainers"
+              action="edit"
+              // params={{ id: 1 }}
+              fallback={trainerListResponse.data.map((row, index) => (
+                <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
+                  <TrainerCard data={row}></TrainerCard>
+                </Grid>
+              ))}
+            >
+              {trainerListResponse.data.map((row, index) => (
+                <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
+                  <TrainerCardAdmin data={row}></TrainerCardAdmin>
+                </Grid>
+              ))}
+            </CanAccess>
           </Grid>
         ) : (
           <Box
