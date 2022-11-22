@@ -34,11 +34,17 @@ import { PostList, PostShow } from "pages/posts";
 import { AccountSettings } from "pages/account-settings";
 
 function App() {
-  const user_uuid = JSON.parse(
-    localStorage.getItem("supabase.auth.token") as string
-  ).currentSession.user.id;
+  // const supabaseStorageString: string = localStorage.getItem(
+  //   "supabase.auth.token"
+  // ) as string;
+  // const user_uuid =
+  //   supabaseStorageString !== null
+  //     ? JSON.parse(supabaseStorageString).currentSession.user.id
+  //     : null;
 
   const dataProviderObj = dataProvider(supabaseClient);
+
+  const liveProviderObj = liveProvider(supabaseClient);
 
   const { t, i18n } = useTranslation();
 
@@ -61,23 +67,22 @@ function App() {
           accessControlProvider={{
             can: async ({ resource, action, params }) => {
               const enforcer = await newEnforcer(model, adapter);
+              const userIdentity = await authProvider?.getUserIdentity?.();
+              // const userProfile = await dataProviderObj.getOne({
+              //   resource: "profiles",
+              //   id: user_uuid,
+              // });
               const userProfile = await dataProviderObj.getOne({
                 resource: "profiles",
-                id: user_uuid,
+                id: userIdentity.id,
               });
+
               console.log(userProfile.data.role);
-              // console.log(params?.resource);
-              const can = await enforcer.enforce(
+              const can: any = await enforcer.enforce(
                 userProfile.data.role,
                 resource,
                 action
               );
-              // const can = await enforcer.enforce(
-              //   userData?.data.role,
-              //   resource,
-              //   action
-              // );
-
               return Promise.resolve({ can });
             },
           }}
@@ -85,7 +90,7 @@ function App() {
           ReadyPage={ReadyPage}
           catchAll={<ErrorComponent />}
           dataProvider={dataProviderObj}
-          liveProvider={liveProvider(supabaseClient)}
+          liveProvider={liveProviderObj}
           authProvider={authProvider}
           routerProvider={{
             ...routerProvider,
