@@ -29,9 +29,13 @@ p, admin, calendar, (list)|(create)|(edit)|(show)|(delete)
 p, admin, calendar/*, (edit)|(show)
 p, admin, calendar/*, field
 
-p, admin, posts, (list)|(create)
-p, admin, posts/*, (edit)|(show)
+p, admin, posts, (list)|(create)|(edit)|(show)|(delete)
+p, admin, posts/*, (edit)|(show)|(delete)
 p, admin, posts/*, field
+
+p, admin, post_comments, (list)|(create)|(edit)|(show)|(delete)
+p, admin, post_comments/*, (edit)|(show)|(delete)
+p, admin, post_comments/*, field
 
 p, customer, trainers, list
 p, customer, trainers/*, (show)

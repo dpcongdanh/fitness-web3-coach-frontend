@@ -94,6 +94,10 @@ export const CommentBox: React.FC<DataProps> = ({ data, post_id, loading }) => {
     resource: "profiles",
   });
 
+  const currentUserProfile = profilesData?.data.find((profile) => {
+    return profile.id === user.id;
+  });
+
   // console.log(data);
   // console.log(profilesIds);
 
@@ -156,7 +160,8 @@ export const CommentBox: React.FC<DataProps> = ({ data, post_id, loading }) => {
                 </p>
               </Grid>
             </Grid>
-            {profileInfo?.id === user.id && (
+            {(profileInfo?.id === user.id ||
+              currentUserProfile?.role === "admin") && (
               <DeleteButton
                 resourceNameOrRouteName="post_comments"
                 recordItemId={post.id}

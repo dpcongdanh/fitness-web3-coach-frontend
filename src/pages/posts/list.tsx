@@ -4,6 +4,7 @@ import {
   // useMany,
   useList,
   GetListResponse,
+  CanAccess,
 } from "@pankod/refine-core";
 import {
   // useDataGrid,
@@ -33,10 +34,12 @@ import { Search } from "@mui/icons-material";
 
 import { IPost, ITrainer } from "interfaces";
 
-import { PostCard } from "../../components/post-card";
+import { PostCard, PostCardAdmin } from "../../components/post-card";
 
 export const PostList: React.FC = () => {
   const t = useTranslate();
+
+  const [forceReload, setForceReload] = useState<null>();
 
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
@@ -93,7 +96,7 @@ export const PostList: React.FC = () => {
     if (selectAuthor !== undefined && selectAuthor !== "")
       refetchPostsWithAuthor();
     else refetchPosts();
-  }, [refetchPosts, refetchPostsWithAuthor, search, selectAuthor]);
+  }, [refetchPosts, refetchPostsWithAuthor, search, selectAuthor, forceReload]);
 
   // const postListQueryResult = useList<IPost>({
   //   resource: "posts",
@@ -111,7 +114,7 @@ export const PostList: React.FC = () => {
           marginBottom: "10px",
           display: "flex",
           alignItems: "center",
-          width: 640,
+          maxWidth: 640,
         }}
       >
         <IconButton disabled type="button" sx={{ p: "10px" }} aria-label="menu">
@@ -207,13 +210,29 @@ export const PostList: React.FC = () => {
           <Grid
             container
             spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 3, sm: 6, md: 9, lg: 12 }}
+            columns={{ xs: 3, sm: 6, md: 6, lg: 12, xl: 12 }}
           >
-            {postsListResponse.data.map((row, index) => (
-              <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
-                <PostCard data={row}></PostCard>
-              </Grid>
-            ))}
+            <CanAccess
+              resource="posts"
+              action="edit"
+              // params={{ id: 1 }}
+              fallback={postsListResponse.data.map((row, index) => (
+                <Grid item xs={3} sm={3} md={3} lg={4} xl={3} key={index}>
+                  <PostCard data={row}></PostCard>
+                </Grid>
+              ))}
+            >
+              {postsListResponse.data.map((row, index) => (
+                <Grid item xs={3} sm={3} md={3} lg={4} xl={3} key={index}>
+                  <PostCardAdmin
+                    data={row}
+                    onDelete={() => {
+                      setForceReload(null);
+                    }}
+                  ></PostCardAdmin>
+                </Grid>
+              ))}
+            </CanAccess>
           </Grid>
         ) : (
           <Box

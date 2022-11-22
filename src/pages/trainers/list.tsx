@@ -44,6 +44,8 @@ export const TrainerList: React.FC = () => {
 
   // const { dataGridProps } = useDataGrid<ITrainer>();
 
+  const [forceReload, setForceReload] = useState<null>();
+
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
   const [firstNameSearch, setFirstNameSearch] = useState<string>("");
@@ -157,7 +159,7 @@ export const TrainerList: React.FC = () => {
   // }, [refetchTrainers, search]);
 
   useEffect(() => {
-    console.log(selectServices);
+    // console.log(selectServices);
     setIsLoading(true);
     setTrainerListResponse(undefined);
     if (selectCountries !== undefined && selectCountries.length !== 0)
@@ -172,6 +174,7 @@ export const TrainerList: React.FC = () => {
     lastNameSearch,
     selectServices,
     selectCountries,
+    forceReload,
   ]);
 
   return (
@@ -347,7 +350,12 @@ export const TrainerList: React.FC = () => {
             >
               {trainerListResponse.data.map((row, index) => (
                 <Grid item xs={3} sm={3} md={3} lg={3} key={index}>
-                  <TrainerCardAdmin data={row}></TrainerCardAdmin>
+                  <TrainerCardAdmin
+                    data={row}
+                    onDelete={() => {
+                      setForceReload(null);
+                    }}
+                  ></TrainerCardAdmin>
                 </Grid>
               ))}
             </CanAccess>

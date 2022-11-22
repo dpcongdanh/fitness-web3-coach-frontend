@@ -24,7 +24,12 @@ import { supabaseClient } from "utility";
 import { Title, Sider, Layout, Header } from "components/layout";
 import authProvider from "./authProvider";
 
-import { TrainerList, TrainerShow, TrainerEdit } from "pages/trainers";
+import {
+  TrainerList,
+  TrainerShow,
+  TrainerEdit,
+  TrainerCreate,
+} from "pages/trainers";
 
 import { CalendarList } from "pages/calendar";
 
@@ -137,7 +142,7 @@ function App() {
               name: "trainers",
               list: TrainerList,
               show: TrainerShow,
-              // create: TrainerCreate,
+              create: TrainerCreate,
               edit: TrainerEdit,
             },
             {

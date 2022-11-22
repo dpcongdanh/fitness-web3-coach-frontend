@@ -14,9 +14,7 @@ import {
 } from "@pankod/refine-mui";
 import { useForm } from "@pankod/refine-react-hook-form";
 
-// import { IPatient, IClinic } from "interfaces";
-
-import { ITrainer } from "interfaces";
+import { IPost } from "interfaces";
 
 import { FileUpload } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
@@ -29,31 +27,8 @@ import { uploadImage, getPublicImageUrl } from "api";
 
 import countryListAllIsoData from "components/countriesList";
 
-// import { createEditor, BaseEditor, Descendant } from "slate";
-
-// import { Slate, Editable, withReact, ReactEditor } from "slate-react";
-
-// type CustomElement = { type: "paragraph"; children: CustomText[] };
-// type CustomText = { text: string };
-
-// declare module "slate" {
-//   interface CustomTypes {
-//     Editor: BaseEditor & ReactEditor;
-//     Element: CustomElement;
-//     Text: CustomText;
-//   }
-// }
-
-// const initialAbout: Descendant[] = [
-//   {
-//     type: "paragraph",
-//     children: [{ text: "A line of text in a paragraph." }],
-//   },
-// ];
-
-export const TrainerEdit: React.FC = () => {
+export const PostEdit: React.FC = () => {
   const t = useTranslate();
-  // const [about] = useState(() => withReact(createEditor()));
 
   const {
     refineCore: { formLoading, queryResult },
@@ -63,7 +38,7 @@ export const TrainerEdit: React.FC = () => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<ITrainer, HttpError, ITrainer>();
+  } = useForm<IPost, HttpError, IPost>();
 
   // const imageInput = watch("image");
 
@@ -76,46 +51,48 @@ export const TrainerEdit: React.FC = () => {
 
   //Form field state
 
-  const [userName, setUserName] = useState("");
+  const [title, setTitle] = useState("");
 
   const [firstName, setFirstName] = useState("");
 
   const [lastName, setLastName] = useState("");
 
-  const [about, setAbout] = useState("");
+  const [cover, setCover] = useState("");
 
   const [location, setLocation] = useState("");
 
   useEffect(() => {
     if (formLoading) {
-      register("about");
+      register("body");
     }
     if (!formLoading && !queryResult?.isLoading) {
       console.log(getValues());
       reset();
-      setUserName(getValues("username"));
-      setFirstName(getValues("first_name"));
-      setLastName(getValues("last_name"));
-      setAbout(getValues("about"));
-      setLocation(getValues("location"));
+      setTitle(getValues("title"));
+      // setFirstName(getValues("first_name"));
+      // setLastName(getValues("last_name"));
+      // setAbout(getValues("about"));
+      // setLocation(getValues("location"));
     }
   }, [getValues, reset, queryResult?.isLoading, formLoading, register]);
 
   const handleSubmit = async (e: BaseSyntheticEvent<object, any, any>) => {
-    setValue("about", about);
+    setValue("cover", cover);
     console.log(getValues());
+
+    // console.log(imageFile);
 
     try {
       if (imageFile !== undefined) {
         setCreatingPatient(true);
         const uploaded = await uploadImage(
           imageFile,
-          "avatar",
-          `patients/${getValues("username")}/`
+          "post",
+          `${getValues("username")}/${getValues("title")}/`
         );
         if (uploaded !== undefined) {
           const imageUrl = await getPublicImageUrl(
-            "avatar",
+            "post",
             uploaded?.Key.substring(uploaded?.Key.indexOf("/") + 1)
           );
           if (imageUrl !== undefined) setValue("avatar", imageUrl?.publicURL);
@@ -179,40 +156,6 @@ export const TrainerEdit: React.FC = () => {
         spacing={{ xs: 1, sm: 2, md: 4 }}
         paddingBottom="24px"
       >
-        <Stack gap={1}>
-          <Avatar
-            alt={getValues("username")}
-            src={imagePreview || getValues("avatar")}
-            sx={{ width: 320, height: 320 }}
-          />
-          <label htmlFor="images-input">
-            <Input
-              id="images-input"
-              type="file"
-              sx={{ display: "none" }}
-              onChange={onChangeHandler}
-              // onChange={(event) => {
-              //   console.log(event.target);
-              // }}
-            />
-            <input id="file" {...register("avatar")} type="hidden" />
-            <LoadingButton
-              // loading={isUploadLoading}
-              loadingPosition="start"
-              startIcon={<FileUpload />}
-              variant="contained"
-              component="span"
-            >
-              Upload
-            </LoadingButton>
-            <br />
-            {/* {errors.image && (
-                            <Typography variant="caption" color="#fa541c">
-                                {errors.image?.message}
-                            </Typography>
-                        )} */}
-          </label>
-        </Stack>
         <Stack gap={1} width="100%">
           <Box
             component="form"
@@ -220,18 +163,18 @@ export const TrainerEdit: React.FC = () => {
             autoComplete="off"
           >
             <TextField
-              {...register("username", { required: "Username is required" })}
-              error={!!errors?.username}
-              helperText={errors.username?.message}
+              {...register("title", { required: "Title is required" })}
+              error={!!errors?.title}
+              helperText={errors.title?.message}
               margin="normal"
               // required
               fullWidth
-              id="username"
-              label={t("trainers.fields.username")}
-              name="username"
-              value={userName}
+              id="title"
+              label={t("posts.fields.title")}
+              name="title"
+              value={title}
               onChange={(e) => {
-                setUserName(e.target.value as string);
+                setTitle(e.target.value as string);
               }}
               autoFocus
             />

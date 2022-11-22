@@ -2,7 +2,7 @@ import { HttpError, useTranslate } from "@pankod/refine-core";
 import {
   Box,
   TextField,
-  Edit,
+  Create,
   Input,
   Stack,
   Avatar,
@@ -51,7 +51,7 @@ import countryListAllIsoData from "components/countriesList";
 //   },
 // ];
 
-export const TrainerEdit: React.FC = () => {
+export const TrainerCreate: React.FC = () => {
   const t = useTranslate();
   // const [about] = useState(() => withReact(createEditor()));
 
@@ -90,20 +90,17 @@ export const TrainerEdit: React.FC = () => {
     if (formLoading) {
       register("about");
     }
-    if (!formLoading && !queryResult?.isLoading) {
-      console.log(getValues());
-      reset();
-      setUserName(getValues("username"));
-      setFirstName(getValues("first_name"));
-      setLastName(getValues("last_name"));
-      setAbout(getValues("about"));
-      setLocation(getValues("location"));
-    }
-  }, [getValues, reset, queryResult?.isLoading, formLoading, register]);
+  }, [formLoading, register]);
 
   const handleSubmit = async (e: BaseSyntheticEvent<object, any, any>) => {
     setValue("about", about);
     console.log(getValues());
+    // console.log(saveButtonProps);
+
+    // console.log(watch("username"));
+    // console.log(getValues());
+    // setValue("image", "fegsegsegse");
+    // console.log(imageFile);
 
     try {
       if (imageFile !== undefined) {
@@ -121,7 +118,6 @@ export const TrainerEdit: React.FC = () => {
           if (imageUrl !== undefined) setValue("avatar", imageUrl?.publicURL);
         }
       }
-
       saveButtonProps.onClick(e);
       setCreatingPatient(false);
       // throw new Error("Function not implemented.");
@@ -165,7 +161,7 @@ export const TrainerEdit: React.FC = () => {
   // console.log(defaultValueQueryResult?.data?.data[0]);
 
   return (
-    <Edit
+    <Create
       isLoading={formLoading}
       saveButtonProps={{
         disabled: creatingPatient || formLoading,
@@ -357,6 +353,6 @@ export const TrainerEdit: React.FC = () => {
         {t("trainers.fields.about")}
       </Typography>
       <ReactQuill theme="snow" value={about} onChange={setAbout} />
-    </Edit>
+    </Create>
   );
 };

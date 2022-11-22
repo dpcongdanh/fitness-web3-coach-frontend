@@ -18,9 +18,13 @@ import countryListAllIsoData from "components/countriesList";
 
 export type DataPropsAdmin = {
   data?: ITrainer;
+  onDelete?: () => any;
 };
 
-export const TrainerCardAdmin: React.FC<DataPropsAdmin> = ({ data }) => {
+export const TrainerCardAdmin: React.FC<DataPropsAdmin> = ({
+  data,
+  onDelete,
+}) => {
   return (
     <Card
     // sx={{ maxWidth: 320 }}
@@ -50,7 +54,11 @@ export const TrainerCardAdmin: React.FC<DataPropsAdmin> = ({ data }) => {
       <CardActions>
         <ShowButton size="small" recordItemId={data?.id} />
         <EditButton size="small" recordItemId={data?.id} />
-        <DeleteButton size="small" recordItemId={data?.id} />
+        <DeleteButton
+          onSuccess={onDelete}
+          size="small"
+          recordItemId={data?.id}
+        />
       </CardActions>
     </Card>
   );
