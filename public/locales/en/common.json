@@ -142,6 +142,10 @@
     "fields": {
       "id": "Id",
       "title": "Title",
+      "author": "Author",
+      "body": "Body",
+      "cover": "Cover",
+      "summary": "Summary",
       "category": {
         "title": "Category",
         "filter": {

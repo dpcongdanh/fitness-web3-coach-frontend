@@ -35,7 +35,7 @@ import { CalendarList } from "pages/calendar";
 
 import { UserList } from "pages/users";
 
-import { PostList, PostShow } from "pages/posts";
+import { PostList, PostShow, PostEdit, PostCreate } from "pages/posts";
 
 import { AccountSettings } from "pages/account-settings";
 
@@ -156,15 +156,15 @@ function App() {
               name: "posts",
               list: PostList,
               show: PostShow,
-              // create: PostCreate,
-              // edit: PostEdit,
+              create: PostCreate,
+              edit: PostEdit,
             },
             {
               name: "profiles",
               list: UserList,
-              // show: PostShow,
-              // create: PostCreate,
-              // edit: PostEdit,
+              // show: UserShow,
+              // create: UserCreate,
+              // edit: UserEdit,
             },
           ]}
           Title={Title}

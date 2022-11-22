@@ -142,6 +142,10 @@
     "fields": {
       "id": "Id",
       "title": "Tiêu đề",
+      "author": "Tác giả",
+      "body": "Nội dung bài viết",
+      "cover": "Ảnh bìa",
+      "summary": "Tóm tắt",
       "category": {
         "title": "Category",
         "filter": {

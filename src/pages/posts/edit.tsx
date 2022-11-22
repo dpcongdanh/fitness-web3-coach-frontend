@@ -1,11 +1,10 @@
-import { HttpError, useTranslate } from "@pankod/refine-core";
+import { HttpError, useTranslate, useList } from "@pankod/refine-core";
 import {
   Box,
   TextField,
   Edit,
   Input,
   Stack,
-  Avatar,
   Typography,
   FormControl,
   InputLabel,
@@ -14,7 +13,7 @@ import {
 } from "@pankod/refine-mui";
 import { useForm } from "@pankod/refine-react-hook-form";
 
-import { IPost } from "interfaces";
+import { IPost, ITrainer } from "interfaces";
 
 import { FileUpload } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
@@ -24,8 +23,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import { uploadImage, getPublicImageUrl } from "api";
-
-import countryListAllIsoData from "components/countriesList";
 
 export const PostEdit: React.FC = () => {
   const t = useTranslate();
@@ -40,6 +37,22 @@ export const PostEdit: React.FC = () => {
     formState: { errors },
   } = useForm<IPost, HttpError, IPost>();
 
+  const { data: authorsData, isLoading: authorsLoading } = useList<ITrainer>({
+    resource: "trainers",
+    // config: {
+    //   filters: [{ field: "title", operator: "contains", value: search }],
+    // },
+    // queryOptions: {
+    //   enabled: false,
+    //   onSuccess: (data) => {
+    //     setIsLoading(false);
+    //     if (data.total > 0) {
+    //       setPostsListResponse(data);
+    //     }
+    //   },
+    // },
+  });
+
   // const imageInput = watch("image");
 
   // avatar state
@@ -51,15 +64,13 @@ export const PostEdit: React.FC = () => {
 
   //Form field state
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState<string>("");
 
-  const [firstName, setFirstName] = useState("");
+  const [summary, setSummary] = useState<string>("");
 
-  const [lastName, setLastName] = useState("");
+  const [author, setAuthor] = useState<number>(0);
 
-  const [cover, setCover] = useState("");
-
-  const [location, setLocation] = useState("");
+  const [body, setBody] = useState<string>("");
 
   useEffect(() => {
     if (formLoading) {
@@ -68,7 +79,11 @@ export const PostEdit: React.FC = () => {
     if (!formLoading && !queryResult?.isLoading) {
       console.log(getValues());
       reset();
+      console.log(getValues("user_id"));
       setTitle(getValues("title"));
+      setAuthor(getValues("user_id"));
+      setSummary(getValues("summary"));
+      setBody(getValues("body"));
       // setFirstName(getValues("first_name"));
       // setLastName(getValues("last_name"));
       // setAbout(getValues("about"));
@@ -77,7 +92,7 @@ export const PostEdit: React.FC = () => {
   }, [getValues, reset, queryResult?.isLoading, formLoading, register]);
 
   const handleSubmit = async (e: BaseSyntheticEvent<object, any, any>) => {
-    setValue("cover", cover);
+    setValue("body", body);
     console.log(getValues());
 
     // console.log(imageFile);
@@ -85,17 +100,21 @@ export const PostEdit: React.FC = () => {
     try {
       if (imageFile !== undefined) {
         setCreatingPatient(true);
+        const authorUserName = authorsData?.data?.find((item) => {
+          return item.id === getValues("user_id");
+        })?.username;
+
         const uploaded = await uploadImage(
           imageFile,
-          "post",
-          `${getValues("username")}/${getValues("title")}/`
+          "posts",
+          `${authorUserName}/${getValues("title")}/`
         );
         if (uploaded !== undefined) {
           const imageUrl = await getPublicImageUrl(
-            "post",
+            "posts",
             uploaded?.Key.substring(uploaded?.Key.indexOf("/") + 1)
           );
-          if (imageUrl !== undefined) setValue("avatar", imageUrl?.publicURL);
+          if (imageUrl !== undefined) setValue("cover", imageUrl?.publicURL);
         }
       }
 
@@ -151,90 +170,74 @@ export const PostEdit: React.FC = () => {
         },
       }}
     >
-      <Stack
-        direction={{ sm: "column", md: "row" }}
-        spacing={{ xs: 1, sm: 2, md: 4 }}
-        paddingBottom="24px"
-      >
-        <Stack gap={1} width="100%">
-          <Box
-            component="form"
-            // sx={{ display: "flex", flexDirection: "column" }}
-            autoComplete="off"
-          >
-            <TextField
-              {...register("title", { required: "Title is required" })}
-              error={!!errors?.title}
-              helperText={errors.title?.message}
-              margin="normal"
-              // required
-              fullWidth
-              id="title"
-              label={t("posts.fields.title")}
-              name="title"
-              value={title}
+      <Stack gap={1} width="100%">
+        <Box
+          component="form"
+          // sx={{ display: "flex", flexDirection: "column" }}
+          sx={{ padding: "10px" }}
+          autoComplete="off"
+        >
+          <TextField
+            {...register("title", { required: "Title is required" })}
+            error={!!errors?.title}
+            helperText={errors.title?.message}
+            margin="normal"
+            // required
+            fullWidth
+            id="title"
+            label={t("posts.fields.title")}
+            name="title"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value as string);
+            }}
+            autoFocus
+          />
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">
+              {t("posts.fields.author")}
+            </InputLabel>
+            <Select
+              {...register("user_id", { required: "Author is required" })}
+              // error={!!errors?.user_id}
+              // helperText={errors.user_id?.message}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              name="user_id"
+              value={author}
+              label={t("posts.fields.author")}
               onChange={(e) => {
-                setTitle(e.target.value as string);
+                console.log(e.target.value);
+                setAuthor(e.target.value as number);
               }}
-              autoFocus
-            />
-
-            <TextField
-              {...register("first_name", {
-                required: "First Name is required",
+            >
+              {authorsData?.data?.map((item) => {
+                return (
+                  <MenuItem value={item.id}>
+                    {item.first_name + " " + item.last_name}
+                  </MenuItem>
+                );
               })}
-              error={!!errors?.first_name}
-              helperText={errors.first_name?.message}
-              margin="normal"
-              // required
-              fullWidth
-              id="first_name"
-              label={t("trainers.fields.first_name")}
-              name="first_name"
-              value={firstName}
-              onChange={(e) => {
-                setFirstName(e.target.value as string);
-              }}
-            />
-            <TextField
-              {...register("last_name", { required: "Last Name is required" })}
-              error={!!errors?.last_name}
-              helperText={errors.last_name?.message}
-              margin="normal"
-              // required
-              fullWidth
-              id="last_name"
-              label={t("trainers.fields.last_name")}
-              name="last_name"
-              value={lastName}
-              onChange={(e) => {
-                setLastName(e.target.value as string);
-              }}
-            />
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                {t("trainers.fields.location")}
-              </InputLabel>
-              <Select
-                {...register("location")}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={location}
-                label={t("trainers.fields.location")}
-                onChange={(e) => {
-                  setLocation(e.target.value as string);
-                }}
-              >
-                {countryListAllIsoData.map((item) => {
-                  return <MenuItem value={item.code3}>{item.name}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-
-            {/* <Slate editor={about} value={initialAbout}>
-              <Editable />
-            </Slate> */}
-            {/* <Controller
+            </Select>
+          </FormControl>
+          <TextField
+            {...register("summary")}
+            error={!!errors?.summary}
+            helperText={errors.summary?.message}
+            margin="normal"
+            // required
+            fullWidth
+            id="summary"
+            label={t("posts.fields.summary")}
+            multiline
+            rows={4}
+            name="summary"
+            value={summary}
+            onChange={(e) => {
+              setSummary(e.target.value as string);
+            }}
+          />
+          {/* <Controller
           control={control}
           name="status"
           rules={{ required: "Status is required" }}
@@ -259,7 +262,7 @@ export const PostEdit: React.FC = () => {
             />
           )}
         /> */}
-            {/* <Controller
+          {/* <Controller
               control={control}
               name="clinic"
               rules={{ required: "Clinic is required" }}
@@ -293,13 +296,59 @@ export const PostEdit: React.FC = () => {
                 />
               )}
             /> */}
-          </Box>
-        </Stack>
+          <Typography variant="h5" paddingBottom="4px">
+            {t("posts.fields.body")}
+          </Typography>
+          <ReactQuill theme="snow" value={body} onChange={setBody} />
+          {/* <Avatar
+            alt={getValues("username")}
+            src={imagePreview || getValues("avatar")}
+            sx={{ width: 320, height: 320 }}
+          /> */}
+          <label htmlFor="images-input">
+            <Input
+              id="images-input"
+              type="file"
+              sx={{ display: "none" }}
+              onChange={onChangeHandler}
+              // onChange={(event) => {
+              //   console.log(event.target);
+              // }}
+            />
+            <input id="file" {...register("cover")} type="hidden" />
+            <Typography variant="h5" paddingBottom="4px">
+              {t("posts.fields.cover")}
+            </Typography>
+            <LoadingButton
+              // loading={isUploadLoading}
+              loadingPosition="start"
+              startIcon={<FileUpload />}
+              variant="contained"
+              component="span"
+            >
+              Upload Cover Image
+            </LoadingButton>
+            <br />
+            <Box sx={{ width: "480px", paddingTop: "10px" }}>
+              {((imagePreview !== "" && imagePreview !== null) ||
+                (getValues("cover") !== "" && getValues("cover") !== null)) && (
+                <img
+                  src={imagePreview || getValues("cover")}
+                  srcSet={imagePreview || getValues("cover")}
+                  alt={getValues("title")}
+                  style={{ width: "inherit", height: "inherit" }}
+                  loading="lazy"
+                />
+              )}
+            </Box>
+            {/* {errors.image && (
+                            <Typography variant="caption" color="#fa541c">
+                                {errors.image?.message}
+                            </Typography>
+                        )} */}
+          </label>
+        </Box>
       </Stack>
-      <Typography variant="h5" paddingBottom="4px">
-        {t("trainers.fields.about")}
-      </Typography>
-      <ReactQuill theme="snow" value={about} onChange={setAbout} />
     </Edit>
   );
 };
