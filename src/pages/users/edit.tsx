@@ -2,59 +2,36 @@ import { HttpError, useTranslate } from "@pankod/refine-core";
 import {
   Box,
   TextField,
-  Create,
+  Edit,
   Input,
   Stack,
   Avatar,
-  Typography,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
+  TextFieldProps,
+  SelectChangeEvent,
 } from "@pankod/refine-mui";
 import { useForm } from "@pankod/refine-react-hook-form";
 
-// import { IPatient, IClinic } from "interfaces";
-
-import { ITrainer } from "interfaces";
+import { IProfile } from "interfaces";
 
 import { FileUpload, SaveOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { BaseSyntheticEvent, useState, useEffect } from "react";
 
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import dayjs, { Dayjs } from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { uploadImage, getPublicImageUrl } from "api";
 
 import countryListAllIsoData from "components/countriesList";
 
-// import { createEditor, BaseEditor, Descendant } from "slate";
-
-// import { Slate, Editable, withReact, ReactEditor } from "slate-react";
-
-// type CustomElement = { type: "paragraph"; children: CustomText[] };
-// type CustomText = { text: string };
-
-// declare module "slate" {
-//   interface CustomTypes {
-//     Editor: BaseEditor & ReactEditor;
-//     Element: CustomElement;
-//     Text: CustomText;
-//   }
-// }
-
-// const initialAbout: Descendant[] = [
-//   {
-//     type: "paragraph",
-//     children: [{ text: "A line of text in a paragraph." }],
-//   },
-// ];
-
-export const TrainerCreate: React.FC = () => {
+export const UserEdit: React.FC = () => {
   const t = useTranslate();
-  // const [about] = useState(() => withReact(createEditor()));
-
   const {
     refineCore: { formLoading, queryResult },
     saveButtonProps,
@@ -63,52 +40,51 @@ export const TrainerCreate: React.FC = () => {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<ITrainer, HttpError, ITrainer>();
-
-  // const imageInput = watch("image");
+  } = useForm<IProfile, HttpError, IProfile>();
 
   // avatar state
   const [imagePreview, setImagePreview] = useState<string>("");
 
   const [imageFile, setImageFile] = useState<File>();
 
-  const [creatingPatient, setCreatingPatient] = useState<boolean>(false);
+  const [updatingUser, setUpdatingUser] = useState<boolean>(false);
 
   //Form field state
-
-  const [userName, setUserName] = useState("");
 
   const [firstName, setFirstName] = useState("");
 
   const [lastName, setLastName] = useState("");
 
-  const [about, setAbout] = useState("");
+  const [gender, setGender] = useState<string>("");
 
-  const [location, setLocation] = useState("");
+  const [dob, setDob] = useState<Dayjs | null>(null);
+
+  const [country, setCountry] = useState("");
 
   useEffect(() => {
-    if (formLoading) {
-      register("about");
+    // if (formLoading) {
+    //   register("about");
+    // }
+    if (!formLoading && !queryResult?.isLoading) {
+      console.log(getValues());
+      const dob = getValues("dob");
+      reset();
+      setFirstName(getValues("first_name"));
+      setLastName(getValues("last_name"));
+      setGender(getValues("gender") || "");
+      setDob(dob !== null && dob !== undefined ? dayjs(dob) : null);
+      setCountry(getValues("country"));
     }
-  }, [formLoading, register]);
+  }, [getValues, reset, queryResult?.isLoading, formLoading, register]);
 
   const handleSubmit = async (e: BaseSyntheticEvent<object, any, any>) => {
-    setValue("about", about);
-    console.log(getValues());
-    // console.log(saveButtonProps);
-
-    // console.log(watch("username"));
-    // console.log(getValues());
-    // setValue("image", "fegsegsegse");
-    // console.log(imageFile);
-
     try {
       if (imageFile !== undefined) {
-        setCreatingPatient(true);
+        setUpdatingUser(true);
         const uploaded = await uploadImage(
           imageFile,
           "avatar",
-          `patients/${getValues("username")}/`
+          `customers/${getValues("id")}/`
         );
         if (uploaded !== undefined) {
           const imageUrl = await getPublicImageUrl(
@@ -119,10 +95,10 @@ export const TrainerCreate: React.FC = () => {
         }
       }
       saveButtonProps.onClick(e);
-      setCreatingPatient(false);
+      setUpdatingUser(false);
       // throw new Error("Function not implemented.");
     } catch (error) {
-      setCreatingPatient(false);
+      setUpdatingUser(false);
     }
   };
 
@@ -161,14 +137,14 @@ export const TrainerCreate: React.FC = () => {
   // console.log(defaultValueQueryResult?.data?.data[0]);
 
   return (
-    <Create
+    <Edit
       isLoading={formLoading}
       footerButtons={
         <LoadingButton
           type="submit"
           startIcon={<SaveOutlined />}
           loadingPosition="start"
-          loading={formLoading || creatingPatient}
+          loading={formLoading || updatingUser}
           variant="contained"
           onClick={async (e) => handleSubmit(e)}
         >
@@ -183,7 +159,7 @@ export const TrainerCreate: React.FC = () => {
       >
         <Stack gap={1}>
           <Avatar
-            alt={getValues("username")}
+            alt={getValues("id")}
             src={imagePreview || getValues("avatar")}
             sx={{ width: 320, height: 320 }}
           />
@@ -216,12 +192,13 @@ export const TrainerCreate: React.FC = () => {
           </label>
         </Stack>
         <Stack gap={1} width="100%">
-          <Box
-            component="form"
-            // sx={{ display: "flex", flexDirection: "column" }}
-            autoComplete="off"
-          >
-            <TextField
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Box
+              component="form"
+              // sx={{ display: "flex", flexDirection: "column" }}
+              autoComplete="off"
+            >
+              {/* <TextField
               {...register("username", { required: "Username is required" })}
               error={!!errors?.username}
               helperText={errors.username?.message}
@@ -236,64 +213,107 @@ export const TrainerCreate: React.FC = () => {
                 setUserName(e.target.value as string);
               }}
               autoFocus
-            />
+            /> */}
 
-            <TextField
-              {...register("first_name", {
-                required: "First Name is required",
-              })}
-              error={!!errors?.first_name}
-              helperText={errors.first_name?.message}
-              margin="normal"
-              // required
-              fullWidth
-              id="first_name"
-              label={t("trainers.fields.first_name")}
-              name="first_name"
-              value={firstName}
-              onChange={(e) => {
-                setFirstName(e.target.value as string);
-              }}
-            />
-            <TextField
-              {...register("last_name", { required: "Last Name is required" })}
-              error={!!errors?.last_name}
-              helperText={errors.last_name?.message}
-              margin="normal"
-              // required
-              fullWidth
-              id="last_name"
-              label={t("trainers.fields.last_name")}
-              name="last_name"
-              value={lastName}
-              onChange={(e) => {
-                setLastName(e.target.value as string);
-              }}
-            />
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                {t("trainers.fields.location")}
-              </InputLabel>
-              <Select
-                {...register("location")}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={location}
-                label={t("trainers.fields.location")}
-                onChange={(e) => {
-                  setLocation(e.target.value as string);
-                }}
-              >
-                {countryListAllIsoData.map((item) => {
-                  return <MenuItem value={item.code3}>{item.name}</MenuItem>;
+              <TextField
+                {...register("first_name", {
+                  required: "First Name is required",
                 })}
-              </Select>
-            </FormControl>
-
-            {/* <Slate editor={about} value={initialAbout}>
-              <Editable />
-            </Slate> */}
-            {/* <Controller
+                error={!!errors?.first_name}
+                helperText={errors.first_name?.message}
+                margin="normal"
+                // required
+                fullWidth
+                id="first_name"
+                label={t("profiles.fields.first_name")}
+                name="first_name"
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value as string);
+                }}
+              />
+              <TextField
+                {...register("last_name", {
+                  required: "Last Name is required",
+                })}
+                error={!!errors?.last_name}
+                helperText={errors.last_name?.message}
+                margin="normal"
+                // required
+                fullWidth
+                id="last_name"
+                label={t("profiles.fields.last_name")}
+                name="last_name"
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value as string);
+                }}
+              />
+              <FormControl margin="normal" fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  {t("profiles.fields.country")}
+                </InputLabel>
+                <Select
+                  {...register("country")}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={country}
+                  label={t("profiles.fields.country")}
+                  onChange={(e) => {
+                    setCountry(e.target.value as string);
+                  }}
+                >
+                  {countryListAllIsoData.map((item) => {
+                    return <MenuItem value={item.code3}>{item.name}</MenuItem>;
+                  })}
+                </Select>
+              </FormControl>
+              <FormControl margin="normal" fullWidth>
+                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                <Select
+                  {...register("gender")}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={gender}
+                  label="Gender"
+                  onChange={(event: SelectChangeEvent) => {
+                    setGender(event.target.value as string);
+                  }}
+                >
+                  <MenuItem value="Male">Male</MenuItem>
+                  <MenuItem value="Female">Female</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
+                </Select>
+              </FormControl>
+              <DatePicker
+                {...register("dob")}
+                disableFuture
+                // label={t("health_status_certificates.fields.expired_date")}
+                label="DOB"
+                openTo="day"
+                views={["year", "month", "day"]}
+                value={dob}
+                onChange={(newValue) => {
+                  if (newValue === null) setValue("dob", null);
+                  else {
+                    setValue("dob", newValue?.toDate().toLocaleDateString());
+                  }
+                  setDob(newValue);
+                }}
+                renderInput={(
+                  params: JSX.IntrinsicAttributes & TextFieldProps
+                ) => (
+                  <TextField
+                    // error={!!errors?.dob}
+                    // helperText={errors.dob?.message as string}
+                    fullWidth
+                    // variant="standard"
+                    margin="normal"
+                    {...params}
+                  />
+                )}
+              />
+              {/* <Controller
           control={control}
           name="status"
           rules={{ required: "Status is required" }}
@@ -318,7 +338,7 @@ export const TrainerCreate: React.FC = () => {
             />
           )}
         /> */}
-            {/* <Controller
+              {/* <Controller
               control={control}
               name="clinic"
               rules={{ required: "Clinic is required" }}
@@ -352,13 +372,10 @@ export const TrainerCreate: React.FC = () => {
                 />
               )}
             /> */}
-          </Box>
+            </Box>
+          </LocalizationProvider>
         </Stack>
       </Stack>
-      <Typography variant="h5" paddingBottom="4px">
-        {t("trainers.fields.about")}
-      </Typography>
-      <ReactQuill theme="snow" value={about} onChange={setAbout} />
-    </Create>
+    </Edit>
   );
 };

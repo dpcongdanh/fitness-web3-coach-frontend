@@ -33,7 +33,7 @@ import {
 
 import { CalendarList } from "pages/calendar";
 
-import { UserList } from "pages/users";
+import { UserList, UserEdit } from "pages/users";
 
 import { PostList, PostShow, PostEdit, PostCreate } from "pages/posts";
 
@@ -164,7 +164,7 @@ function App() {
               list: UserList,
               // show: UserShow,
               // create: UserCreate,
-              // edit: UserEdit,
+              edit: UserEdit,
             },
           ]}
           Title={Title}

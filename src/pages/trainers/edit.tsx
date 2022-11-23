@@ -18,7 +18,7 @@ import { useForm } from "@pankod/refine-react-hook-form";
 
 import { ITrainer } from "interfaces";
 
-import { FileUpload } from "@mui/icons-material";
+import { FileUpload, SaveOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { BaseSyntheticEvent, useState, useEffect } from "react";
 
@@ -167,12 +167,18 @@ export const TrainerEdit: React.FC = () => {
   return (
     <Edit
       isLoading={formLoading}
-      saveButtonProps={{
-        disabled: creatingPatient || formLoading,
-        onClick: (e: BaseSyntheticEvent<object, any, any>) => {
-          handleSubmit(e);
-        },
-      }}
+      footerButtons={
+        <LoadingButton
+          type="submit"
+          startIcon={<SaveOutlined />}
+          loadingPosition="start"
+          loading={formLoading || creatingPatient}
+          variant="contained"
+          onClick={async (e) => handleSubmit(e)}
+        >
+          {t("buttons.save")}
+        </LoadingButton>
+      }
     >
       <Stack
         direction={{ sm: "column", md: "row" }}

@@ -34,6 +34,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { uploadImage, getPublicImageUrl } from "api";
 
+import countryListAllIsoData from "components/countriesList";
+
 export const AccountSettings: React.FC = () => {
   const t = useTranslate();
 
@@ -95,6 +97,8 @@ export const AccountSettings: React.FC = () => {
 
   const [lastName, setLastName] = useState<string>("");
 
+  const [country, setCountry] = useState<string>("");
+
   const [gender, setGender] = useState<string>("");
 
   const [dob, setDob] = useState<Dayjs | null>(null);
@@ -110,6 +114,7 @@ export const AccountSettings: React.FC = () => {
       setFirstName(getValues("first_name"));
       setLastName(getValues("last_name"));
       setGender(getValues("gender"));
+      setCountry(getValues("country"));
       setDob(dayjs(getValues("dob")));
     }
   }, [getValues, reset, queryResult?.isLoading, formLoading]);
@@ -251,7 +256,6 @@ export const AccountSettings: React.FC = () => {
         </Stack>
         <Stack gap={1} width="100%">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {" "}
             <Box
               component="form"
               // sx={{ display: "flex", flexDirection: "column" }}
@@ -291,7 +295,11 @@ export const AccountSettings: React.FC = () => {
                 label="Last Name"
                 name="last_name"
               />
-              <FormControl fullWidth>
+              <FormControl
+                // sx={{ marginTop: "12px", marginBottom: "12px" }}
+                margin="normal"
+                fullWidth
+              >
                 <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                 <Select
                   {...register("gender")}
@@ -304,6 +312,29 @@ export const AccountSettings: React.FC = () => {
                   <MenuItem value="Male">Male</MenuItem>
                   <MenuItem value="Female">Female</MenuItem>
                   <MenuItem value="Other">Other</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl
+                margin="normal"
+                // sx={{ marginTop: "12px", marginBottom: "12px" }}
+                fullWidth
+              >
+                <InputLabel id="demo-simple-select-label">
+                  {t("profiles.fields.country")}
+                </InputLabel>
+                <Select
+                  {...register("country")}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={country}
+                  label={t("profiles.fields.country")}
+                  onChange={(e) => {
+                    setCountry(e.target.value as string);
+                  }}
+                >
+                  {countryListAllIsoData.map((item) => {
+                    return <MenuItem value={item.code3}>{item.name}</MenuItem>;
+                  })}
                 </Select>
               </FormControl>
               <DatePicker
@@ -329,7 +360,7 @@ export const AccountSettings: React.FC = () => {
                     helperText={errors.dob?.message as string}
                     fullWidth
                     // variant="standard"
-                    margin="dense"
+                    margin="normal"
                     {...params}
                   />
                 )}
