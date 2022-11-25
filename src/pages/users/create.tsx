@@ -2,7 +2,7 @@ import { HttpError, useTranslate } from "@pankod/refine-core";
 import {
   Box,
   TextField,
-  Edit,
+  Create,
   Input,
   Stack,
   Avatar,
@@ -30,15 +30,14 @@ import { uploadImage, getPublicImageUrl } from "api";
 
 import countryListAllIsoData from "components/countriesList";
 
-export const UserEdit: React.FC = () => {
+export const UserCreate: React.FC = () => {
   const t = useTranslate();
   const {
-    refineCore: { formLoading, queryResult },
+    refineCore: { formLoading },
     saveButtonProps,
     register,
     getValues,
     setValue,
-    reset,
     formState: { errors },
   } = useForm<IProfile, HttpError, IProfile>();
 
@@ -61,21 +60,21 @@ export const UserEdit: React.FC = () => {
 
   const [country, setCountry] = useState("");
 
-  useEffect(() => {
-    // if (formLoading) {
-    //   register("about");
-    // }
-    if (!formLoading && !queryResult?.isLoading) {
-      console.log(getValues());
-      const dob = getValues("dob");
-      reset();
-      setFirstName(getValues("first_name"));
-      setLastName(getValues("last_name"));
-      setGender(getValues("gender") || "");
-      setDob(dob !== null && dob !== undefined ? dayjs(dob) : null);
-      setCountry(getValues("country"));
-    }
-  }, [getValues, reset, queryResult?.isLoading, formLoading, register]);
+  // useEffect(() => {
+  //   // if (formLoading) {
+  //   //   register("about");
+  //   // }
+  //   if (!formLoading && !queryResult?.isLoading) {
+  //     console.log(getValues());
+  //     const dob = getValues("dob");
+  //     reset();
+  //     setFirstName(getValues("first_name"));
+  //     setLastName(getValues("last_name"));
+  //     setGender(getValues("gender") || "");
+  //     setDob(dob !== null && dob !== undefined ? dayjs(dob) : null);
+  //     setCountry(getValues("country"));
+  //   }
+  // }, [getValues, reset, queryResult?.isLoading, formLoading, register]);
 
   const handleSubmit = async (e: BaseSyntheticEvent<object, any, any>) => {
     try {
@@ -137,7 +136,7 @@ export const UserEdit: React.FC = () => {
   // console.log(defaultValueQueryResult?.data?.data[0]);
 
   return (
-    <Edit
+    <Create
       isLoading={formLoading}
       footerButtons={
         <LoadingButton
@@ -376,6 +375,6 @@ export const UserEdit: React.FC = () => {
           </LocalizationProvider>
         </Stack>
       </Stack>
-    </Edit>
+    </Create>
   );
 };

@@ -274,7 +274,7 @@ export const TrainerEdit: React.FC = () => {
                 setLastName(e.target.value as string);
               }}
             />
-            <FormControl fullWidth>
+            <FormControl margin="normal" fullWidth>
               <InputLabel id="demo-simple-select-label">
                 {t("trainers.fields.location")}
               </InputLabel>

@@ -199,7 +199,7 @@ export const PostEdit: React.FC = () => {
             }}
             autoFocus
           />
-          <FormControl fullWidth>
+          <FormControl margin="normal" fullWidth>
             <InputLabel id="demo-simple-select-label">
               {t("posts.fields.author")}
             </InputLabel>

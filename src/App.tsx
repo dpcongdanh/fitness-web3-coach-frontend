@@ -118,6 +118,11 @@ function App() {
                 path: "/account-settings",
                 layout: true,
               },
+              {
+                element: <AccountSettings />,
+                path: "/cart",
+                layout: true,
+              },
             ],
           }}
           LoginPage={() => (

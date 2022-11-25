@@ -2,7 +2,7 @@ import { HttpError, useTranslate, useList } from "@pankod/refine-core";
 import {
   Box,
   TextField,
-  Edit,
+  Create,
   Input,
   Stack,
   Avatar,
@@ -148,7 +148,7 @@ export const PostCreate: React.FC = () => {
   // console.log(defaultValueQueryResult?.data?.data[0]);
 
   return (
-    <Edit
+    <Create
       isLoading={formLoading}
       footerButtons={
         <LoadingButton
@@ -186,7 +186,7 @@ export const PostCreate: React.FC = () => {
             }}
             autoFocus
           />
-          <FormControl fullWidth>
+          <FormControl margin="normal" fullWidth>
             <InputLabel id="demo-simple-select-label">
               {t("posts.fields.author")}
             </InputLabel>
@@ -340,6 +340,6 @@ export const PostCreate: React.FC = () => {
           </label>
         </Box>
       </Stack>
-    </Edit>
+    </Create>
   );
 };

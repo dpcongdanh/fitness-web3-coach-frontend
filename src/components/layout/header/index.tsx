@@ -20,12 +20,14 @@ import {
   Select,
   Toolbar,
   Typography,
+  Badge,
 } from "@pankod/refine-mui";
 import {
   DarkModeOutlined,
   LightModeOutlined,
   Person,
   Logout,
+  ShoppingCart,
 } from "@mui/icons-material";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
@@ -70,6 +72,15 @@ export const Header: React.FC = () => {
             }}
           >
             {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              push("/cart");
+            }}
+          >
+            <Badge badgeContent={4} color="primary">
+              <ShoppingCart />
+            </Badge>
           </IconButton>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <Select
