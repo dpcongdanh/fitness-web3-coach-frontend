@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import {
   TextField,
@@ -10,19 +10,15 @@ import {
   Input,
   Box,
   Stack,
-  // TextFieldProps,
-  // useAutocomplete,
-  // Autocomplete,
 } from "@pankod/refine-mui";
 
 import { LoadingButton } from "@mui/lab";
 
-// import { IDoctor, IClinic, IDisease } from "interfaces";
-import { IGallery } from "interfaces";
+// import { IGallery } from "interfaces";
 import {
   AddCircleOutlineOutlined,
   CancelOutlined,
-  FileUpload,
+  // FileUpload,
 } from "@mui/icons-material";
 
 import {
@@ -58,6 +54,8 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
 
   const [uploadingImage, setUploadingImage] = useState<boolean>();
 
+  const [submitted, setSubmitted] = useState<boolean>(false);
+
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const target = event.target;
@@ -70,6 +68,39 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
       // setIsUploadLoading(false);
     }
   };
+
+  const handleClose = useCallback(() => {
+    console.log(getValues());
+    setImageFile(undefined);
+    setImagePreview("");
+    setValue("image", "");
+    reset();
+    console.log(getValues());
+    console.log(imagePreview);
+    setSubmitted(false);
+    close();
+    return;
+  }, [close, getValues, imagePreview, reset, setValue, setSubmitted]);
+
+  useEffect(() => {
+    console.log("submitted:" + submitted);
+    console.log("formLoading:" + formLoading);
+    if (formLoading === false && submitted) {
+      handleClose();
+    }
+  }, [formLoading, handleClose, submitted]);
+
+  // const handleFinish = () => {
+  //   console.log(getValues());
+  //   setImageFile(undefined);
+  //   setImagePreview("");
+  //   setValue("image", "");
+  //   reset();
+  //   console.log(getValues());
+  //   console.log(imagePreview);
+  //   // close();
+  //   // return;
+  // };
 
   const submitButtonClick = async (
     e: React.BaseSyntheticEvent<object, any, any>
@@ -105,6 +136,7 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
             setValue("image", imageUrl?.publicURL);
             console.log(getValues());
             saveButtonProps.onClick(e);
+            setSubmitted(true);
           }
         }
         setUploadingImage(false);
@@ -118,10 +150,10 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
           setUploadingImage(false);
           return;
         }
-
         saveButtonProps.onClick(e);
         setUploadingImage(false);
-        return;
+        // setSubmitted(true);
+        // return;
       }
     } catch (error) {
       setUploadingImage(false);
@@ -132,18 +164,24 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
     <div>
       <Dialog
         open={visible}
-        onClose={() => {
-          reset();
-          close();
-        }}
+        onClose={handleClose}
+        // onClose={() => {
+        //   reset();
+        //   close();
+        // }}
       >
         <DialogTitle>{t("image_gallery.titles.create")}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please enter the information and select image to be added
+            Please enter the title and select image to be added
           </DialogContentText>
-
-          <form className="form" onSubmit={handleSubmit(onFinish)}>
+          <form
+            className="form"
+            // onSubmit={() => {
+            //   handleSubmit(onFinish);
+            //   handleClose();
+            // }}
+          >
             <TextField
               {...register("title", { required: "Title is required" })}
               error={!!errors?.title}
@@ -185,6 +223,7 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
                     alignItems: "center",
                     flexDirection: "column",
                     height: "260px",
+                    marginTop: "16px",
                   }}
                 >
                   <img
@@ -245,10 +284,7 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
           <LoadingButton
             color="error"
             startIcon={<CancelOutlined />}
-            onClick={() => {
-              reset();
-              close();
-            }}
+            onClick={handleClose}
           >
             Cancel
           </LoadingButton>
@@ -258,7 +294,10 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
             loadingPosition="start"
             loading={formLoading || uploadingImage}
             // {...saveButtonProps}
-            onClick={async (e) => submitButtonClick(e)}
+            onClick={async (e) => {
+              await submitButtonClick(e);
+              // handleFinish();
+            }}
           >
             {submitButtonText || "Submit"}
           </LoadingButton>

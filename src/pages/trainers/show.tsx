@@ -29,6 +29,7 @@ import {
   Button,
   ImageListItemBar,
   IconButton,
+  DeleteButton,
 } from "@pankod/refine-mui";
 
 import {
@@ -126,21 +127,34 @@ export const TrainerShow: React.FC = () => {
   //     },
   //   });
 
+  const serviceIds = record?.services !== null ? record?.services : [];
+
   const { data: servicesData, isLoading: servicesLoading } = useMany<IService>({
     resource: "services",
-    ids: record?.services || [],
+    ids: serviceIds || [],
     queryOptions: {
-      enabled: record !== undefined ? record?.services.length > 0 : false,
+      enabled:
+        record?.services !== null
+          ? serviceIds !== undefined
+            ? serviceIds?.length > 0
+            : false
+          : true,
     },
   });
 
+  const certificationIds =
+    record?.certifications !== null ? record?.certifications : [];
   const { data: certificationsData, isLoading: certificationsLoading } =
     useMany<ICertification>({
       resource: "certificates",
-      ids: record?.certifications || [],
+      ids: certificationIds || [],
       queryOptions: {
         enabled:
-          record !== undefined ? record?.certifications.length > 0 : false,
+          record?.certifications !== null
+            ? certificationIds !== undefined
+              ? certificationIds?.length > 0
+              : false
+            : true,
       },
     });
 
@@ -156,6 +170,10 @@ export const TrainerShow: React.FC = () => {
           value: record?.id || null,
         },
       ],
+      pagination: {
+        pageSize: 10000,
+        current: 1,
+      },
     },
   });
 
@@ -169,6 +187,10 @@ export const TrainerShow: React.FC = () => {
           value: record?.id || null,
         },
       ],
+      pagination: {
+        pageSize: 10000,
+        current: 1,
+      },
     },
   });
 
@@ -182,6 +204,10 @@ export const TrainerShow: React.FC = () => {
           value: record?.id || null,
         },
       ],
+      pagination: {
+        pageSize: 10000,
+        current: 1,
+      },
     },
   });
 
@@ -195,6 +221,10 @@ export const TrainerShow: React.FC = () => {
           value: record?.id || null,
         },
       ],
+      pagination: {
+        pageSize: 10000,
+        current: 1,
+      },
     },
   });
 
@@ -392,12 +422,12 @@ export const TrainerShow: React.FC = () => {
             {!galleryLoading ? (
               galleryData !== undefined && galleryData.total > 0 ? (
                 <ImageList
-                  sx={{ width: 960, height: 600 }}
+                  // sx={{ width: 960, height: 600 }}
                   cols={3}
                   rowHeight={320}
                 >
                   {galleryData.data.map((item) => (
-                    <ImageListItem key={item.image} sx={{ width: 320 }}>
+                    <ImageListItem key={item.image}>
                       <img
                         src={`${item.image}`}
                         srcSet={`${item.image}`}
@@ -417,16 +447,32 @@ export const TrainerShow: React.FC = () => {
                             // params={{ id: 1 }}
                             fallback={null}
                           >
-                            <IconButton
-                              sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                              aria-label={`info about ${item.title}`}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                showEditModal(item.id);
-                              }}
-                            >
-                              <Edit />
-                            </IconButton>
+                            <React.Fragment>
+                              <IconButton
+                                sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                                aria-label={`info about ${item.title}`}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  showEditModal(item.id);
+                                }}
+                              >
+                                <Edit />
+                              </IconButton>
+                              <DeleteButton
+                                // variant="text"
+                                sx={{ display: "inline" }}
+                                resourceNameOrRouteName="image_gallery"
+                                size="small"
+                                hideText
+                                recordItemId={item?.id}
+                              />
+                              {/* <IconButton
+                                // variant="text"
+                                sx={{ margin: "0px", padding: "0px" }}
+                              >
+                                
+                              </IconButton> */}
+                            </React.Fragment>
                           </CanAccess>
                         }
                       />
