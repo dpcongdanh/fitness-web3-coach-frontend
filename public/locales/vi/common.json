@@ -108,6 +108,25 @@
   "dashboard": {
     "title": "Dashboard"
   },
+  "image_gallery": {
+    "image_gallery": "Thư viện ảnh",
+    "loading": "Đang tải thư viện ảnh",
+    "show_loading": "Đang tải thông tin ảnh",
+    "fields": {
+      "id": "Id",
+      "title": "Tiêu đề",
+      "image": "Ảnh",
+      "user_id": "ID Người Dùng",
+      "trainer": "Huấn luyện viên",
+      "createdAt": "Được tạo vào lúc"
+    },
+    "titles": {
+      "create": "Thêm ảnh",
+      "edit": "Chỉnh sửa ảnh",
+      "list": "Thư viện ảnh",
+      "show": "Xem chi tiết ảnh"
+    }
+  },
   "trainers": {
     "trainers": "Huấn luyện viên",
     "loading": "Đang tải danh sách huấn luyện viên",

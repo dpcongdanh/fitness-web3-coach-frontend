@@ -108,6 +108,25 @@
   "dashboard": {
     "title": "Dashboard"
   },
+  "image_gallery": {
+    "image_gallery": "Image Gallery",
+    "loading": "Loading Images",
+    "show_loading": "Loading Image's Information",
+    "fields": {
+      "id": "Id",
+      "title": "Title",
+      "image": "Image",
+      "user_id": "User ID",
+      "trainer": "Trainer",
+      "createdAt": "Created At"
+    },
+    "titles": {
+      "create": "Add New Image",
+      "edit": "Edit Image",
+      "list": "Image Gallery",
+      "show": "Show Image"
+    }
+  },
   "trainers": {
     "trainers": "Trainers",
     "loading": "Loading Trainers",

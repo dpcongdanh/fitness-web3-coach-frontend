@@ -2,16 +2,16 @@ import * as React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 
 import {
-  Button,
+  // Button,
   styled,
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
+  // DialogActions,
   IconButton,
   Typography,
 } from "@pankod/refine-mui";
-import { ISelectedEventInfo, ITrainer } from "interfaces";
+import { ISelectedEventInfo, IService, ITrainer } from "interfaces";
 // import Iframe from "react-iframe";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -59,15 +59,17 @@ export type EventProps = {
   buttonText?: string;
   eventInfo?: ISelectedEventInfo;
   trainersData?: ITrainer[];
+  servicesData?: IService[];
   dialogTitle?: string;
 };
 
 export const EventDialog: React.FC<EventProps> = ({
   visible,
   close,
-  buttonText,
+  // buttonText,
   eventInfo,
   trainersData,
+  servicesData,
   dialogTitle,
 }) => {
   // const [open, setOpen] = React.useState(false);
@@ -81,6 +83,10 @@ export const EventDialog: React.FC<EventProps> = ({
 
   const trainer = trainersData?.find((item) => {
     return item.id === eventInfo?.extendedProps.trainer_id;
+  });
+
+  const service = servicesData?.find((item) => {
+    return item.id === eventInfo?.extendedProps.service;
   });
 
   return (
@@ -108,6 +114,14 @@ export const EventDialog: React.FC<EventProps> = ({
           <Typography variant="body1" gutterBottom>
             {trainer?.first_name + " " + trainer?.last_name}
           </Typography>
+
+          <Typography variant="h5" gutterBottom>
+            Service
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            {service?.name}
+          </Typography>
+
           <Typography variant="h5" gutterBottom>
             Start At
           </Typography>

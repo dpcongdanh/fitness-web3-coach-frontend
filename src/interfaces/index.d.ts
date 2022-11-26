@@ -58,6 +58,7 @@ export interface ISchedule {
   end: string;
   customer_id: string;
   trainer_id: number;
+  service: number;
   created_at: string;
 }
 
@@ -73,6 +74,7 @@ export interface IExtendedPropsEvent {
   description: string;
   customer_id: string;
   trainer_id: number;
+  service: number;
   created_at: string;
 }
 

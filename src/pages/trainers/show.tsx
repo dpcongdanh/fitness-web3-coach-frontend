@@ -1,4 +1,12 @@
-import { useShow, useTranslate, useMany, useList } from "@pankod/refine-core";
+import {
+  useShow,
+  useTranslate,
+  useMany,
+  useList,
+  useModal,
+  // useCan,
+  CanAccess,
+} from "@pankod/refine-core";
 
 import parse from "html-react-parser";
 
@@ -17,9 +25,15 @@ import {
   Box,
   CircularProgress,
   Container,
+  List,
+  Button,
 } from "@pankod/refine-mui";
 
-import { FitnessCenter } from "@mui/icons-material";
+import {
+  FitnessCenter,
+  Collections,
+  AddBoxOutlined,
+} from "@mui/icons-material";
 
 import {
   ITrainer,
@@ -38,14 +52,68 @@ import { CourseCard } from "../../components/course-card";
 import { PostCard } from "../../components/post-card";
 
 import { VideoDialog } from "../../components/video-dialog";
+import React from "react";
+import { useModalForm } from "@pankod/refine-react-hook-form";
+
+import {
+  ImageEditorDialog,
+  ImageDetailDialog,
+} from "components/image-gallery-dialog";
 
 export const TrainerShow: React.FC = () => {
   const t = useTranslate();
 
   const { queryResult } = useShow<ITrainer>();
 
+  const { queryResult: galleryQueryResult, setShowId } = useShow<IGallery>({
+    resource: "image_gallery",
+    id: "0",
+  });
+
+  const {
+    show: showDetailModal,
+    close: closeDetailModal,
+    visible: detailModalVisible,
+  } = useModal();
+
+  const createModalFormReturnValues = useModalForm({
+    refineCoreProps: {
+      action: "create",
+      resource: "image_gallery",
+      redirect: false,
+    },
+  });
+
+  const editModalFormReturnValues = useModalForm({
+    refineCoreProps: {
+      action: "edit",
+      resource: "image_gallery",
+      redirect: false,
+    },
+  });
+
+  const {
+    setValue,
+    modal: {
+      show: showCreateModal,
+      // close: closeCreateModal,
+      // visible: createModalVisible,
+    },
+  } = createModalFormReturnValues;
+
+  const {
+    // setValue,
+    modal: {
+      show: showEditModal,
+      // close: closeCreateModal,
+      // visible: createModalVisible,
+    },
+  } = editModalFormReturnValues;
+
   const { data, isLoading } = queryResult;
   const record = data?.data;
+
+  setValue("user_id", record?.id);
 
   //   const { data: categoryData } = useOne<ICategory>({
   //     resource: "categories",
@@ -158,7 +226,6 @@ export const TrainerShow: React.FC = () => {
     </Box>
   ) : (
     <Container>
-      {" "}
       <Show isLoading={isLoading}>
         <Stack
           direction={{ sm: "column", md: "row" }}
@@ -270,42 +337,109 @@ export const TrainerShow: React.FC = () => {
             </Stack>
           </Stack>
         </Stack>
-        <Stack gap={1} justifyContent="center" alignItems="center">
-          <Typography variant="h4" fontWeight="bold">
-            {t("trainers.image_gallery")}
-          </Typography>
-          {!galleryLoading ? (
-            galleryData !== undefined && galleryData.total > 0 ? (
-              <ImageList
-                sx={{ width: 960, height: 600 }}
-                cols={3}
-                rowHeight={320}
+        {/* <Stack gap={1} justifyContent="center" alignItems="center"> */}
+        <Stack gap={1}>
+          <ImageEditorDialog
+            submitButtonText={t("image_gallery.titles.create")}
+            {...createModalFormReturnValues}
+          />
+          <ImageEditorDialog
+            submitButtonText={t("image_gallery.titles.edit")}
+            {...editModalFormReturnValues}
+          />
+
+          <ImageDetailDialog
+            loading={galleryLoading}
+            data={galleryData?.data}
+            close={closeDetailModal}
+            visible={detailModalVisible}
+          />
+          <List
+            resource="image_gallery"
+            breadcrumb={false}
+            canCreate={false}
+            headerButtons={
+              <CanAccess
+                resource="image_gallery"
+                action="edit"
+                // params={{ id: 1 }}
+                fallback={null}
               >
-                {galleryData.data.map((item) => (
-                  <ImageListItem key={item.image} sx={{ width: 320 }}>
-                    <img
-                      src={`${item.image}`}
-                      srcSet={`${item.image}`}
-                      alt={item.title}
-                      style={{ height: "inherit" }}
-                      loading="lazy"
-                    />
-                  </ImageListItem>
-                ))}
-              </ImageList>
+                <Button variant="contained" onClick={() => showCreateModal()}>
+                  <AddBoxOutlined
+                    fontSize="small"
+                    sx={{ marginLeft: "-4px", marginRight: "8px" }}
+                  />
+                  {t("image_gallery.titles.create")}
+                </Button>
+              </CanAccess>
+            }
+            title={
+              <React.Fragment>
+                <Collections
+                  sx={{ verticalAlign: "middle", marginRight: "8px" }}
+                />
+                {t("trainers.image_gallery")}
+              </React.Fragment>
+            }
+          >
+            {/* <Typography variant="h4" fontWeight="bold">
+              {t("trainers.image_gallery")}
+            </Typography> */}
+            {!galleryLoading ? (
+              galleryData !== undefined && galleryData.total > 0 ? (
+                <ImageList
+                  sx={{ width: 960, height: 600 }}
+                  cols={3}
+                  rowHeight={320}
+                >
+                  {galleryData.data.map((item) => (
+                    <ImageListItem key={item.image} sx={{ width: 320 }}>
+                      <img
+                        src={`${item.image}`}
+                        srcSet={`${item.image}`}
+                        alt={item.title}
+                        style={{ height: "inherit" }}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    height: "260px",
+                  }}
+                >
+                  <img
+                    src={"/images/product-placeholder.jpg"}
+                    alt="Empty Gallery"
+                    style={{
+                      height: "inherit",
+                    }}
+                    loading="lazy"
+                  />
+                </Box>
+              )
             ) : (
-              <img
-                src={"https://via.placeholder.com/300x300.png?text=No+Image"}
-                width={300}
-                height={300}
-                alt="Empty Gallery"
-                style={{ height: "inherit" }}
-                loading="lazy"
-              />
-            )
-          ) : (
-            "Loading"
-          )}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  height: "260px",
+                }}
+              >
+                <CircularProgress />
+                <Typography>{t("image_gallery.loading")}</Typography>
+              </Box>
+            )}
+          </List>
         </Stack>
         <Stack gap={1} justifyContent="center" alignItems="center">
           <Typography variant="h4" fontWeight="bold">

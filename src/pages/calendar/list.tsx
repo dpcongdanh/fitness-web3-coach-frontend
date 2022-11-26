@@ -12,7 +12,7 @@ import FullCalendar, { EventSourceInput } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
-import googleCalendarPlugin from "@fullcalendar/google-calendar";
+// import googleCalendarPlugin from "@fullcalendar/google-calendar";
 import {
   // useDataGrid,
   // DataGrid,
@@ -29,11 +29,11 @@ import {
 } from "@pankod/refine-mui";
 
 import { EventDialog } from "../../components/event-dialog";
-import { ISchedule, ISelectedEventInfo, ITrainer } from "interfaces";
+import { ISchedule, ISelectedEventInfo, IService, ITrainer } from "interfaces";
 
-const calendarID = process.env.REACT_APP_CALENDAR_ID;
-const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
+// const calendarID = process.env.REACT_APP_CALENDAR_ID;
+// const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+// const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
 
 export const CalendarList: React.FC = () => {
   const { data: user } = useGetIdentity();
@@ -73,6 +73,15 @@ export const CalendarList: React.FC = () => {
     ids: trainerIds,
     queryOptions: {
       enabled: trainerIds.length > 0,
+    },
+  });
+
+  const serviceIds = schedulesList.map((item) => item.service);
+  const { data: servicesData, isLoading: servicesLoading } = useMany<IService>({
+    resource: "services",
+    ids: serviceIds,
+    queryOptions: {
+      enabled: serviceIds.length > 0,
     },
   });
 
@@ -135,6 +144,7 @@ export const CalendarList: React.FC = () => {
       <EventDialog
         eventInfo={selectedEventData}
         trainersData={trainersData?.data}
+        servicesData={servicesData?.data}
         visible={visible}
         close={close}
       />
@@ -143,9 +153,9 @@ export const CalendarList: React.FC = () => {
           dayGridPlugin,
           timeGridPlugin,
           listPlugin,
-          googleCalendarPlugin,
+          // googleCalendarPlugin,
         ]}
-        googleCalendarApiKey={apiKey}
+        // googleCalendarApiKey={apiKey}
         initialView="dayGridMonth"
         height={"100%"}
         headerToolbar={{
