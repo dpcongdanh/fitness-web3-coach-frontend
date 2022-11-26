@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   TextField,
@@ -7,27 +7,30 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextFieldProps,
-  useAutocomplete,
-  Autocomplete,
+  Input,
+  Box,
+  Stack,
+  // TextFieldProps,
+  // useAutocomplete,
+  // Autocomplete,
 } from "@pankod/refine-mui";
-
-import dayjs, { Dayjs } from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { LoadingButton } from "@mui/lab";
 
 // import { IDoctor, IClinic, IDisease } from "interfaces";
 import { IGallery } from "interfaces";
-import { AddCircleOutlineOutlined, CancelOutlined } from "@mui/icons-material";
+import {
+  AddCircleOutlineOutlined,
+  CancelOutlined,
+  FileUpload,
+} from "@mui/icons-material";
 
 import {
-  Controller,
+  // Controller,
   UseModalFormReturnType,
 } from "@pankod/refine-react-hook-form";
-import { useTranslate } from "@pankod/refine-core";
+import { useTranslate, useNotification } from "@pankod/refine-core";
+import { getPublicImageUrl, uploadImage } from "api";
 
 export type EditorDataProps = UseModalFormReturnType & {
   submitButtonText?: string;
@@ -46,12 +49,83 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
   submitButtonText,
   reset,
 }) => {
+  const { open } = useNotification();
   const t = useTranslate();
 
-  const submitButtonClick = (e: React.BaseSyntheticEvent<object, any, any>) => {
-    // if (getValues("expired_date") === "") setValue("expired_date", null);
+  const [imagePreview, setImagePreview] = useState<string>("");
+
+  const [imageFile, setImageFile] = useState<File>();
+
+  const [uploadingImage, setUploadingImage] = useState<boolean>();
+
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      const target = event.target;
+      const file: File = (target.files as FileList)[0];
+      setImageFile(file);
+      console.log(imageFile);
+      setImagePreview(URL.createObjectURL(file));
+    } catch (error) {
+      // setError("images", { message: "Upload failed. Please try again." });
+      // setIsUploadLoading(false);
+    }
+  };
+
+  const submitButtonClick = async (
+    e: React.BaseSyntheticEvent<object, any, any>
+  ) => {
     console.log(getValues());
-    saveButtonProps.onClick(e);
+    if (
+      getValues("title") === null ||
+      getValues("title") === undefined ||
+      getValues("title").length === 0
+    ) {
+      open?.({
+        message: "Please enter your title first",
+        description: "Error! You did not enter your title",
+        type: "error",
+      });
+      saveButtonProps.onClick(e);
+      return;
+    }
+    try {
+      if (imageFile !== undefined) {
+        setUploadingImage(true);
+        const uploaded = await uploadImage(
+          imageFile,
+          "image-gallery",
+          `${getValues("name")}/`
+        );
+        if (uploaded !== undefined) {
+          const imageUrl = await getPublicImageUrl(
+            "image-gallery",
+            uploaded?.Key.substring(uploaded?.Key.indexOf("/") + 1)
+          );
+          if (imageUrl !== undefined) {
+            setValue("image", imageUrl?.publicURL);
+            console.log(getValues());
+            saveButtonProps.onClick(e);
+          }
+        }
+        setUploadingImage(false);
+      } else {
+        if (getValues("image").length === 0) {
+          open?.({
+            message: "Please choose image from your computer",
+            description: "Error! You did not select your image yet!",
+            type: "error",
+          });
+          setUploadingImage(false);
+          return;
+        }
+
+        saveButtonProps.onClick(e);
+        setUploadingImage(false);
+        return;
+      }
+    } catch (error) {
+      setUploadingImage(false);
+    }
   };
 
   return (
@@ -68,33 +142,104 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
           <DialogContentText>
             Please enter the information and select image to be added
           </DialogContentText>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <form className="form" onSubmit={handleSubmit(onFinish)}>
-              <TextField
-                {...register("title", { required: "Title is required" })}
-                error={!!errors?.title}
-                helperText={errors.title?.message as string}
-                autoFocus
-                margin="dense"
-                id="title"
-                label={t("image_gallery.fields.title")}
-                name="title"
-                required
-                // defaultValue={"lsdjflksd"}
-                fullWidth
-                variant="standard"
-              />
-              <input
-                {...register("user_id", {
-                  required: "Trainer is required",
-                })}
-                hidden
-                id="user_id"
-                name="user_id"
-                // value={holder}
-              />
-            </form>
-          </LocalizationProvider>
+
+          <form className="form" onSubmit={handleSubmit(onFinish)}>
+            <TextField
+              {...register("title", { required: "Title is required" })}
+              error={!!errors?.title}
+              helperText={errors.title?.message as string}
+              autoFocus
+              margin="dense"
+              id="title"
+              label={t("image_gallery.fields.title")}
+              name="title"
+              required
+              fullWidth
+              variant="standard"
+            />
+            <input
+              {...register("user_id", {
+                required: "Trainer is required",
+              })}
+              hidden
+              id="user_id"
+              name="user_id"
+            />
+            <Stack>
+              {/* <Box
+                component="img"
+                alt={getValues("name")}
+                src={
+                  imagePreview ||
+                  getValues("image") ||
+                  "/images/product-placeholder.jpg"
+                }
+                sx={{ height: 260 }}
+              /> */}
+
+              <label htmlFor="images-input">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    height: "260px",
+                  }}
+                >
+                  <img
+                    src={
+                      imagePreview ||
+                      getValues("image") ||
+                      "/images/product-placeholder.jpg"
+                    }
+                    alt={getValues("name")}
+                    style={{
+                      height: "inherit",
+                      width: "300px",
+                      objectFit: "cover",
+                    }}
+                    loading="lazy"
+                  />
+                </Box>
+                <Input
+                  // {...register("image", { required: "Image is required" })}
+                  id="images-input"
+                  type="file"
+                  sx={{ display: "none" }}
+                  onChange={onChangeHandler}
+                  // error={!!errors?.image}
+                  // helperText={errors.image?.message as string}
+                  // hidden
+                  // required
+                  // helperText={errors.image?.message as string}
+                  // onChange={(event) => {
+                  //   console.log(event.target);
+                  // }}
+                />
+                <input
+                  id="file"
+                  {...register("image", { required: "Image is required" })}
+                  type="hidden"
+                />
+                {/* <LoadingButton
+                  // loading={isUploadLoading}
+                  loadingPosition="start"
+                  startIcon={<FileUpload />}
+                  variant="contained"
+                  component="span"
+                >
+                  Upload
+                </LoadingButton> */}
+                <br />
+                {/* {errors.image && (
+                            <Typography variant="caption" color="#fa541c">
+                                {errors.image?.message}
+                            </Typography>
+                        )} */}
+              </label>
+            </Stack>
+          </form>
         </DialogContent>
         <DialogActions>
           <LoadingButton
@@ -111,9 +256,9 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
             type="submit"
             startIcon={<AddCircleOutlineOutlined />}
             loadingPosition="start"
-            loading={formLoading}
+            loading={formLoading || uploadingImage}
             // {...saveButtonProps}
-            onClick={(e) => submitButtonClick(e)}
+            onClick={async (e) => submitButtonClick(e)}
           >
             {submitButtonText || "Submit"}
           </LoadingButton>

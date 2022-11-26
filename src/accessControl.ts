@@ -41,16 +41,16 @@ p, admin, post_comments, (list)|(create)|(edit)|(show)|(delete)
 p, admin, post_comments/*, (edit)|(show)|(delete)
 p, admin, post_comments/*, field
 
-p, customer, trainers, list
+p, customer, trainers, (list)|(show)
 p, customer, trainers/*, (show)
 
-p, customer, image_gallery, list
+p, customer, image_gallery, (list)|(show)
 p, customer, image_gallery/*, (show)
 
-p, customer, calendar, list
+p, customer, calendar, (list)|(show)
 p, customer, calendar/*, show
 
-p, customer, posts, list
+p, customer, posts, (list)|(show)
 p, customer, posts/*, (show)
 
 `);

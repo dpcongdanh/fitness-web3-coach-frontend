@@ -27,12 +27,15 @@ import {
   Container,
   List,
   Button,
+  ImageListItemBar,
+  IconButton,
 } from "@pankod/refine-mui";
 
 import {
   FitnessCenter,
   Collections,
   AddBoxOutlined,
+  Edit,
 } from "@mui/icons-material";
 
 import {
@@ -249,7 +252,7 @@ export const TrainerShow: React.FC = () => {
           </Stack>
           <Stack gap={1}>
             <Typography variant="body1" fontWeight="bold">
-              {t("trainers.fields.name")}
+              {t("trainers.fields.full_name")}
             </Typography>
             <Typography variant="body2">
               {record?.first_name + " " + record?.last_name}
@@ -401,6 +404,31 @@ export const TrainerShow: React.FC = () => {
                         alt={item.title}
                         style={{ height: "inherit" }}
                         loading="lazy"
+                      />
+                      <ImageListItemBar
+                        title={item.title}
+                        subtitle={new Date(
+                          Date.parse(item.created_at)
+                        ).toLocaleString()}
+                        actionIcon={
+                          <CanAccess
+                            resource="image_gallery"
+                            action="edit"
+                            // params={{ id: 1 }}
+                            fallback={null}
+                          >
+                            <IconButton
+                              sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                              aria-label={`info about ${item.title}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                showEditModal(item.id);
+                              }}
+                            >
+                              <Edit />
+                            </IconButton>
+                          </CanAccess>
+                        }
                       />
                     </ImageListItem>
                   ))}

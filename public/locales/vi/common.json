@@ -134,6 +134,7 @@
     "fields": {
       "id": "Id",
       "username": "Username",
+      "full_name": "Họ Tên",
       "first_name": "Tên",
       "last_name": "Họ",
       "location": "Địa điểm",
