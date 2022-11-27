@@ -26,6 +26,7 @@ import { useTranslate, useNotification } from "@pankod/refine-core";
 import { getPublicImageUrl, uploadImage } from "api";
 
 export type EditorDataProps = UseModalFormReturnType & {
+  dialogTitle?: string;
   trainerInfo?: ITrainer;
   submitButtonText?: string;
 };
@@ -39,6 +40,7 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
   modal: { visible, close },
   saveButtonProps,
   submitButtonText,
+  dialogTitle,
   trainerInfo,
   reset,
 }) => {
@@ -167,7 +169,7 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
         //   close();
         // }}
       >
-        <DialogTitle>{t("image_gallery.titles.create")}</DialogTitle>
+        <DialogTitle>{dialogTitle || "Image Management Dialog"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please enter the title and select image to be added

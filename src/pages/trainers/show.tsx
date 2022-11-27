@@ -396,11 +396,13 @@ export const TrainerShow: React.FC = () => {
         {/* <Stack gap={1} justifyContent="center" alignItems="center"> */}
         <Stack gap={1}>
           <ImageEditorDialog
+            dialogTitle={t("image_gallery.titles.create")}
             submitButtonText={t("image_gallery.titles.create")}
             trainerInfo={queryResult.data?.data}
             {...createGalleryModalFormReturnValues}
           />
           <ImageEditorDialog
+            dialogTitle={t("image_gallery.titles.edit")}
             submitButtonText={t("image_gallery.titles.edit")}
             trainerInfo={queryResult.data?.data}
             {...editGalleryModalFormReturnValues}
@@ -443,9 +445,6 @@ export const TrainerShow: React.FC = () => {
               </React.Fragment>
             }
           >
-            {/* <Typography variant="h4" fontWeight="bold">
-              {t("trainers.image_gallery")}
-            </Typography> */}
             {!galleryLoading ? (
               galleryData !== undefined && galleryData.total > 0 ? (
                 <ImageList
@@ -575,11 +574,13 @@ export const TrainerShow: React.FC = () => {
         </Stack>
         <Stack gap={1}>
           <ProductEditorDialog
+            dialogTitle={t("products.titles.create")}
             submitButtonText={t("products.titles.create")}
             trainerInfo={queryResult.data?.data}
             {...createProductsModalFormReturnValues}
           />
           <ProductEditorDialog
+            dialogTitle={t("products.titles.edit")}
             submitButtonText={t("products.titles.edit")}
             trainerInfo={queryResult.data?.data}
             {...editProductsModalFormReturnValues}
@@ -640,8 +641,6 @@ export const TrainerShow: React.FC = () => {
                   </MuiList>
                 ) : (
                   <img
-                    // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
-                    // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
                     src={
                       "https://via.placeholder.com/300x300.png?text=No+Product"
                     }

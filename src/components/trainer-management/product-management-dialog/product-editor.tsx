@@ -22,6 +22,7 @@ import { useTranslate, useNotification } from "@pankod/refine-core";
 import { getPublicImageUrl, uploadImage } from "api";
 
 export type EditorDataProps = UseModalFormReturnType & {
+  dialogTitle?: string;
   trainerInfo?: ITrainer;
   submitButtonText?: string;
 };
@@ -34,6 +35,7 @@ export const ProductEditorDialog: React.FC<EditorDataProps> = ({
   setValue,
   modal: { visible, close },
   saveButtonProps,
+  dialogTitle,
   submitButtonText,
   trainerInfo,
   reset,
@@ -144,7 +146,7 @@ export const ProductEditorDialog: React.FC<EditorDataProps> = ({
   return (
     <div>
       <Dialog open={visible} onClose={handleClose}>
-        <DialogTitle>{t("products.titles.create")}</DialogTitle>
+        <DialogTitle>{dialogTitle || "Product Management Dialog"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please enter the product's informations and select image of the
