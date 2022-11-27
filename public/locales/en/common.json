@@ -146,6 +146,10 @@
       "edit": "Edit Product",
       "list": "Products",
       "show": "Show Product"
+    },
+    "buttons": {
+      "buy_now": "Buy Now",
+      "add_to_cart": "Add To Cart"
     }
   },
   "trainers": {

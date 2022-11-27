@@ -1,4 +1,5 @@
 import React from "react";
+import { CanAccess, useTranslate } from "@pankod/refine-core";
 import {
   Card,
   CardActions,
@@ -6,27 +7,31 @@ import {
   CardMedia,
   Button,
   Box,
-  // ShowButton,
   Typography,
   MuiList,
-  ListItem,
-  ListItemText,
+  DeleteButton,
 } from "@pankod/refine-mui";
 import { IProduct } from "interfaces";
 
+import { AddShoppingCart, Paid, EditOutlined } from "@mui/icons-material";
+
 export type DataProps = {
   data: IProduct | undefined;
+  editButtonClick?: () => any;
+  // onDelete?: () => any;
 };
 
-export const ProductCard: React.FC<DataProps> = ({ data }) => {
+export const ProductCard: React.FC<DataProps> = ({
+  data,
+  // onDelete,
+  editButtonClick,
+}) => {
+  const t = useTranslate();
   return (
     <Card sx={{ display: "flex", height: 192 }}>
       <CardMedia
         component="img"
-        // height="240"
-        // width="320"
         sx={{ width: 192 }}
-        // image="https://www.dropbox.com/s/a36t7juz7rl0sqm/binhthanhmai-1665188876521.jpg?raw=1"
         image={data?.image || "https://via.placeholder.com/192?text=No+Image"}
         alt="image"
       />
@@ -40,30 +45,67 @@ export const ProductCard: React.FC<DataProps> = ({ data }) => {
             color="text.secondary"
             component="div"
           >
-            <MuiList dense={true}>
-              awfwaf
-              {/* {data !== undefined &&
-                data?.description.map((item) => (
-                  <ListItem>
-                    <ListItemText primary={item} />
-                  </ListItem>
-                ))} */}
-            </MuiList>
+            <MuiList dense={true}>{data?.description}</MuiList>
           </Typography>
         </CardContent>
-        {/* <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
-          sefsefsefsef
-        </Box> */}
       </Box>
-      <Box sx={{ display: "flex", flexDirection: "column", width: 96 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", width: 160 }}>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="div"
+            textAlign="center"
+          >
             ${data?.price}
           </Typography>
         </CardContent>
         <CardActions>
+          <CanAccess
+            resource="products"
+            action="edit"
+            // params={{ id: 1 }}
+            fallback={
+              <Box sx={{ width: 160 }}>
+                <Button startIcon={<AddShoppingCart />} size="medium">
+                  {t("products.buttons.add_to_cart")}
+                </Button>
+                <Button startIcon={<Paid />} size="medium">
+                  {t("products.buttons.buy_now")}
+                </Button>
+              </Box>
+            }
+          >
+            <Box sx={{ width: 160 }}>
+              <Button
+                startIcon={<EditOutlined />}
+                onClick={editButtonClick}
+                size="medium"
+              >
+                {t("buttons.edit")}
+              </Button>
+              {/* <EditButton
+                size="medium"
+                onClick={(
+                  event:
+                    | React.MouseEvent<HTMLButtonElement, MouseEvent>
+                    | React.PointerEvent<HTMLButtonElement>
+                ) => {
+                  event.preventDefault();
+                }}
+                resourceNameOrRouteName="products"
+                recordItemId={data?.id}
+              /> */}
+              <DeleteButton
+                resourceNameOrRouteName="products"
+                // onSuccess={onDelete}
+                size="medium"
+                recordItemId={data?.id}
+              />
+            </Box>
+          </CanAccess>
+
           {/* <ShowButton size="small" recordItemId={data?.id} /> */}
-          <Button size="large">Buy</Button>
         </CardActions>
       </Box>
     </Card>

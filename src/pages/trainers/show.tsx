@@ -629,7 +629,12 @@ export const TrainerShow: React.FC = () => {
                   <MuiList>
                     {productData.data.map((item) => (
                       <ListItem>
-                        <ProductCard data={item}></ProductCard>
+                        <ProductCard
+                          editButtonClick={() => {
+                            showEditProductsModal(item?.id);
+                          }}
+                          data={item}
+                        ></ProductCard>
                       </ListItem>
                     ))}
                   </MuiList>

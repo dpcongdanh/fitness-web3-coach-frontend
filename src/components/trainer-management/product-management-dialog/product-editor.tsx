@@ -164,6 +164,22 @@ export const ProductEditorDialog: React.FC<EditorDataProps> = ({
               fullWidth
               variant="standard"
             />
+            <TextField
+              {...register("description", {
+                required: "Description is required",
+              })}
+              multiline
+              rows={4}
+              error={!!errors?.description}
+              helperText={errors.description?.message as string}
+              margin="dense"
+              id="description"
+              label={t("products.fields.description")}
+              name="description"
+              required
+              fullWidth
+              variant="outlined"
+            />
             <input
               {...register("user_id", {
                 required: "Trainer is required",
@@ -222,7 +238,6 @@ export const ProductEditorDialog: React.FC<EditorDataProps> = ({
               {...register("price", { required: "Price is required" })}
               error={!!errors?.price}
               helperText={errors.price?.message as string}
-              autoFocus
               margin="dense"
               type="number"
               id="price"

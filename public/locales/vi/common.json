@@ -146,6 +146,10 @@
       "edit": "Chỉnh sửa sản phẩm",
       "list": "Danh sách sản phẩm",
       "show": "Chi tiết sản phẩm"
+    },
+    "buttons": {
+      "buy_now": "Mua ngay",
+      "add_to_cart": "Thêm vào giỏ"
     }
   },
   "trainers": {
