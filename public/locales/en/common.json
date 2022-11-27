@@ -127,6 +127,27 @@
       "show": "Show Image"
     }
   },
+  "products": {
+    "products": "Products",
+    "loading": "Loading Products",
+    "show_loading": "Loading Product's Information",
+    "fields": {
+      "id": "Id",
+      "user_id": "User ID",
+      "name": "Name",
+      "description": "Description",
+      "image": "Image",
+      "price": "Price",
+      "trainer": "Trainer",
+      "createdAt": "Created At"
+    },
+    "titles": {
+      "create": "Add Product",
+      "edit": "Edit Product",
+      "list": "Products",
+      "show": "Show Product"
+    }
+  },
   "trainers": {
     "trainers": "Trainers",
     "loading": "Loading Trainers",

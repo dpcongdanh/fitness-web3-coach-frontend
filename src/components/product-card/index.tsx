@@ -41,12 +41,13 @@ export const ProductCard: React.FC<DataProps> = ({ data }) => {
             component="div"
           >
             <MuiList dense={true}>
-              {data !== undefined &&
+              awfwaf
+              {/* {data !== undefined &&
                 data?.description.map((item) => (
                   <ListItem>
                     <ListItemText primary={item} />
                   </ListItem>
-                ))}
+                ))} */}
             </MuiList>
           </Typography>
         </CardContent>

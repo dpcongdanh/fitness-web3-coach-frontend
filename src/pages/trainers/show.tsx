@@ -37,6 +37,7 @@ import {
   Collections,
   AddBoxOutlined,
   Edit,
+  Inventory,
 } from "@mui/icons-material";
 
 import {
@@ -61,26 +62,31 @@ import { useModalForm } from "@pankod/refine-react-hook-form";
 
 import {
   ImageEditorDialog,
-  ImageDetailDialog,
-} from "components/image-gallery-dialog";
+  // ImageDetailDialog,
+} from "components/trainer-management/image-gallery-dialog";
+
+import {
+  ProductEditorDialog,
+  ProductDetailDialog,
+} from "components/trainer-management/product-management-dialog";
 
 export const TrainerShow: React.FC = () => {
   const t = useTranslate();
 
   const { queryResult } = useShow<ITrainer>();
 
-  const { queryResult: galleryQueryResult, setShowId } = useShow<IGallery>({
-    resource: "image_gallery",
-    id: "0",
-  });
+  // const { queryResult: galleryQueryResult, setShowId } = useShow<IGallery>({
+  //   resource: "image_gallery",
+  //   id: "0",
+  // });
 
-  const {
-    show: showDetailModal,
-    close: closeDetailModal,
-    visible: detailModalVisible,
-  } = useModal();
+  // const {
+  //   show: showDetailModal,
+  //   close: closeDetailModal,
+  //   visible: detailModalVisible,
+  // } = useModal();
 
-  const createModalFormReturnValues = useModalForm({
+  const createGalleryModalFormReturnValues = useModalForm({
     refineCoreProps: {
       action: "create",
       resource: "image_gallery",
@@ -88,7 +94,7 @@ export const TrainerShow: React.FC = () => {
     },
   });
 
-  const editModalFormReturnValues = useModalForm({
+  const editGalleryModalFormReturnValues = useModalForm({
     refineCoreProps: {
       action: "edit",
       resource: "image_gallery",
@@ -97,27 +103,44 @@ export const TrainerShow: React.FC = () => {
   });
 
   const {
-    setValue,
-    modal: {
-      show: showCreateModal,
-      // close: closeCreateModal,
-      // visible: createModalVisible,
-    },
-  } = createModalFormReturnValues;
+    setValue: setValueForGallery,
+    modal: { show: showCreateGalleryModal },
+  } = createGalleryModalFormReturnValues;
 
   const {
-    // setValue,
-    modal: {
-      show: showEditModal,
-      // close: closeCreateModal,
-      // visible: createModalVisible,
+    modal: { show: showEditGalleryModal },
+  } = editGalleryModalFormReturnValues;
+
+  const createProductsModalFormReturnValues = useModalForm({
+    refineCoreProps: {
+      action: "create",
+      resource: "products",
+      redirect: false,
     },
-  } = editModalFormReturnValues;
+  });
+
+  const editProductsModalFormReturnValues = useModalForm({
+    refineCoreProps: {
+      action: "edit",
+      resource: "products",
+      redirect: false,
+    },
+  });
+
+  const {
+    setValue: setValueForProduct,
+    modal: { show: showCreateProductsModal },
+  } = createProductsModalFormReturnValues;
+
+  const {
+    modal: { show: showEditProductsModal },
+  } = editProductsModalFormReturnValues;
 
   const { data, isLoading } = queryResult;
   const record = data?.data;
 
-  setValue("user_id", record?.id);
+  setValueForGallery("user_id", record?.id);
+  setValueForProduct("user_id", record?.id);
 
   //   const { data: categoryData } = useOne<ICategory>({
   //     resource: "categories",
@@ -374,19 +397,20 @@ export const TrainerShow: React.FC = () => {
         <Stack gap={1}>
           <ImageEditorDialog
             submitButtonText={t("image_gallery.titles.create")}
-            {...createModalFormReturnValues}
+            trainerInfo={queryResult.data?.data}
+            {...createGalleryModalFormReturnValues}
           />
           <ImageEditorDialog
             submitButtonText={t("image_gallery.titles.edit")}
-            {...editModalFormReturnValues}
+            trainerInfo={queryResult.data?.data}
+            {...editGalleryModalFormReturnValues}
           />
-
-          <ImageDetailDialog
+          {/* <ImageDetailDialog
             loading={galleryLoading}
             data={galleryData?.data}
             close={closeDetailModal}
             visible={detailModalVisible}
-          />
+          /> */}
           <List
             resource="image_gallery"
             breadcrumb={false}
@@ -398,7 +422,10 @@ export const TrainerShow: React.FC = () => {
                 // params={{ id: 1 }}
                 fallback={null}
               >
-                <Button variant="contained" onClick={() => showCreateModal()}>
+                <Button
+                  variant="contained"
+                  onClick={() => showCreateGalleryModal()}
+                >
                   <AddBoxOutlined
                     fontSize="small"
                     sx={{ marginLeft: "-4px", marginRight: "8px" }}
@@ -453,7 +480,7 @@ export const TrainerShow: React.FC = () => {
                                 aria-label={`info about ${item.title}`}
                                 onClick={(e) => {
                                   e.preventDefault();
-                                  showEditModal(item.id);
+                                  showEditGalleryModal(item.id);
                                 }}
                               >
                                 <Edit />
@@ -546,34 +573,85 @@ export const TrainerShow: React.FC = () => {
             "Loading"
           )}
         </Stack>
-        <Stack gap={1} justifyContent="center" alignItems="center">
-          <Typography variant="h4" fontWeight="bold">
-            {t("trainers.products")}
-          </Typography>
-          {!productLoading ? (
-            productData !== undefined && productData.total > 0 ? (
-              <MuiList>
-                {productData.data.map((item) => (
-                  <ListItem>
-                    <ProductCard data={item}></ProductCard>
-                  </ListItem>
-                ))}
-              </MuiList>
-            ) : (
-              <img
-                // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
-                // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
-                src={"https://via.placeholder.com/300x300.png?text=No+Product"}
-                width={300}
-                height={300}
-                alt="Empty Product"
-                style={{ height: "inherit" }}
-                loading="lazy"
-              />
-            )
-          ) : (
-            "Loading"
-          )}
+        <Stack gap={1}>
+          <ProductEditorDialog
+            submitButtonText={t("products.titles.create")}
+            trainerInfo={queryResult.data?.data}
+            {...createProductsModalFormReturnValues}
+          />
+          <ProductEditorDialog
+            submitButtonText={t("products.titles.edit")}
+            trainerInfo={queryResult.data?.data}
+            {...editProductsModalFormReturnValues}
+          />
+          <List
+            resource="products"
+            breadcrumb={false}
+            canCreate={false}
+            headerButtons={
+              <CanAccess
+                resource="products"
+                action="edit"
+                // params={{ id: 1 }}
+                fallback={null}
+              >
+                <Button
+                  variant="contained"
+                  onClick={() => showCreateProductsModal()}
+                >
+                  <AddBoxOutlined
+                    fontSize="small"
+                    sx={{ marginLeft: "-4px", marginRight: "8px" }}
+                  />
+                  {t("products.titles.create")}
+                </Button>
+              </CanAccess>
+            }
+            title={
+              <React.Fragment>
+                <Inventory
+                  sx={{ verticalAlign: "middle", marginRight: "8px" }}
+                />
+                {t("trainers.products")}
+              </React.Fragment>
+            }
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              {!productLoading ? (
+                productData !== undefined && productData.total > 0 ? (
+                  <MuiList>
+                    {productData.data.map((item) => (
+                      <ListItem>
+                        <ProductCard data={item}></ProductCard>
+                      </ListItem>
+                    ))}
+                  </MuiList>
+                ) : (
+                  <img
+                    // src={`${item.image}?w=320&h=320&fit=crop&auto=format`}
+                    // srcSet={`${item.image}?w=320&h=320&fit=crop&auto=format&dpr=2 2x`}
+                    src={
+                      "https://via.placeholder.com/300x300.png?text=No+Product"
+                    }
+                    width={300}
+                    height={300}
+                    alt="Empty Product"
+                    style={{ height: "inherit" }}
+                    loading="lazy"
+                  />
+                )
+              ) : (
+                "Loading"
+              )}
+            </Box>
+          </List>
         </Stack>
         <Stack gap={1}>
           <Typography variant="h4" fontWeight="bold">

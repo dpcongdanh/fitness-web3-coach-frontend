@@ -14,35 +14,28 @@ import {
 
 import { LoadingButton } from "@mui/lab";
 
-// import { IGallery } from "interfaces";
-import {
-  AddCircleOutlineOutlined,
-  CancelOutlined,
-  // FileUpload,
-} from "@mui/icons-material";
+import { ITrainer } from "interfaces";
+import { AddCircleOutlineOutlined, CancelOutlined } from "@mui/icons-material";
 
-import {
-  // Controller,
-  UseModalFormReturnType,
-} from "@pankod/refine-react-hook-form";
+import { UseModalFormReturnType } from "@pankod/refine-react-hook-form";
 import { useTranslate, useNotification } from "@pankod/refine-core";
 import { getPublicImageUrl, uploadImage } from "api";
 
 export type EditorDataProps = UseModalFormReturnType & {
+  trainerInfo?: ITrainer;
   submitButtonText?: string;
 };
 
-export const ImageEditorDialog: React.FC<EditorDataProps> = ({
+export const ProductEditorDialog: React.FC<EditorDataProps> = ({
   register,
-  control,
   formState: { errors },
-  refineCore: { onFinish, formLoading },
-  handleSubmit,
+  refineCore: { formLoading },
   getValues,
   setValue,
   modal: { visible, close },
   saveButtonProps,
   submitButtonText,
+  trainerInfo,
   reset,
 }) => {
   const { open } = useNotification();
@@ -90,30 +83,18 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
     }
   }, [formLoading, handleClose, submitted]);
 
-  // const handleFinish = () => {
-  //   console.log(getValues());
-  //   setImageFile(undefined);
-  //   setImagePreview("");
-  //   setValue("image", "");
-  //   reset();
-  //   console.log(getValues());
-  //   console.log(imagePreview);
-  //   // close();
-  //   // return;
-  // };
-
   const submitButtonClick = async (
     e: React.BaseSyntheticEvent<object, any, any>
   ) => {
     console.log(getValues());
     if (
-      getValues("title") === null ||
-      getValues("title") === undefined ||
-      getValues("title").length === 0
+      getValues("name") === null ||
+      getValues("name") === undefined ||
+      getValues("name").length === 0
     ) {
       open?.({
-        message: "Please enter your title first",
-        description: "Error! You did not enter your title",
+        message: "Please enter your product's name first",
+        description: "Error! You did not enter your product's name",
         type: "error",
       });
       saveButtonProps.onClick(e);
@@ -124,12 +105,12 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
         setUploadingImage(true);
         const uploaded = await uploadImage(
           imageFile,
-          "image-gallery",
-          `${getValues("name")}/`
+          "products",
+          `${trainerInfo?.username}/`
         );
         if (uploaded !== undefined) {
           const imageUrl = await getPublicImageUrl(
-            "image-gallery",
+            "products",
             uploaded?.Key.substring(uploaded?.Key.indexOf("/") + 1)
           );
           if (imageUrl !== undefined) {
@@ -162,35 +143,23 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
 
   return (
     <div>
-      <Dialog
-        open={visible}
-        onClose={handleClose}
-        // onClose={() => {
-        //   reset();
-        //   close();
-        // }}
-      >
-        <DialogTitle>{t("image_gallery.titles.create")}</DialogTitle>
+      <Dialog open={visible} onClose={handleClose}>
+        <DialogTitle>{t("products.titles.create")}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please enter the title and select image to be added
+            Please enter the product's informations and select image of the
+            product.
           </DialogContentText>
-          <form
-            className="form"
-            // onSubmit={() => {
-            //   handleSubmit(onFinish);
-            //   handleClose();
-            // }}
-          >
+          <form className="form">
             <TextField
-              {...register("title", { required: "Title is required" })}
-              error={!!errors?.title}
-              helperText={errors.title?.message as string}
+              {...register("name", { required: "Name is required" })}
+              error={!!errors?.name}
+              helperText={errors.name?.message as string}
               autoFocus
               margin="dense"
-              id="title"
-              label={t("image_gallery.fields.title")}
-              name="title"
+              id="name"
+              label={t("products.fields.name")}
+              name="name"
               required
               fullWidth
               variant="standard"
@@ -204,17 +173,6 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
               name="user_id"
             />
             <Stack>
-              {/* <Box
-                component="img"
-                alt={getValues("name")}
-                src={
-                  imagePreview ||
-                  getValues("image") ||
-                  "/images/product-placeholder.jpg"
-                }
-                sx={{ height: 260 }}
-              /> */}
-
               <label htmlFor="images-input">
                 <Box
                   sx={{
@@ -242,34 +200,16 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
                   />
                 </Box>
                 <Input
-                  // {...register("image", { required: "Image is required" })}
                   id="images-input"
                   type="file"
                   sx={{ display: "none" }}
                   onChange={onChangeHandler}
-                  // error={!!errors?.image}
-                  // helperText={errors.image?.message as string}
-                  // hidden
-                  // required
-                  // helperText={errors.image?.message as string}
-                  // onChange={(event) => {
-                  //   console.log(event.target);
-                  // }}
                 />
                 <input
                   id="file"
                   {...register("image", { required: "Image is required" })}
                   type="hidden"
                 />
-                {/* <LoadingButton
-                  // loading={isUploadLoading}
-                  loadingPosition="start"
-                  startIcon={<FileUpload />}
-                  variant="contained"
-                  component="span"
-                >
-                  Upload
-                </LoadingButton> */}
                 <br />
                 {/* {errors.image && (
                             <Typography variant="caption" color="#fa541c">
@@ -278,6 +218,20 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
                         )} */}
               </label>
             </Stack>
+            <TextField
+              {...register("price", { required: "Price is required" })}
+              error={!!errors?.price}
+              helperText={errors.price?.message as string}
+              autoFocus
+              margin="dense"
+              type="number"
+              id="price"
+              label={t("products.fields.price")}
+              name="price"
+              required
+              fullWidth
+              variant="standard"
+            />
           </form>
         </DialogContent>
         <DialogActions>
@@ -293,10 +247,8 @@ export const ImageEditorDialog: React.FC<EditorDataProps> = ({
             startIcon={<AddCircleOutlineOutlined />}
             loadingPosition="start"
             loading={formLoading || uploadingImage}
-            // {...saveButtonProps}
             onClick={async (e) => {
               await submitButtonClick(e);
-              // handleFinish();
             }}
           >
             {submitButtonText || "Submit"}

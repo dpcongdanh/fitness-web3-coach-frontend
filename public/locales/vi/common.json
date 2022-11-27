@@ -127,6 +127,27 @@
       "show": "Xem chi tiết ảnh"
     }
   },
+  "products": {
+    "products": "Sản phẩm",
+    "loading": "Đang Tải Danh Sách Sản Phẩm",
+    "show_loading": "Đang Tải Thông Tin Sản Phẩm",
+    "fields": {
+      "id": "Id",
+      "user_id": "ID Người Dùng",
+      "name": "Tên Sản Phẩm",
+      "description": "Mô tả",
+      "image": "Ảnh",
+      "price": "Giá",
+      "trainer": "Huấn Luyện Viên",
+      "createdAt": "Được tạo vào lúc"
+    },
+    "titles": {
+      "create": "Thêm Sản Phẩm",
+      "edit": "Chỉnh sửa sản phẩm",
+      "list": "Danh sách sản phẩm",
+      "show": "Chi tiết sản phẩm"
+    }
+  },
   "trainers": {
     "trainers": "Huấn luyện viên",
     "loading": "Đang tải danh sách huấn luyện viên",
