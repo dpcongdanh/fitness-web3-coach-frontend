@@ -41,8 +41,7 @@ export const TrainerCard: React.FC<DataProps> = ({ data }) => {
         <CardMedia
           component="img"
           height="240"
-          // image="https://www.dropbox.com/s/a36t7juz7rl0sqm/binhthanhmai-1665188876521.jpg?raw=1"
-          image={data?.avatar}
+          image={data?.avatar || "/images/People_Placeholder.png"}
           alt="avatar"
         />
         <CardContent>

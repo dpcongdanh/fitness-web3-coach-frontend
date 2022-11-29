@@ -58,6 +58,7 @@ export const ProductEditorDialog: React.FC<EditorDataProps> = ({
       setImageFile(file);
       console.log(imageFile);
       setImagePreview(URL.createObjectURL(file));
+      setValue("image", file);
     } catch (error) {
       // setError("images", { message: "Upload failed. Please try again." });
       // setIsUploadLoading(false);
@@ -167,9 +168,7 @@ export const ProductEditorDialog: React.FC<EditorDataProps> = ({
               variant="standard"
             />
             <TextField
-              {...register("description", {
-                required: "Description is required",
-              })}
+              {...register("description")}
               multiline
               rows={4}
               error={!!errors?.description}
@@ -178,7 +177,6 @@ export const ProductEditorDialog: React.FC<EditorDataProps> = ({
               id="description"
               label={t("products.fields.description")}
               name="description"
-              required
               fullWidth
               variant="outlined"
             />
@@ -224,7 +222,7 @@ export const ProductEditorDialog: React.FC<EditorDataProps> = ({
                   onChange={onChangeHandler}
                 />
                 <input
-                  id="file"
+                  id="images-input"
                   {...register("image", { required: "Image is required" })}
                   type="hidden"
                 />

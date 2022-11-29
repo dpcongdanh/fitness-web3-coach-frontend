@@ -59,6 +59,7 @@ export interface ISchedule {
   customer_id: string;
   trainer_id: number;
   service: number;
+  training_package: number;
   created_at: string;
 }
 
@@ -75,6 +76,7 @@ export interface IExtendedPropsEvent {
   customer_id: string;
   trainer_id: number;
   service: number;
+  training_package: number;
   created_at: string;
 }
 
@@ -108,6 +110,18 @@ export interface ICourse {
   image: string;
   plan: string;
   price: string;
+  created_at: string;
+}
+
+export interface ITrainingPackage {
+  id: number;
+  user_id: number;
+  name: string;
+  description: string[];
+  image: string;
+  session_count: string;
+  price_per_session: string;
+  // services: string;
   created_at: string;
 }
 

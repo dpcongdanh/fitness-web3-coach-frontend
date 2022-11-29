@@ -30,6 +30,10 @@ p, admin, products, (list)|(create)|(edit)|(show)|(delete)
 p, admin, products/*, (edit)|(show)|(delete)
 p, admin, products/*, field
 
+p, admin, training_packages, (list)|(create)|(edit)|(show)|(delete)
+p, admin, training_packages/*, (edit)|(show)|(delete)
+p, admin, training_packages/*, field
+
 p, admin, profiles, (list)|(create)|(edit)|(show)|(delete)
 p, admin, profiles/*, (edit)|(show)|(delete)
 
@@ -53,6 +57,9 @@ p, customer, image_gallery/*, (show)
 
 p, customer, products, (list)|(show)
 p, customer, products/*, (show)
+
+p, customer, training_packages, (list)|(show)
+p, customer, training_packages/*, (show)
 
 p, customer, calendar, (list)|(show)
 p, customer, calendar/*, show

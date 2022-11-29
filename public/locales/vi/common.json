@@ -152,6 +152,34 @@
       "add_to_cart": "Thêm vào giỏ"
     }
   },
+  "training_packages": {
+    "training_packages": "Training Packages",
+    "loading": "Loading Packages",
+    "show_loading": "Loading Package's Information",
+    "fields": {
+      "id": "Id",
+      "user_id": "ID Người Dùng",
+      "name": "Tên Gói Tập",
+      "description": "Mô tả",
+      "image": "Ảnh",
+      "session_count": "Số buổi tập",
+      "session": "Buổi",
+      "sessions": "Buổi",
+      "price_per_session": "Đơn giá",
+      "trainer": "Huấn luyện viên",
+      "createdAt": "Created At"
+    },
+    "titles": {
+      "create": "Thêm gói tập",
+      "edit": "Sửa gói tập",
+      "list": "Danh sách gói tập",
+      "show": "Chi tiết gói tập"
+    },
+    "buttons": {
+      "buy_now": "Mua ngay",
+      "add_to_cart": "Thêm vào giỏ"
+    }
+  },
   "trainers": {
     "trainers": "Huấn luyện viên",
     "loading": "Đang tải danh sách huấn luyện viên",
@@ -177,6 +205,7 @@
     "image_gallery": "Thư viện ảnh",
     "subscriptions": "Subscriptions",
     "courses": "Khóa học",
+    "training_packages": "Gói tập PT",
     "products": "Sản phẩm",
     "posts": "Bài đăng"
   },

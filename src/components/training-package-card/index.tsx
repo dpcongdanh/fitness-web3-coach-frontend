@@ -11,16 +11,19 @@ import {
   MuiList,
   DeleteButton,
 } from "@pankod/refine-mui";
-import { IProduct } from "interfaces";
+import { ITrainingPackage } from "interfaces";
 
 import { AddShoppingCart, Paid, EditOutlined } from "@mui/icons-material";
 
 export type DataProps = {
-  data: IProduct | undefined;
+  data: ITrainingPackage | undefined;
   editButtonClick?: () => any;
 };
 
-export const ProductCard: React.FC<DataProps> = ({ data, editButtonClick }) => {
+export const TrainingPackageCard: React.FC<DataProps> = ({
+  data,
+  editButtonClick,
+}) => {
   const t = useTranslate();
   return (
     <Card sx={{ display: "flex", height: 192 }}>
@@ -39,9 +42,10 @@ export const ProductCard: React.FC<DataProps> = ({ data, editButtonClick }) => {
           <Typography
             variant="subtitle1"
             color="text.secondary"
-            component="div"
+            component="pre"
+            overflow="auto"
           >
-            <MuiList dense={true}>{data?.description}</MuiList>
+            {data?.description}
           </Typography>
         </CardContent>
       </Box>
@@ -49,25 +53,28 @@ export const ProductCard: React.FC<DataProps> = ({ data, editButtonClick }) => {
         <CardContent>
           <Typography
             gutterBottom
-            variant="h5"
+            variant="h6"
             component="div"
             textAlign="center"
           >
-            ${data?.price}
+            ${data?.price_per_session}/session
+          </Typography>
+          <Typography variant="body2" color="text.secondary" textAlign="center">
+            {data?.session_count} sessions
           </Typography>
         </CardContent>
         <CardActions>
           <CanAccess
-            resource="products"
+            resource="training_packages"
             action="edit"
             // params={{ id: 1 }}
             fallback={
               <Box sx={{ width: 160 }}>
                 <Button startIcon={<AddShoppingCart />} size="medium">
-                  {t("products.buttons.add_to_cart")}
+                  {t("training_packages.buttons.add_to_cart")}
                 </Button>
                 <Button startIcon={<Paid />} size="medium">
-                  {t("products.buttons.buy_now")}
+                  {t("training_packages.buttons.buy_now")}
                 </Button>
               </Box>
             }
@@ -81,7 +88,7 @@ export const ProductCard: React.FC<DataProps> = ({ data, editButtonClick }) => {
                 {t("buttons.edit")}
               </Button>
               <DeleteButton
-                resourceNameOrRouteName="products"
+                resourceNameOrRouteName="training_packages"
                 size="medium"
                 recordItemId={data?.id}
               />

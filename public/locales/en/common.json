@@ -152,6 +152,34 @@
       "add_to_cart": "Add To Cart"
     }
   },
+  "training_packages": {
+    "training_packages": "Training Packages",
+    "loading": "Loading Packages",
+    "show_loading": "Loading Package's Information",
+    "fields": {
+      "id": "Id",
+      "user_id": "User ID",
+      "name": "Name",
+      "description": "Description",
+      "image": "Image",
+      "session_count": "Session Count",
+      "session": "Session",
+      "sessions": "Sessions",
+      "price_per_session": "Price per Session",
+      "trainer": "Trainer",
+      "createdAt": "Created At"
+    },
+    "titles": {
+      "create": "Add Training Package",
+      "edit": "Edit Training Package",
+      "list": "Training Packages",
+      "show": "Show Training Package"
+    },
+    "buttons": {
+      "buy_now": "Buy Now",
+      "add_to_cart": "Add To Cart"
+    }
+  },
   "trainers": {
     "trainers": "Trainers",
     "loading": "Loading Trainers",
@@ -177,6 +205,7 @@
     "image_gallery": "Image Gallery",
     "subscriptions": "Subscriptions",
     "courses": "Courses",
+    "training_packages": "Training Packages",
     "products": "Products",
     "posts": "Posts"
   },

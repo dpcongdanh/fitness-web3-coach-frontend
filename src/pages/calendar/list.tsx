@@ -29,7 +29,13 @@ import {
 } from "@pankod/refine-mui";
 
 import { EventDialog } from "../../components/event-dialog";
-import { ISchedule, ISelectedEventInfo, IService, ITrainer } from "interfaces";
+import {
+  ISchedule,
+  ISelectedEventInfo,
+  IService,
+  ITrainer,
+  ITrainingPackage,
+} from "interfaces";
 
 // const calendarID = process.env.REACT_APP_CALENDAR_ID;
 // const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -84,6 +90,16 @@ export const CalendarList: React.FC = () => {
       enabled: serviceIds.length > 0,
     },
   });
+
+  const trainingpackageIds = schedulesList.map((item) => item.training_package);
+  const { data: trainingPackagesData, isLoading: trainingPackagesLoading } =
+    useMany<ITrainingPackage>({
+      resource: "training_packages",
+      ids: trainingpackageIds,
+      queryOptions: {
+        enabled: trainingpackageIds.length > 0,
+      },
+    });
 
   // const { data: trainersData, isLoading: trainersLoading } = useList<ITrainer>({
   //   resource: "trainers",
@@ -145,6 +161,7 @@ export const CalendarList: React.FC = () => {
         eventInfo={selectedEventData}
         trainersData={trainersData?.data}
         servicesData={servicesData?.data}
+        trainingPackagesData={trainingPackagesData?.data}
         visible={visible}
         close={close}
       />

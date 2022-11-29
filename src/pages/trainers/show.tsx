@@ -48,11 +48,14 @@ import {
   IProduct,
   ICourse,
   IPost,
+  ITrainingPackage,
 } from "interfaces";
 
 import { ProductCard } from "../../components/product-card";
 
-import { CourseCard } from "../../components/course-card";
+// import { CourseCard } from "../../components/course-card";
+
+import { TrainingPackageCard } from "components/training-package-card";
 
 import { PostCard } from "../../components/post-card";
 
@@ -67,8 +70,13 @@ import {
 
 import {
   ProductEditorDialog,
-  ProductDetailDialog,
+  // ProductDetailDialog,
 } from "components/trainer-management/product-management-dialog";
+
+import {
+  TrainingPackageEditorDialog,
+  // TrainingPackageDetailDialog,
+} from "components/trainer-management/training-package-management-dialog";
 
 export const TrainerShow: React.FC = () => {
   const t = useTranslate();
@@ -136,11 +144,37 @@ export const TrainerShow: React.FC = () => {
     modal: { show: showEditProductsModal },
   } = editProductsModalFormReturnValues;
 
+  const createTrainingPackagesModalFormReturnValues = useModalForm({
+    refineCoreProps: {
+      action: "create",
+      resource: "training_packages",
+      redirect: false,
+    },
+  });
+
+  const editTrainingPackagesModalFormReturnValues = useModalForm({
+    refineCoreProps: {
+      action: "edit",
+      resource: "training_packages",
+      redirect: false,
+    },
+  });
+
+  const {
+    setValue: setValueForTrainingPackage,
+    modal: { show: showCreateTrainingPackagesModal },
+  } = createTrainingPackagesModalFormReturnValues;
+
+  const {
+    modal: { show: showEditTrainingPackagesModal },
+  } = editTrainingPackagesModalFormReturnValues;
+
   const { data, isLoading } = queryResult;
   const record = data?.data;
 
   setValueForGallery("user_id", record?.id);
   setValueForProduct("user_id", record?.id);
+  setValueForTrainingPackage("user_id", record?.id);
 
   //   const { data: categoryData } = useOne<ICategory>({
   //     resource: "categories",
@@ -200,22 +234,22 @@ export const TrainerShow: React.FC = () => {
     },
   });
 
-  const { data: coursesData, isLoading: coursesLoading } = useList<ICourse>({
-    resource: "courses",
-    config: {
-      filters: [
-        {
-          field: "user_id",
-          operator: "eq",
-          value: record?.id || null,
-        },
-      ],
-      pagination: {
-        pageSize: 10000,
-        current: 1,
-      },
-    },
-  });
+  // const { data: coursesData, isLoading: coursesLoading } = useList<ICourse>({
+  //   resource: "courses",
+  //   config: {
+  //     filters: [
+  //       {
+  //         field: "user_id",
+  //         operator: "eq",
+  //         value: record?.id || null,
+  //       },
+  //     ],
+  //     pagination: {
+  //       pageSize: 10000,
+  //       current: 1,
+  //     },
+  //   },
+  // });
 
   const { data: productData, isLoading: productLoading } = useList<IProduct>({
     resource: "products",
@@ -233,6 +267,24 @@ export const TrainerShow: React.FC = () => {
       },
     },
   });
+
+  const { data: trainingPackagesData, isLoading: trainingPackagesLoading } =
+    useList<ITrainingPackage>({
+      resource: "training_packages",
+      config: {
+        filters: [
+          {
+            field: "user_id",
+            operator: "eq",
+            value: record?.id || null,
+          },
+        ],
+        pagination: {
+          pageSize: 10000,
+          current: 1,
+        },
+      },
+    });
 
   const { data: postsData, isLoading: postsLoading } = useList<IPost>({
     resource: "posts",
@@ -541,7 +593,7 @@ export const TrainerShow: React.FC = () => {
             )}
           </List>
         </Stack>
-        <Stack gap={1} justifyContent="center" alignItems="center">
+        {/* <Stack gap={1} justifyContent="center" alignItems="center">
           <Typography variant="h4" fontWeight="bold">
             {t("trainers.courses")}
           </Typography>
@@ -571,7 +623,7 @@ export const TrainerShow: React.FC = () => {
           ) : (
             "Loading"
           )}
-        </Stack>
+        </Stack> */}
         <Stack gap={1}>
           <ProductEditorDialog
             dialogTitle={t("products.titles.create")}
@@ -641,12 +693,97 @@ export const TrainerShow: React.FC = () => {
                   </MuiList>
                 ) : (
                   <img
-                    src={
-                      "https://via.placeholder.com/300x300.png?text=No+Product"
-                    }
+                    src={"/images/Product_Not_Found.png"}
                     width={300}
                     height={300}
                     alt="Empty Product"
+                    style={{ height: "inherit" }}
+                    loading="lazy"
+                  />
+                )
+              ) : (
+                "Loading"
+              )}
+            </Box>
+          </List>
+        </Stack>
+        <Stack gap={1}>
+          <TrainingPackageEditorDialog
+            dialogTitle={t("training_packages.titles.create")}
+            submitButtonText={t("training_packages.titles.create")}
+            trainerInfo={queryResult.data?.data}
+            {...createTrainingPackagesModalFormReturnValues}
+          />
+          <TrainingPackageEditorDialog
+            dialogTitle={t("training_packages.titles.edit")}
+            submitButtonText={t("training_packages.titles.edit")}
+            trainerInfo={queryResult.data?.data}
+            {...editTrainingPackagesModalFormReturnValues}
+          />
+          <List
+            resource="training_packages"
+            breadcrumb={false}
+            canCreate={false}
+            headerButtons={
+              <CanAccess
+                resource="training_packages"
+                action="edit"
+                // params={{ id: 1 }}
+                fallback={null}
+              >
+                <Button
+                  variant="contained"
+                  onClick={() => showCreateTrainingPackagesModal()}
+                >
+                  <AddBoxOutlined
+                    fontSize="small"
+                    sx={{ marginLeft: "-4px", marginRight: "8px" }}
+                  />
+                  {t("training_packages.titles.create")}
+                </Button>
+              </CanAccess>
+            }
+            title={
+              <React.Fragment>
+                <FitnessCenter
+                  sx={{ verticalAlign: "middle", marginRight: "8px" }}
+                />
+                {t("trainers.training_packages")}
+              </React.Fragment>
+            }
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              {!trainingPackagesLoading ? (
+                trainingPackagesData !== undefined &&
+                trainingPackagesData.total > 0 ? (
+                  <MuiList>
+                    {trainingPackagesData.data.map((item) => (
+                      <ListItem>
+                        <TrainingPackageCard
+                          editButtonClick={() => {
+                            showEditTrainingPackagesModal(item?.id);
+                          }}
+                          data={item}
+                        ></TrainingPackageCard>
+                      </ListItem>
+                    ))}
+                  </MuiList>
+                ) : (
+                  <img
+                    // src={
+                    //   "https://via.placeholder.com/300x300.png?text=No+Product"
+                    // }
+                    src={"/images/Product_Not_Found.png"}
+                    width={300}
+                    height={300}
+                    alt="Empty Packages"
                     style={{ height: "inherit" }}
                     loading="lazy"
                   />

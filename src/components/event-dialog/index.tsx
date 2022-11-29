@@ -11,7 +11,12 @@ import {
   IconButton,
   Typography,
 } from "@pankod/refine-mui";
-import { ISelectedEventInfo, IService, ITrainer } from "interfaces";
+import {
+  ISelectedEventInfo,
+  IService,
+  ITrainer,
+  ITrainingPackage,
+} from "interfaces";
 // import Iframe from "react-iframe";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -60,6 +65,7 @@ export type EventProps = {
   eventInfo?: ISelectedEventInfo;
   trainersData?: ITrainer[];
   servicesData?: IService[];
+  trainingPackagesData?: ITrainingPackage[];
   dialogTitle?: string;
 };
 
@@ -70,6 +76,7 @@ export const EventDialog: React.FC<EventProps> = ({
   eventInfo,
   trainersData,
   servicesData,
+  trainingPackagesData,
   dialogTitle,
 }) => {
   // const [open, setOpen] = React.useState(false);
@@ -89,6 +96,10 @@ export const EventDialog: React.FC<EventProps> = ({
     return item.id === eventInfo?.extendedProps.service;
   });
 
+  const trainingPackage = trainingPackagesData?.find((item) => {
+    return item.id === eventInfo?.extendedProps.training_package;
+  });
+
   return (
     <div>
       <BootstrapDialog
@@ -105,8 +116,10 @@ export const EventDialog: React.FC<EventProps> = ({
           <Typography variant="h5" gutterBottom>
             Title
           </Typography>
+
           <Typography variant="body1" gutterBottom>
-            {eventInfo?.title}
+            {/* {eventInfo?.title} */}
+            {trainingPackage?.name}
           </Typography>
           <Typography variant="h5" gutterBottom>
             Trainer
