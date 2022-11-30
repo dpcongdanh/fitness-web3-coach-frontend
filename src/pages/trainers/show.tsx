@@ -12,6 +12,7 @@ import parse from "html-react-parser";
 
 import {
   Show,
+  Paper,
   Stack,
   Typography,
   Avatar,
@@ -46,7 +47,7 @@ import {
   IService,
   IGallery,
   IProduct,
-  ICourse,
+  // ICourse,
   IPost,
   ITrainingPackage,
 } from "interfaces";
@@ -339,7 +340,7 @@ export const TrainerShow: React.FC = () => {
           direction={{ sm: "column", md: "row" }}
           spacing={{ xs: 1, sm: 2, md: 4 }}
         >
-          <Stack gap={1}>
+          <Stack gap={2}>
             <Avatar
               alt={record?.username}
               src={record?.avatar}
@@ -363,7 +364,6 @@ export const TrainerShow: React.FC = () => {
               {record?.first_name + " " + record?.last_name}
             </Typography>
             <Typography variant="body1" fontWeight="bold">
-              {/* Location */}
               {t("trainers.fields.location")}
             </Typography>
             <Typography variant="body2">
@@ -371,12 +371,31 @@ export const TrainerShow: React.FC = () => {
               <Typography variant="body2">{record?.location}</Typography>
             </Typography>
             <Typography variant="body1" fontWeight="bold">
-              {/* About */}
+              {t("trainers.fields.email")}
+            </Typography>
+            <Typography variant="body2">{record?.email}</Typography>
+            <Typography variant="body1" fontWeight="bold">
+              {t("trainers.fields.phone")}
+            </Typography>
+            <Typography variant="body2">{record?.phone}</Typography>
+            {/* <Typography variant="body1" fontWeight="bold">
               {t("trainers.fields.about")}
             </Typography>
             <Typography variant="body2">
               {parse(record?.about || "")}
+            </Typography> */}
+          </Stack>
+        </Stack>
+        <Stack marginTop="16px">
+          <Stack gap={2} sx={{ padding: "14px" }}>
+            <Typography variant="h4" fontWeight="bold">
+              {t("trainers.fields.about")}
             </Typography>
+            <Paper sx={{ padding: "12px" }}>
+              <Typography variant="body2">
+                {parse(record?.about || "")}
+              </Typography>
+            </Paper>
           </Stack>
         </Stack>
         <Stack
@@ -728,7 +747,6 @@ export const TrainerShow: React.FC = () => {
               <CanAccess
                 resource="training_packages"
                 action="edit"
-                // params={{ id: 1 }}
                 fallback={null}
               >
                 <Button

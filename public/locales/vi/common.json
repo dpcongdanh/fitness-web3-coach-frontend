@@ -67,12 +67,12 @@
   },
   "actions": {
     "list": "Danh sách",
-    "create": "Create",
-    "edit": "Edit",
+    "create": "Tạo mới",
+    "edit": "Chỉnh sửa",
     "show": "Thông tin chi tiết"
   },
   "buttons": {
-    "create": "Create",
+    "create": "Tạo mới",
     "save": "Lưu",
     "logout": "Đăng xuất",
     "delete": "Xóa",
@@ -84,7 +84,7 @@
     "refresh": "Làm mới",
     "show": "Xem chi tiết",
     "undo": "Hoàn tác",
-    "import": "Import",
+    "import": "Nhập",
     "clone": "Nhân bản",
     "notAccessTitle": "Bạn không có quyền truy cập"
   },
@@ -167,7 +167,7 @@
       "sessions": "Buổi",
       "price_per_session": "Đơn giá",
       "trainer": "Huấn luyện viên",
-      "createdAt": "Created At"
+      "createdAt": "Được tạo vào lúc"
     },
     "titles": {
       "create": "Thêm gói tập",
@@ -192,7 +192,9 @@
       "last_name": "Họ",
       "location": "Địa điểm",
       "about": "Giới thiệu bản thân",
-      "createdAt": "Được tạo vào"
+      "email": "Email",
+      "phone": "Số điện thoại",
+      "createdAt": "Được tạo vào lúc"
     },
     "titles": {
       "create": "Thêm Huấn Luyện Viên",

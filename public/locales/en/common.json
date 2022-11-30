@@ -191,7 +191,9 @@
       "first_name": "First Name",
       "last_name": "Last Name",
       "location": "Location",
-      "about": "About",
+      "about": "Biography",
+      "email": "Email",
+      "phone": "Phone",
       "createdAt": "Created At"
     },
     "titles": {

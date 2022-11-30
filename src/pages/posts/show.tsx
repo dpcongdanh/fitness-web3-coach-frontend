@@ -1,10 +1,4 @@
-import {
-  useOne,
-  useShow,
-  useTranslate,
-  // useMany,
-  useList,
-} from "@pankod/refine-core";
+import { useOne, useShow, useTranslate, useList } from "@pankod/refine-core";
 
 import parse from "html-react-parser";
 
@@ -12,32 +6,33 @@ import {
   Show,
   Stack,
   Typography,
-  // TagField,
   Avatar,
-  // ListItem,
-  // ListItemIcon,
-  // ListItemText,
-  // MuiList,
-  // ImageList,
-  // ImageListItem,
-  // Grid,
   Paper,
   Container,
   Box,
   Divider,
-  // border,
   CircularProgress,
 } from "@pankod/refine-mui";
 
-// import { FitnessCenter } from "@mui/icons-material";
-
 import { ITrainer, IPost, IComment } from "interfaces";
-
-// import { ProductCard } from "../../components/product-card";
 
 import { PostCard } from "../../components/post-card";
 
 import { CommentBox } from "components/comment-box";
+
+// const currentDate = new Date();
+
+// console.log(currentDate);
+
+const oldestVisibleArticlesDate = new Date();
+
+const oldestDayToGOBack: number = 10;
+
+oldestVisibleArticlesDate.setDate(
+  oldestVisibleArticlesDate.getDate() - oldestDayToGOBack
+);
+
+// console.log(oldestVisibleArticlesDate);
 
 export const PostShow: React.FC = () => {
   const t = useTranslate();
@@ -45,6 +40,13 @@ export const PostShow: React.FC = () => {
   const { data: latestPosts, isLoading: latestPostsLoading } = useList<IPost>({
     resource: "posts",
     config: {
+      filters: [
+        {
+          field: "created_at",
+          operator: "gte",
+          value: oldestVisibleArticlesDate.toISOString(),
+        },
+      ],
       sort: [{ order: "desc", field: "created_at" }],
       pagination: { current: 1, pageSize: 5 },
     },
@@ -87,65 +89,6 @@ export const PostShow: React.FC = () => {
       enabled: !!record?.id,
     },
   });
-
-  // const { data: servicesData, isLoading: servicesLoading } = useMany<IService>({
-  //   resource: "services",
-  //   ids: record?.services || [],
-  //   queryOptions: {
-  //     enabled: record !== undefined ? record?.services.length > 0 : false,
-  //   },
-  // });
-
-  // console.log(servicesData);
-
-  // const { data: galleryData, isLoading: galleryLoading } = useList<IGallery>({
-  //   resource: "image_gallery",
-  //   config: {
-  //     filters: [
-  //       {
-  //         field: "user_id",
-  //         operator: "eq",
-  //         value: record?.id || null,
-  //       },
-  //     ],
-  //   },
-  // });
-
-  // const { data: productData, isLoading: productLoading } = useList<IProduct>({
-  //   resource: "products",
-  //   config: {
-  //     filters: [
-  //       {
-  //         field: "user_id",
-  //         operator: "eq",
-  //         value: record?.id || null,
-  //       },
-  //     ],
-  //   },
-  // });
-
-  // const { data: postsData, isLoading: postsLoading } = useList<IPost>({
-  //   resource: "posts",
-  //   config: {
-  //     filters: [
-  //       {
-  //         field: "user_id",
-  //         operator: "eq",
-  //         value: record?.id || null,
-  //       },
-  //     ],
-  //   },
-  // });
-
-  // console.log(galleryData);
-
-  // const { data: galleryData, isLoading: galleryLoading } = useMany<IGallery>({
-  //   resource: "image_gallery",
-  //   ids: record?.services || [],
-  //   queryOptions: {
-  //     enabled: record !== undefined ? record?.services.length > 0 : false,
-  //   },
-  // });
 
   return isLoading || trainerLoading || latestPostsLoading ? (
     <Box
@@ -215,7 +158,6 @@ export const PostShow: React.FC = () => {
             </Box>
             <Typography variant="body2">{parse(record?.body || "")}</Typography>
             <Paper>
-              {/* <Typography variant="h5">{t("posts.fields.comments")}</Typography> */}
               <CommentBox
                 data={commentsData?.data}
                 post_id={record?.id}

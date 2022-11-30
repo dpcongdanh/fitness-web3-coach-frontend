@@ -14,8 +14,6 @@ import {
 } from "@pankod/refine-mui";
 import { useForm } from "@pankod/refine-react-hook-form";
 
-// import { IPatient, IClinic } from "interfaces";
-
 import { ITrainer } from "interfaces";
 
 import { FileUpload, SaveOutlined } from "@mui/icons-material";
@@ -29,31 +27,8 @@ import { uploadImage, getPublicImageUrl } from "api";
 
 import countryListAllIsoData from "components/countriesList";
 
-// import { createEditor, BaseEditor, Descendant } from "slate";
-
-// import { Slate, Editable, withReact, ReactEditor } from "slate-react";
-
-// type CustomElement = { type: "paragraph"; children: CustomText[] };
-// type CustomText = { text: string };
-
-// declare module "slate" {
-//   interface CustomTypes {
-//     Editor: BaseEditor & ReactEditor;
-//     Element: CustomElement;
-//     Text: CustomText;
-//   }
-// }
-
-// const initialAbout: Descendant[] = [
-//   {
-//     type: "paragraph",
-//     children: [{ text: "A line of text in a paragraph." }],
-//   },
-// ];
-
 export const TrainerEdit: React.FC = () => {
   const t = useTranslate();
-  // const [about] = useState(() => withReact(createEditor()));
 
   const {
     refineCore: { formLoading, queryResult },
@@ -65,8 +40,6 @@ export const TrainerEdit: React.FC = () => {
     formState: { errors },
   } = useForm<ITrainer, HttpError, ITrainer>();
 
-  // const imageInput = watch("image");
-
   // avatar state
   const [imagePreview, setImagePreview] = useState<string>("");
 
@@ -76,15 +49,19 @@ export const TrainerEdit: React.FC = () => {
 
   //Form field state
 
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState<string>("");
 
-  const [firstName, setFirstName] = useState("");
+  const [firstName, setFirstName] = useState<string>("");
 
-  const [lastName, setLastName] = useState("");
+  const [lastName, setLastName] = useState<string>("");
 
-  const [about, setAbout] = useState("");
+  const [about, setAbout] = useState<string>("");
 
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState<string>("");
+
+  const [email, setEmail] = useState<string>("");
+
+  const [phone, setPhone] = useState<string>("");
 
   useEffect(() => {
     if (formLoading) {
@@ -98,6 +75,8 @@ export const TrainerEdit: React.FC = () => {
       setLastName(getValues("last_name"));
       setAbout(getValues("about"));
       setLocation(getValues("location"));
+      setEmail(getValues("email"));
+      setPhone(getValues("phone"));
     }
   }, [getValues, reset, queryResult?.isLoading, formLoading, register]);
 
@@ -146,23 +125,6 @@ export const TrainerEdit: React.FC = () => {
       // setIsUploadLoading(false);
     }
   };
-
-  // const {
-  //   autocompleteProps,
-  //   // defaultValueQueryResult
-  // } = useAutocomplete<IClinic>({
-  //   resource: "clinics",
-  //   onSearch: (value) => [
-  //     {
-  //       field: "name",
-  //       operator: "containss",
-  //       value,
-  //     },
-  //   ],
-  //   defaultValue: queryResult?.data?.data.clinic,
-  // });
-
-  // console.log(defaultValueQueryResult?.data?.data[0]);
 
   return (
     <Edit
@@ -274,6 +236,40 @@ export const TrainerEdit: React.FC = () => {
                 setLastName(e.target.value as string);
               }}
             />
+            <TextField
+              {...register("email", {
+                required: "Email address is required",
+              })}
+              error={!!errors?.email}
+              helperText={errors.email?.message}
+              margin="normal"
+              // required
+              fullWidth
+              id="email"
+              label={t("trainers.fields.email")}
+              name="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value as string);
+              }}
+            />
+            <TextField
+              {...register("phone", {
+                required: "Phone number is required",
+              })}
+              error={!!errors?.phone}
+              helperText={errors.phone?.message}
+              margin="normal"
+              // required
+              fullWidth
+              id="phone"
+              label={t("trainers.fields.phone")}
+              name="phone"
+              value={phone}
+              onChange={(e) => {
+                setPhone(e.target.value as string);
+              }}
+            />
             <FormControl margin="normal" fullWidth>
               <InputLabel id="demo-simple-select-label">
                 {t("trainers.fields.location")}
@@ -293,69 +289,6 @@ export const TrainerEdit: React.FC = () => {
                 })}
               </Select>
             </FormControl>
-
-            {/* <Slate editor={about} value={initialAbout}>
-              <Editable />
-            </Slate> */}
-            {/* <Controller
-          control={control}
-          name="status"
-          rules={{ required: "Status is required" }}
-          render={({ field }) => (
-            <Autocomplete
-              {...field}
-              options={["published", "draft", "rejected"]}
-              onChange={(_, value) => {
-                field.onChange(value);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Status"
-                  margin="normal"
-                  variant="outlined"
-                  error={!!errors.status}
-                  helperText={errors.status?.message}
-                  required
-                />
-              )}
-            />
-          )}
-        /> */}
-            {/* <Controller
-              control={control}
-              name="clinic"
-              rules={{ required: "Clinic is required" }}
-              render={({ field }) => (
-                <Autocomplete
-                  {...autocompleteProps}
-                  {...field}
-                  // defaultValue={defaultValueQueryResult?.data?.data[0]}
-                  onChange={(_, value) => {
-                    console.log(value);
-                    field.onChange(value?.id);
-                  }}
-                  getOptionLabel={(item) => {
-                    return item.name ? item.name : "";
-                  }}
-                  isOptionEqualToValue={(option, value) =>
-                    value === undefined || option.id === value.id
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      // placeholder={defaultValueQueryResult?.data?.data[0].name}
-                      label="Clinic"
-                      margin="normal"
-                      variant="outlined"
-                      error={!!errors.clinic}
-                      helperText={errors.clinic?.message}
-                      required
-                    />
-                  )}
-                />
-              )}
-            /> */}
           </Box>
         </Stack>
       </Stack>

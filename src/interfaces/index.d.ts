@@ -46,6 +46,8 @@ export interface ITrainer {
   avatar: string;
   services: number[];
   video: string;
+  email: string;
+  phone: string;
   certifications: number[];
   created_at: string;
 }
