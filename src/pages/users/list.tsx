@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import {
   useTranslate,
-  useMany,
+  // useMany,
   CrudFilters,
-  useList,
+  // useList,
   // useTable,
 } from "@pankod/refine-core";
 import {
@@ -36,6 +36,8 @@ export const UserList: React.FC = () => {
 
   // const { tableQueryResult, setFilters: setFilters2 } = useTable<IPatient>();
 
+  const [emailSearch, setEmailSearch] = useState<string>("");
+
   const [firstNameSearch, setFirstNameSearch] = useState<string>("");
 
   const [lastNameSearch, setLastNameSearch] = useState<string>("");
@@ -57,14 +59,19 @@ export const UserList: React.FC = () => {
   useEffect(() => {
     const filter: CrudFilters = [
       {
+        field: "email",
+        operator: "contains",
+        value: emailSearch,
+      },
+      {
         field: "first_name",
         operator: "contains",
-        value: firstNameSearch,
+        value: firstNameSearch || null,
       },
       {
         field: "last_name",
         operator: "contains",
-        value: lastNameSearch,
+        value: lastNameSearch || null,
       },
     ];
     if (
@@ -92,7 +99,7 @@ export const UserList: React.FC = () => {
     }
     setFilters(filter);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstNameSearch, lastNameSearch, selectGender, selectRole]);
+  }, [emailSearch, firstNameSearch, lastNameSearch, selectGender, selectRole]);
 
   // const categoryIds = dataGridProps.rows.map((item) => item.category.id);
   // const { data: categoriesData, isLoading } = useMany<ICategory>({
@@ -112,6 +119,12 @@ export const UserList: React.FC = () => {
     //   maxWidth: 50,
     //   flex: 1,
     // },
+    {
+      field: "email",
+      headerName: t("profiles.fields.email"),
+      minWidth: 100,
+      flex: 1,
+    },
     {
       field: "first_name",
       headerName: t("profiles.fields.first_name"),
@@ -202,6 +215,25 @@ export const UserList: React.FC = () => {
         <IconButton disabled type="button" sx={{ p: "10px" }} aria-label="menu">
           <Search />
         </IconButton>
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="Search Email"
+          value={emailSearch}
+          onChange={(
+            event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+          ) => {
+            setEmailSearch(event.target.value);
+          }}
+          inputProps={{ "aria-label": "search email" }}
+        />
+        <Divider
+          sx={{
+            color: "text.secondary",
+            borderColor: "text.secondary",
+          }}
+          orientation="vertical"
+          flexItem
+        />
         <InputBase
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search First Name"

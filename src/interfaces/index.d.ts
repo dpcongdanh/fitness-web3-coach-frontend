@@ -1,3 +1,4 @@
+import { WeekNumberCalculation } from "@fullcalendar/react";
 import { StringIfPlural } from "react-i18next";
 
 export interface ICategory {
@@ -26,8 +27,9 @@ export interface IComment {
 }
 
 export interface IProfile {
-  id: string;
+  id: string; //uuid
   avatar: string;
+  email: string;
   first_name: string;
   last_name: string;
   gender: string;

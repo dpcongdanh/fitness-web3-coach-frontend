@@ -39,7 +39,8 @@ export const ProductCard: React.FC<DataProps> = ({ data, editButtonClick }) => {
           <Typography
             variant="subtitle1"
             color="text.secondary"
-            component="div"
+            component="pre"
+            overflow="auto"
           >
             <MuiList dense={true}>{data?.description}</MuiList>
           </Typography>

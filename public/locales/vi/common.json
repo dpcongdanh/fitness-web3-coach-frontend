@@ -85,6 +85,7 @@
     "show": "Xem chi tiết",
     "undo": "Hoàn tác",
     "import": "Nhập",
+    "upload": "Tải lên",
     "clone": "Nhân bản",
     "notAccessTitle": "Bạn không có quyền truy cập"
   },
@@ -252,6 +253,7 @@
     "show_loading": "Đang tải thông tin người dùng",
     "fields": {
       "id": "Id",
+      "email": "Email",
       "avatar": "Avatar",
       "first_name": "Tên",
       "last_name": "Họ",
@@ -264,6 +266,7 @@
     "titles": {
       "create": "Tạo người dùng mới",
       "edit": "Sửa người dùng",
+      "account_settings": "Cài đặt tài khoản",
       "list": "Danh sách người dùng",
       "show": "Xem chi tiết người dùng"
     }

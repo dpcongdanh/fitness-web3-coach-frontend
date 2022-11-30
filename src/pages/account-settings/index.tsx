@@ -1,7 +1,7 @@
 import {
   HttpError,
   useGetIdentity,
-  useOne,
+  // useOne,
   useTranslate,
 } from "@pankod/refine-core";
 import {
@@ -11,7 +11,7 @@ import {
   Input,
   Stack,
   Avatar,
-  SaveButton,
+  // SaveButton,
   FormControl,
   InputLabel,
   MenuItem,
@@ -193,6 +193,7 @@ export const AccountSettings: React.FC = () => {
 
   return (
     <Edit
+      title={t("profiles.titles.account_settings")}
       isLoading={formLoading}
       resource="profiles"
       recordItemId={user?.id}
@@ -244,7 +245,7 @@ export const AccountSettings: React.FC = () => {
               variant="contained"
               component="span"
             >
-              Upload
+              {t("buttons.upload")}
             </LoadingButton>
             <br />
             {/* {errors.image && (
@@ -275,7 +276,7 @@ export const AccountSettings: React.FC = () => {
                   setFirstName(event.target.value);
                 }}
                 id="first_name"
-                label="First Name"
+                label={t("profiles.fields.first_name")}
                 name="first_name"
               />
               <TextField
@@ -292,7 +293,7 @@ export const AccountSettings: React.FC = () => {
                   setLastName(event.target.value);
                 }}
                 id="last_name"
-                label="Last Name"
+                label={t("profiles.fields.last_name")}
                 name="last_name"
               />
               <FormControl
@@ -300,13 +301,15 @@ export const AccountSettings: React.FC = () => {
                 margin="normal"
                 fullWidth
               >
-                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                <InputLabel id="demo-simple-select-label">
+                  {t("profiles.fields.gender")}
+                </InputLabel>
                 <Select
                   {...register("gender")}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={gender}
-                  label="Gender"
+                  label={t("profiles.fields.gender")}
                   onChange={handleChange}
                 >
                   <MenuItem value="Male">Male</MenuItem>
@@ -341,7 +344,7 @@ export const AccountSettings: React.FC = () => {
                 {...register("dob")}
                 disableFuture
                 // label={t("health_status_certificates.fields.expired_date")}
-                label="DOB"
+                label={t("profiles.fields.dob")}
                 openTo="day"
                 views={["year", "month", "day"]}
                 value={dob}

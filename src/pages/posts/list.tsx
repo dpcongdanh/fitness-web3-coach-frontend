@@ -5,6 +5,7 @@ import {
   useList,
   GetListResponse,
   CanAccess,
+  useCan,
 } from "@pankod/refine-core";
 import {
   // useDataGrid,
@@ -49,6 +50,17 @@ export const PostList: React.FC = () => {
 
   const [postsListResponse, setPostsListResponse] =
     useState<GetListResponse<IPost>>();
+
+  const { data: isAdmin } = useCan(
+    {
+      resource: "posts",
+      action: "edit",
+      // params: { foo: "optional-params" }
+    }
+    // queryOptions: {
+    //     staleTime: 5 * 60 * 1000, // 5 minutes
+    // }
+  );
 
   const { refetch: refetchPosts } = useList<IPost>({
     resource: "posts",
@@ -192,7 +204,10 @@ export const PostList: React.FC = () => {
         <DirectionsIcon />
       </IconButton> */}
       </Paper>
-      <List wrapperProps={{ sx: { minHeight: "calc(100vh - 230px)" } }}>
+      <List
+        canCreate={isAdmin?.can || false}
+        wrapperProps={{ sx: { minHeight: "calc(100vh - 230px)" } }}
+      >
         {isLoading ? (
           <Box
             sx={{

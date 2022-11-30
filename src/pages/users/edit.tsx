@@ -62,9 +62,9 @@ export const UserEdit: React.FC = () => {
   const [country, setCountry] = useState("");
 
   useEffect(() => {
-    // if (formLoading) {
-    //   register("about");
-    // }
+    if (formLoading) {
+      register("email");
+    }
     if (!formLoading && !queryResult?.isLoading) {
       console.log(getValues());
       const dob = getValues("dob");
@@ -84,7 +84,7 @@ export const UserEdit: React.FC = () => {
         const uploaded = await uploadImage(
           imageFile,
           "avatar",
-          `customers/${getValues("id")}/`
+          `customers/${getValues("email")}/`
         );
         if (uploaded !== undefined) {
           const imageUrl = await getPublicImageUrl(
@@ -181,7 +181,7 @@ export const UserEdit: React.FC = () => {
               variant="contained"
               component="span"
             >
-              Upload
+              {t("buttons.upload")}
             </LoadingButton>
             <br />
             {/* {errors.image && (

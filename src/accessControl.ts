@@ -67,4 +67,8 @@ p, customer, calendar/*, show
 p, customer, posts, (list)|(show)
 p, customer, posts/*, (show)
 
+p, customer, post_comments, (list)|(create)|(edit)|(show)|(delete)
+p, customer, post_comments/*, (edit)|(show)|(delete)
+p, customer, post_comments/*, field
+
 `);

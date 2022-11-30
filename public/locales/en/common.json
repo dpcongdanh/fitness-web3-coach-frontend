@@ -85,6 +85,7 @@
     "show": "View Details",
     "undo": "Undo",
     "import": "Import",
+    "upload": "Upload",
     "clone": "Clone",
     "notAccessTitle": "You don't have permission to access"
   },
@@ -252,6 +253,7 @@
     "show_loading": "Loading User",
     "fields": {
       "id": "Id",
+      "email": "Email",
       "avatar": "Avatar",
       "first_name": "First Name",
       "last_name": "Last Name",
@@ -264,6 +266,7 @@
     "titles": {
       "create": "Create User",
       "edit": "Edit User",
+      "account_settings": "Account Settings",
       "list": "Users",
       "show": "Show User"
     }

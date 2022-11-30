@@ -5,6 +5,7 @@ import {
   useList,
   GetListResponse,
   CanAccess,
+  useCan,
 } from "@pankod/refine-core";
 import {
   // useDataGrid,
@@ -58,6 +59,17 @@ export const TrainerList: React.FC = () => {
   // const [trainerListQueryResult, setTrainerListQueryResult] = useState<
   //   QueryObserverResult<GetListResponse<ITrainer>, HttpError>
   // >([]);
+
+  const { data: isAdmin } = useCan(
+    {
+      resource: "trainers",
+      action: "edit",
+      // params: { foo: "optional-params" }
+    }
+    // queryOptions: {
+    //     staleTime: 5 * 60 * 1000, // 5 minutes
+    // }
+  );
 
   const [trainerListResponse, setTrainerListResponse] =
     useState<GetListResponse<ITrainer>>();
@@ -317,7 +329,10 @@ export const TrainerList: React.FC = () => {
           </Select>
         </FormControl> */}
       </Paper>
-      <List wrapperProps={{ sx: { minHeight: "calc(100vh - 230px)" } }}>
+      <List
+        canCreate={isAdmin?.can || false}
+        wrapperProps={{ sx: { minHeight: "calc(100vh - 230px)" } }}
+      >
         {isLoading ? (
           <Box
             sx={{
