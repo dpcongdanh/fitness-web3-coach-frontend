@@ -237,6 +237,7 @@
       },
       "content": "Nội dung",
       "comments": "Bình luận",
+      "comments_loading": "Đang tải bình luận",
       "createdAt": "Created At"
     },
     "titles": {

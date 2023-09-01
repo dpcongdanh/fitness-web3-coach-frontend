@@ -1,5 +1,5 @@
-import { WeekNumberCalculation } from "@fullcalendar/react";
-import { StringIfPlural } from "react-i18next";
+// import { WeekNumberCalculation } from "@fullcalendar/react";
+// import { StringIfPlural } from "react-i18next";
 
 export interface ICategory {
   id: number;
@@ -23,6 +23,15 @@ export interface IComment {
   user_uuid: string;
   post_id: string;
   body: string;
+  created_at: string;
+  modified_at: string;
+}
+
+export interface ICommentLike {
+  id: number;
+  comment_id: number;
+  user_uuid: string;
+  thumbs_up: boolean;
   created_at: string;
 }
 

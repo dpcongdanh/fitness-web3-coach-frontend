@@ -299,9 +299,7 @@ export const UserCreate: React.FC = () => {
                   }
                   setDob(newValue);
                 }}
-                renderInput={(
-                  params: JSX.IntrinsicAttributes & TextFieldProps
-                ) => (
+                renderInput={(params) => (
                   <TextField
                     // error={!!errors?.dob}
                     // helperText={errors.dob?.message as string}

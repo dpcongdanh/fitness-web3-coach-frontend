@@ -237,6 +237,7 @@
       },
       "content": "Content",
       "comments": "Comments",
+      "comments_loading": "Loading Comments",
       "createdAt": "Created At"
     },
     "titles": {

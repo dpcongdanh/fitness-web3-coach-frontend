@@ -23,7 +23,7 @@ import { BaseSyntheticEvent, useState, useEffect } from "react";
 
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { uploadImage, getPublicImageUrl } from "api";
@@ -300,9 +300,8 @@ export const UserEdit: React.FC = () => {
                   }
                   setDob(newValue);
                 }}
-                renderInput={(
-                  params: JSX.IntrinsicAttributes & TextFieldProps
-                ) => (
+                // renderInput={}
+                renderInput={(params) => (
                   <TextField
                     // error={!!errors?.dob}
                     // helperText={errors.dob?.message as string}

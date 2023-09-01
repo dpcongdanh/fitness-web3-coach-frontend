@@ -18,7 +18,7 @@ import { ITrainer, IPost, IComment } from "interfaces";
 
 import { PostCard } from "../../components/post-card";
 
-import { CommentBox } from "components/comment-box";
+import { CommentList } from "components/comment-box";
 
 // const currentDate = new Date();
 
@@ -74,7 +74,11 @@ export const PostShow: React.FC = () => {
     },
   });
 
-  const { data: commentsData, isLoading: commentsLoading } = useList<IComment>({
+  const {
+    data: commentsData,
+    isLoading: commentsLoading,
+    isFetching: commentsFetching,
+  } = useList<IComment>({
     resource: "post_comments",
     config: {
       filters: [
@@ -158,10 +162,10 @@ export const PostShow: React.FC = () => {
             </Box>
             <Typography variant="body2">{parse(record?.body || "")}</Typography>
             <Paper>
-              <CommentBox
-                data={commentsData?.data}
+              <CommentList
+                data={commentsData}
                 post_id={record?.id}
-                loading={commentsLoading}
+                loading={commentsLoading || commentsFetching}
               />
             </Paper>
           </Stack>
