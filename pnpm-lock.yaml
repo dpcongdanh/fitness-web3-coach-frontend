@@ -43,10 +43,10 @@ dependencies:
     version: 3.103.0(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
   '@pankod/refine-mui':
     specifier: ^3.63.0
-    version: 3.63.0(@mui/system@5.14.7)(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.45.4)(react@18.2.0)
+    version: 3.63.0(@mui/system@5.14.7)(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.46.0)(react@18.2.0)
   '@pankod/refine-react-hook-form':
     specifier: ^3.39.0
-    version: 3.39.0(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.45.4)(react@18.2.0)
+    version: 3.39.0(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.46.0)(react@18.2.0)
   '@pankod/refine-react-router-v6':
     specifier: ^3.40.0
     version: 3.40.0(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-router-dom@6.3.0)(react@18.2.0)
@@ -518,6 +518,7 @@ packages:
   /@babel/plugin-proposal-class-properties@7.18.6(@babel/core@7.22.11):
     resolution: {integrity: sha512-cumfXOF0+nzZrrN8Rf0t7M+tF6sZc7vhQwYQck9q1/5w2OExlD+b4v4RpMJFaV1Z7WcDRgO6FqvxqxGlwo+RHQ==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -543,6 +544,7 @@ packages:
   /@babel/plugin-proposal-nullish-coalescing-operator@7.18.6(@babel/core@7.22.11):
     resolution: {integrity: sha512-wQxQzxYeJqHcfppzBDnm1yAY0jSRkUXR2z8RePZYrKwMKgMlE8+Z6LUno+bd6LvbGh8Gltvy74+9pIYkr+XkKA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -554,6 +556,7 @@ packages:
   /@babel/plugin-proposal-numeric-separator@7.18.6(@babel/core@7.22.11):
     resolution: {integrity: sha512-ozlZFogPqoLm8WBr5Z8UckIoE4YQ5KESVcNudyXOR8uqIkliTEgJ3RoketfG6pmzLdeZF0H/wjE9/cCEitBl7Q==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -565,6 +568,7 @@ packages:
   /@babel/plugin-proposal-optional-chaining@7.21.0(@babel/core@7.22.11):
     resolution: {integrity: sha512-p4zeefM72gpmEe2fkUr/OnOXpWEf8nAgk7ZYVqqfFiyIG7oFfVZcCrU64hWn5xp4tQ9LkV4bTIa5rD0KANpKNA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -577,6 +581,7 @@ packages:
   /@babel/plugin-proposal-private-methods@7.18.6(@babel/core@7.22.11):
     resolution: {integrity: sha512-nutsvktDItsNn4rpGItSNV2sz1XwS+nfU0Rg8aCx3W3NOKVzdMjJRu0O5OkgDp3ZGICSTbgRpxZoWsxoKRvbeA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -597,6 +602,7 @@ packages:
   /@babel/plugin-proposal-private-property-in-object@7.21.11(@babel/core@7.22.11):
     resolution: {integrity: sha512-0QZ8qP/3RLDVBwBFoWAwCtgcDZJVwA5LUJRZU8x2YFfKNuFq161wK3cuGrALu5yiPu+vzwTAg/sMWVNeWeNyaw==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -2764,7 +2770,7 @@ packages:
       - react-native
     dev: false
 
-  /@pankod/refine-mui@3.63.0(@mui/system@5.14.7)(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.45.4)(react@18.2.0):
+  /@pankod/refine-mui@3.63.0(@mui/system@5.14.7)(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.46.0)(react@18.2.0):
     resolution: {integrity: sha512-NGHE9a3O8fg+yuQ9iBguKrzs7/jFHjGcclC/crs9FyJcTksvG3kuO1YPb9PeveyAVgxcnk4ZM5XmMFI6/IXEOg==}
     deprecated: 'refine v4 is released 🎉 The new version is 100% backward compatible. You can upgrade to v4 with a single command! See the migration guide here: https://refine.dev/docs/migration-guide/3x-to-4x'
     requiresBuild: true
@@ -2780,7 +2786,7 @@ packages:
       '@mui/material': 5.14.7(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
       '@mui/x-data-grid': 5.17.26(@mui/material@5.14.7)(@mui/system@5.14.7)(react-dom@18.2.0)(react@18.2.0)
       '@pankod/refine-core': 3.103.0(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
-      '@pankod/refine-react-hook-form': 3.39.0(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.45.4)(react@18.2.0)
+      '@pankod/refine-react-hook-form': 3.39.0(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.46.0)(react@18.2.0)
       '@pankod/refine-ui-types': 0.16.0(@pankod/refine-core@3.103.0)(react-dom@18.2.0)(react@18.2.0)
       dayjs: 1.11.9
       lodash: 4.17.21
@@ -2800,7 +2806,7 @@ packages:
       - supports-color
     dev: false
 
-  /@pankod/refine-react-hook-form@3.39.0(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.45.4)(react@18.2.0):
+  /@pankod/refine-react-hook-form@3.39.0(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-hook-form@7.46.0)(react@18.2.0):
     resolution: {integrity: sha512-4frXeDoSYdct/ddhLyFvpphxe1XcnAQSSHF2GSHTaIMb59j7Mz+CR/3ER6o5VlGrIo9LWKyvCzlxJ+fKBAc3dg==}
     engines: {node: '>=10'}
     deprecated: 'refine v4 is released 🎉 The new version is 100% backward compatible. You can upgrade to v4 with a single command! See the migration guide here: https://refine.dev/docs/migration-guide/3x-to-4x'
@@ -2818,7 +2824,7 @@ packages:
       '@types/react-dom': 18.2.7
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-hook-form: 7.45.4(react@18.2.0)
+      react-hook-form: 7.46.0(react@18.2.0)
     dev: false
 
   /@pankod/refine-react-router-v6@3.40.0(@pankod/refine-core@3.103.0)(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react-router-dom@6.3.0)(react@18.2.0):
@@ -4160,8 +4166,8 @@ packages:
     resolution: {integrity: sha512-hNfzcOV8W4NdualtqBFPyVO+54DSJuZGY9qT4pRroB6S9e3iiido2ISIC5h9R2sPJ8H3FHCIiEnsv1lPXO3KtQ==}
     dev: false
 
-  /array-includes@3.1.6:
-    resolution: {integrity: sha512-sgTbLvL6cNnw24FnbaDyjmvddQ2ML8arZsgaJhoABMoplz/4QRhtrYS+alr1BUM1Bwp6dhx8vVCBSLG+StwOFw==}
+  /array-includes@3.1.7:
+    resolution: {integrity: sha512-dlcsNBIiWhPkHdOEEKnehA+RNUWDc4UqFtnIXU4uuYDPtA4LDkr7qip2p0VvFAEXNDr0yWZ9PJyIRiGjRLQzwQ==}
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.2
@@ -4294,7 +4300,7 @@ packages:
     dependencies:
       browserslist: 4.21.10
       caniuse-lite: 1.0.30001525
-      fraction.js: 4.3.4
+      fraction.js: 4.3.6
       normalize-range: 0.1.2
       picocolors: 1.0.0
       postcss: 8.4.29
@@ -4681,7 +4687,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001525
-      electron-to-chromium: 1.4.506
+      electron-to-chromium: 1.4.508
       node-releases: 2.0.13
       update-browserslist-db: 1.0.11(browserslist@4.21.10)
 
@@ -5317,8 +5323,8 @@ packages:
     resolution: {integrity: sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg==}
     dev: false
 
-  /cssdb@7.7.1:
-    resolution: {integrity: sha512-kM+Fs0BFyhJNeE6wbOrlnRsugRdL6vn7QcON0aBDZ7XRd7RI2pMlk+nxoHuTb4Et+aBobXgK0I+6NGLA0LLgTw==}
+  /cssdb@7.7.2:
+    resolution: {integrity: sha512-pQPYP7/kch4QlkTcLuUNiNL2v/E+O+VIdotT+ug62/+2B2/jkzs5fMM6RHCzGCZ9C82pODEMSIzRRUzJOrl78g==}
     dev: false
 
   /cssesc@3.0.0:
@@ -5784,8 +5790,8 @@ packages:
       jake: 10.8.7
     dev: false
 
-  /electron-to-chromium@1.4.506:
-    resolution: {integrity: sha512-xxGct4GPAKSRlrLBtJxJFYy74W11zX6PO9GyHgl/U+2s3Dp0ZEwAklDfNHXOWcvH7zWMpsmgbR0ggEuaYAVvHA==}
+  /electron-to-chromium@1.4.508:
+    resolution: {integrity: sha512-FFa8QKjQK/A5QuFr2167myhMesGrhlOBD+3cYNxO9/S4XzHEXesyTD/1/xF644gC8buFPz3ca6G1LOQD0tZrrg==}
 
   /elliptic@6.5.4:
     resolution: {integrity: sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==}
@@ -6146,7 +6152,7 @@ packages:
         optional: true
     dependencies:
       '@typescript-eslint/parser': 5.62.0(eslint@8.48.0)(typescript@4.9.5)
-      array-includes: 3.1.6
+      array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3
       array.prototype.flat: 1.3.1
       array.prototype.flatmap: 1.3.1
@@ -6200,7 +6206,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.11
       aria-query: 5.3.0
-      array-includes: 3.1.6
+      array-includes: 3.1.7
       array.prototype.flatmap: 1.3.1
       ast-types-flow: 0.0.7
       axe-core: 4.7.2
@@ -6232,7 +6238,7 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
     dependencies:
-      array-includes: 3.1.6
+      array-includes: 3.1.7
       array.prototype.flatmap: 1.3.1
       array.prototype.tosorted: 1.1.1
       doctrine: 2.1.0
@@ -6716,8 +6722,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /fraction.js@4.3.4:
-    resolution: {integrity: sha512-pwiTgt0Q7t+GHZA4yaLjObx4vXmmdcS0iSJ19o8d/goUGgItX9UZWKWNnLHehxviD8wU2IWRsnR8cD5+yOJP2Q==}
+  /fraction.js@4.3.6:
+    resolution: {integrity: sha512-n2aZ9tNfYDwaHhvFTkhFErqOMIb8uyzSQ+vGJBjZyanAKZVbGUQ1sngfk9FdkBw7G26O7AgNjLcecLffD1c7eg==}
     dev: false
 
   /fresh@0.5.2:
@@ -8409,7 +8415,7 @@ packages:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
     engines: {node: '>=4.0'}
     dependencies:
-      array-includes: 3.1.6
+      array-includes: 3.1.7
       array.prototype.flat: 1.3.1
       object.assign: 4.1.4
       object.values: 1.1.7
@@ -9111,8 +9117,8 @@ packages:
       es-abstract: 1.22.1
     dev: false
 
-  /object.getownpropertydescriptors@2.1.6:
-    resolution: {integrity: sha512-lq+61g26E/BgHv0ZTFgRvi7NMEPuAxLkFU7rukXjc/AlwH4Am5xXVnIXy3un1bg/JPbXHrixRkK1itUzzPiIjQ==}
+  /object.getownpropertydescriptors@2.1.7:
+    resolution: {integrity: sha512-PrJz0C2xJ58FNn11XV2lr4Jt5Gzl94qpy9Lu0JlfEj14z88sqbSBJCBEzdlNUCzY2gburhbrwOZ5BHCmuNUy0g==}
     engines: {node: '>= 0.8'}
     dependencies:
       array.prototype.reduce: 1.0.6
@@ -10058,7 +10064,7 @@ packages:
       css-blank-pseudo: 3.0.3(postcss@8.4.29)
       css-has-pseudo: 3.0.4(postcss@8.4.29)
       css-prefers-color-scheme: 6.0.3(postcss@8.4.29)
-      cssdb: 7.7.1
+      cssdb: 7.7.2
       postcss: 8.4.29
       postcss-attribute-case-insensitive: 5.0.2(postcss@8.4.29)
       postcss-clamp: 4.1.0(postcss@8.4.29)
@@ -10464,8 +10470,8 @@ packages:
     resolution: {integrity: sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==}
     dev: false
 
-  /react-hook-form@7.45.4(react@18.2.0):
-    resolution: {integrity: sha512-HGDV1JOOBPZj10LB3+OZgfDBTn+IeEsNOKiq/cxbQAIbKaiJUe/KV8DBUzsx0Gx/7IG/orWqRRm736JwOfUSWQ==}
+  /react-hook-form@7.46.0(react@18.2.0):
+    resolution: {integrity: sha512-sc22pXwuKgbWBR5/EYWOVoFw4i/w893tDRUgQY2/Xb7wlpajJBrqAMFhb4z1CDhZ0TSFFfX62+iKx3gCXnCHHw==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
@@ -12154,7 +12160,7 @@ packages:
       define-properties: 1.2.0
       es-abstract: 1.22.1
       has-symbols: 1.0.3
-      object.getownpropertydescriptors: 2.1.6
+      object.getownpropertydescriptors: 2.1.7
     dev: false
 
   /util@0.10.4:

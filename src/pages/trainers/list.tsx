@@ -34,7 +34,7 @@ import {
 
 import { Search } from "@mui/icons-material";
 
-import { IService, ITrainer } from "interfaces";
+import { IService, ITrainer, ITrainerView } from "interfaces";
 
 import { TrainerCard, TrainerCardAdmin } from "../../components/trainer-card";
 
@@ -48,6 +48,8 @@ export const TrainerList: React.FC = () => {
   const [forceReload, setForceReload] = useState<null>();
 
   const [isLoading, setIsLoading] = useState<Boolean>(false);
+
+  const [fullNameSearch, setFullNameSearch] = useState<string>("");
 
   const [firstNameSearch, setFirstNameSearch] = useState<string>("");
 
@@ -81,12 +83,26 @@ export const TrainerList: React.FC = () => {
   //   },
   // });
 
-  const { refetch: refetchTrainers } = useList<ITrainer>({
-    resource: "trainers",
+  // const { data: testData } = useList<ITrainerView>({
+  //   resource: "trainers_view",
+  // });
+
+  // console.log(testData);
+
+  const { refetch: refetchTrainers } = useList<ITrainerView>({
+    resource: "trainers_view",
     config: {
       filters: [
-        { field: "first_name", operator: "contains", value: firstNameSearch },
-        { field: "last_name", operator: "contains", value: lastNameSearch },
+        {
+          field: "first_name",
+          operator: "contains",
+          value: firstNameSearch,
+        },
+        {
+          field: "last_name",
+          operator: "contains",
+          value: lastNameSearch,
+        },
       ],
     },
     queryOptions: {
@@ -95,6 +111,7 @@ export const TrainerList: React.FC = () => {
         setIsLoading(false);
         if (data.total > 0) {
           setTrainerListResponse(data);
+          // console.log(data);
         }
         // const postOptionGroup = data.data.map((item) =>
         //     renderItem(item.title, "posts", item.id),
@@ -110,6 +127,48 @@ export const TrainerList: React.FC = () => {
       },
     },
   });
+
+  // const { refetch: refetchTrainers } = useList<ITrainer>({
+  //   resource: "trainers",
+  //   metaData: {
+  //     select: "*, profiles(first_name, last_name)",
+  //   },
+  //   config: {
+  //     filters: [
+  //       {
+  //         field: "profiles.first_name",
+  //         operator: "contains",
+  //         value: firstNameSearch,
+  //       },
+  //       {
+  //         field: "profiles.last_name",
+  //         operator: "contains",
+  //         value: lastNameSearch,
+  //       },
+  //     ],
+  //   },
+  //   queryOptions: {
+  //     enabled: false,
+  //     onSuccess: (data) => {
+  //       setIsLoading(false);
+  //       if (data.total > 0) {
+  //         setTrainerListResponse(data);
+  //         console.log(data);
+  //       }
+  //       // const postOptionGroup = data.data.map((item) =>
+  //       //     renderItem(item.title, "posts", item.id),
+  //       // );
+  //       // if (postOptionGroup.length > 0) {
+  //       //     setOptions([
+  //       //         {
+  //       //             label: renderTitle("Posts"),
+  //       //             options: postOptionGroup,
+  //       //         },
+  //       //     ]);
+  //       // }
+  //     },
+  //   },
+  // });
 
   // const { refetch: refetchTrainersWithService } = useList<ITrainer>({
   //   resource: "trainers",
@@ -134,15 +193,34 @@ export const TrainerList: React.FC = () => {
   //   resource: "services",
   // });
 
-  const { refetch: refetchTrainersWithCountries } = useList<ITrainer>({
-    resource: "trainers",
+  const { refetch: refetchTrainersWithCountries } = useList<ITrainerView>({
+    resource: "trainers_view",
+    // metaData: {
+    //   select: "*, profiles(first_name, last_name)",
+    // },
     config: {
       filters: [
-        { field: "first_name", operator: "contains", value: firstNameSearch },
-        { field: "last_name", operator: "contains", value: lastNameSearch },
+        {
+          field: "profiles.first_name",
+          operator: "contains",
+          value: firstNameSearch,
+        },
+        {
+          field: "profiles.last_name",
+          operator: "contains",
+          value: lastNameSearch,
+        },
         { field: "location", operator: "in", value: selectCountries },
       ],
     },
+    // resource: "trainers",
+    // config: {
+    //   filters: [
+    //     { field: "first_name", operator: "contains", value: firstNameSearch },
+    //     { field: "last_name", operator: "contains", value: lastNameSearch },
+    //     { field: "location", operator: "in", value: selectCountries },
+    //   ],
+    // },
     queryOptions: {
       enabled: false,
       onSuccess: (data) => {

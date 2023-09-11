@@ -6,6 +6,7 @@ import {
   useModal,
   // useCan,
   CanAccess,
+  useResource,
 } from "@pankod/refine-core";
 
 import parse from "html-react-parser";
@@ -43,6 +44,7 @@ import {
 
 import {
   ITrainer,
+  ITrainerView,
   ICertification,
   IService,
   IGallery,
@@ -61,7 +63,7 @@ import { TrainingPackageCard } from "components/training-package-card";
 import { PostCard } from "../../components/post-card";
 
 import { VideoDialog } from "../../components/video-dialog";
-import React from "react";
+import React, { useEffect } from "react";
 import { useModalForm } from "@pankod/refine-react-hook-form";
 
 import {
@@ -82,7 +84,12 @@ import {
 export const TrainerShow: React.FC = () => {
   const t = useTranslate();
 
-  const { queryResult } = useShow<ITrainer>();
+  const { id } = useResource();
+
+  const { queryResult } = useShow<ITrainerView>({
+    id: id,
+    resource: "trainers_view",
+  });
 
   // const { queryResult: galleryQueryResult, setShowId } = useShow<IGallery>({
   //   resource: "image_gallery",
@@ -173,9 +180,16 @@ export const TrainerShow: React.FC = () => {
   const { data, isLoading } = queryResult;
   const record = data?.data;
 
-  setValueForGallery("user_id", record?.id);
-  setValueForProduct("user_id", record?.id);
-  setValueForTrainingPackage("user_id", record?.id);
+  useEffect(() => {
+    setValueForGallery("user_id", record?.id);
+    setValueForProduct("user_id", record?.id);
+    setValueForTrainingPackage("user_id", record?.id);
+  }, [
+    record?.id,
+    setValueForGallery,
+    setValueForProduct,
+    setValueForTrainingPackage,
+  ]);
 
   //   const { data: categoryData } = useOne<ICategory>({
   //     resource: "categories",
@@ -234,23 +248,6 @@ export const TrainerShow: React.FC = () => {
       },
     },
   });
-
-  // const { data: coursesData, isLoading: coursesLoading } = useList<ICourse>({
-  //   resource: "courses",
-  //   config: {
-  //     filters: [
-  //       {
-  //         field: "user_id",
-  //         operator: "eq",
-  //         value: record?.id || null,
-  //       },
-  //     ],
-  //     pagination: {
-  //       pageSize: 10000,
-  //       current: 1,
-  //     },
-  //   },
-  // });
 
   const { data: productData, isLoading: productLoading } = useList<IProduct>({
     resource: "products",
@@ -357,17 +354,34 @@ export const TrainerShow: React.FC = () => {
               )}
           </Stack>
           <Stack gap={1}>
+            <Stack
+              direction={{ sm: "column", md: "row" }}
+              spacing={{ xs: 1, sm: 2, md: 32 }}
+            >
+              <Stack gap={1}>
+                <Typography variant="body1" fontWeight="bold">
+                  {t("trainers.fields.first_name")}
+                </Typography>
+                <Typography variant="body2">{record?.first_name}</Typography>
+              </Stack>
+              <Stack gap={1}>
+                <Typography variant="body1" fontWeight="bold">
+                  {t("trainers.fields.last_name")}
+                </Typography>
+                <Typography variant="body2">{record?.last_name}</Typography>
+              </Stack>
+            </Stack>
             <Typography variant="body1" fontWeight="bold">
               {t("trainers.fields.full_name")}
             </Typography>
             <Typography variant="body2">
               {record?.first_name + " " + record?.last_name}
             </Typography>
+
             <Typography variant="body1" fontWeight="bold">
               {t("trainers.fields.location")}
             </Typography>
             <Typography variant="body2">
-              {/* <TagField value={record?.location} /> */}
               <Typography variant="body2">{record?.location}</Typography>
             </Typography>
             <Typography variant="body1" fontWeight="bold">
@@ -378,12 +392,6 @@ export const TrainerShow: React.FC = () => {
               {t("trainers.fields.phone")}
             </Typography>
             <Typography variant="body2">{record?.phone}</Typography>
-            {/* <Typography variant="body1" fontWeight="bold">
-              {t("trainers.fields.about")}
-            </Typography>
-            <Typography variant="body2">
-              {parse(record?.about || "")}
-            </Typography> */}
           </Stack>
         </Stack>
         <Stack marginTop="16px">
@@ -567,7 +575,7 @@ export const TrainerShow: React.FC = () => {
                                 // variant="text"
                                 sx={{ margin: "0px", padding: "0px" }}
                               >
-                                
+
                               </IconButton> */}
                             </React.Fragment>
                           </CanAccess>

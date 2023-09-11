@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@pankod/refine-mui";
 import { useOne, useTranslate } from "@pankod/refine-core";
-import { IPost, ITrainer } from "interfaces";
+import { IPost, ITrainerView } from "interfaces";
 
 export type DataPropsAdmin = {
   data?: IPost;
@@ -24,13 +24,15 @@ export type DataPropsAdmin = {
 export const PostCardAdmin: React.FC<DataPropsAdmin> = ({ data, onDelete }) => {
   const t = useTranslate();
 
-  const { data: trainerData, isLoading: trainerLoading } = useOne<ITrainer>({
-    resource: "trainers",
-    id: data?.user_id || "",
-    queryOptions: {
-      enabled: !!data?.user_id,
-    },
-  });
+  const { data: trainerData, isLoading: trainerLoading } = useOne<ITrainerView>(
+    {
+      resource: "trainers_view",
+      id: data?.user_id || "",
+      queryOptions: {
+        enabled: !!data?.user_id,
+      },
+    }
+  );
 
   return (
     <Card>

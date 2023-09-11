@@ -29,6 +29,7 @@ import {
   // NativeSelect,
   Select,
   SelectChangeEvent,
+  Pagination,
 } from "@pankod/refine-mui";
 
 import { Search } from "@mui/icons-material";
@@ -261,6 +262,18 @@ export const PostList: React.FC = () => {
             No Posts Found
           </Box>
         )}
+        <Pagination
+          count={2}
+          page={2}
+          sx={{ marginTop: "12px" }}
+          // onChange={(event: React.ChangeEvent<unknown>, page: number) => {
+          //   handlePageChange(page);
+          // }}
+          variant="outlined"
+          shape="rounded"
+          showFirstButton
+          showLastButton
+        />
       </List>
     </Box>
   );

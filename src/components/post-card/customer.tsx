@@ -13,15 +13,8 @@ import {
   // ShowButton,
   Typography,
 } from "@pankod/refine-mui";
-import {
-  useOne,
-  // useShow,
-  // useTranslate,
-  useNavigation,
-  // useMany,
-  // useList,
-} from "@pankod/refine-core";
-import { IPost, ITrainer } from "interfaces";
+import { useOne, useNavigation } from "@pankod/refine-core";
+import { IPost, ITrainerView } from "interfaces";
 
 export type DataProps = {
   data?: IPost;
@@ -32,13 +25,15 @@ export const PostCard: React.FC<DataProps> = ({ data }) => {
 
   const { show } = useNavigation();
 
-  const { data: trainerData, isLoading: trainerLoading } = useOne<ITrainer>({
-    resource: "trainers",
-    id: data?.user_id || "",
-    queryOptions: {
-      enabled: !!data?.user_id,
-    },
-  });
+  const { data: trainerData, isLoading: trainerLoading } = useOne<ITrainerView>(
+    {
+      resource: "trainers_view",
+      id: data?.user_id || "",
+      queryOptions: {
+        enabled: !!data?.user_id,
+      },
+    }
+  );
 
   return (
     <Link

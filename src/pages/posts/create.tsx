@@ -14,7 +14,7 @@ import {
 } from "@pankod/refine-mui";
 import { useForm } from "@pankod/refine-react-hook-form";
 
-import { IPost, ITrainer } from "interfaces";
+import { IPost, ITrainerView } from "interfaces";
 
 import { FileUpload, SaveOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
@@ -37,21 +37,22 @@ export const PostCreate: React.FC = () => {
     formState: { errors },
   } = useForm<IPost, HttpError, IPost>();
 
-  const { data: authorsData, isLoading: authorsLoading } = useList<ITrainer>({
-    resource: "trainers",
-    // config: {
-    //   filters: [{ field: "title", operator: "contains", value: search }],
-    // },
-    // queryOptions: {
-    //   enabled: false,
-    //   onSuccess: (data) => {
-    //     setIsLoading(false);
-    //     if (data.total > 0) {
-    //       setPostsListResponse(data);
-    //     }
-    //   },
-    // },
-  });
+  const { data: authorsData, isLoading: authorsLoading } =
+    useList<ITrainerView>({
+      resource: "trainers_view",
+      // config: {
+      //   filters: [{ field: "title", operator: "contains", value: search }],
+      // },
+      // queryOptions: {
+      //   enabled: false,
+      //   onSuccess: (data) => {
+      //     setIsLoading(false);
+      //     if (data.total > 0) {
+      //       setPostsListResponse(data);
+      //     }
+      //   },
+      // },
+    });
 
   // const imageInput = watch("image");
 

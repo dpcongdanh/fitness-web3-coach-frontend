@@ -44,12 +44,14 @@ export interface IProfile {
   gender: string;
   dob: date;
   role: string;
+  phone: string;
   country: string;
 }
 
 export interface ITrainer {
   id: number;
   username: string;
+  profiles: IProfile;
   first_name: string;
   last_name: string;
   location: string;
@@ -62,6 +64,8 @@ export interface ITrainer {
   certifications: number[];
   created_at: string;
 }
+
+export interface ITrainerView extends ITrainer, Omit<IProfile, "id", "role"> {}
 
 export interface ISchedule {
   id: number;

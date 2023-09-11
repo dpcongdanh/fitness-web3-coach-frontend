@@ -12,9 +12,10 @@ import {
   Box,
   Divider,
   CircularProgress,
+  Rating,
 } from "@pankod/refine-mui";
 
-import { ITrainer, IPost, IComment } from "interfaces";
+import { ITrainerView, IPost, IComment } from "interfaces";
 
 import { PostCard } from "../../components/post-card";
 
@@ -66,13 +67,15 @@ export const PostShow: React.FC = () => {
   const { data, isLoading } = queryResult;
   const record = data?.data;
 
-  const { data: trainerData, isLoading: trainerLoading } = useOne<ITrainer>({
-    resource: "trainers",
-    id: record?.user_id || "",
-    queryOptions: {
-      enabled: !!record?.user_id,
-    },
-  });
+  const { data: trainerData, isLoading: trainerLoading } = useOne<ITrainerView>(
+    {
+      resource: "trainers_view",
+      id: record?.user_id || "",
+      queryOptions: {
+        enabled: !!record?.user_id,
+      },
+    }
+  );
 
   const {
     data: commentsData,
@@ -118,6 +121,13 @@ export const PostShow: React.FC = () => {
             <Typography variant="h4" fontWeight="bold">
               {record?.title}
             </Typography>
+            <Rating
+              name="simple-controlled"
+              value={3}
+              // onChange={(event, newValue) => {
+              //   setValue(newValue);
+              // }}
+            />
 
             <Box
               sx={{
@@ -142,10 +152,9 @@ export const PostShow: React.FC = () => {
                 flexItem
               />
               <Typography variant="body2">
-                {!trainerLoading && trainerData !== undefined
-                  ? new Date(
-                      Date.parse(trainerData.data.created_at)
-                    ).toLocaleString()
+                {/* {new Date(Date.parse(record?.created_at)).toLocaleString()} */}
+                {!isLoading && record !== undefined
+                  ? new Date(Date.parse(record.created_at)).toLocaleString()
                   : "loading"}
               </Typography>
             </Box>
